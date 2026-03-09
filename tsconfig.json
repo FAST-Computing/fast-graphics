@@ -1,9 +1,4 @@
 {
   "files": [],
-  "references": [
-    { "path": "./packages/tokens" },
-    { "path": "./packages/mui-theme" },
-    { "path": "./packages/ui" },
-    { "path": "./packages/layouts" }
-  ]
+  "references": []
 }

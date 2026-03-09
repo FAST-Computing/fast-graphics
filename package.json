@@ -1,17 +1,40 @@
 {
   "name": "@fast-computing/fast-graphics",
-  "version": "0.0.1",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "version": "0.0.4",
+  "main": "packages/tokens/dist/index.js",
+  "types": "packages/tokens/dist/index.d.ts",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"
+  },
+  "exports": {
+    "./tokens": {
+      "types": "./packages/tokens/dist/index.d.ts",
+      "default": "./packages/tokens/dist/index.js"
+    },
+    "./mui-theme": {
+      "types": "./packages/mui-theme/dist/index.d.ts",
+      "default": "./packages/mui-theme/dist/index.js"
+    },
+    "./ui": {
+      "types": "./packages/ui/dist/index.d.ts",
+      "default": "./packages/ui/dist/index.js"
+    },
+    "./layouts": {
+      "types": "./packages/layouts/dist/index.d.ts",
+      "default": "./packages/layouts/dist/index.js"
+    }
   },
   "description": "FAST-Computing graphics release repo (@fast/* packages)",
   "workspaces": [
     "packages/*"
   ],
   "scripts": {
-    "build": "npm run --workspaces --if-present build",
+    "build": "npm run build:tokens && npm run build:mui-theme && npm run build:ui && npm run build:layouts && npm run build:assets",
+    "build:tokens": "cd packages/tokens && npm run build",
+    "build:mui-theme": "cd packages/mui-theme && npm run build",
+    "build:ui": "cd packages/ui && npm run build",
+    "build:layouts": "cd packages/layouts && npm run build",
+    "build:assets": "cd packages/assets && npm run build",
     "clean": "rm -rf packages/*/dist",
     "typecheck": "tsc -b",
     "changeset": "changeset",
@@ -31,6 +54,17 @@
   ],
   "author": "FAST-Computing",
   "license": "MIT",
+  "files": [
+    "packages",
+    "README.md",
+    "tsconfig.base.json"
+  ],
+  "peerDependencies": {
+    "@emotion/react": "^11.13.0",
+    "@emotion/styled": "^11.13.0",
+    "@mui/material": "^7.0.0",
+    "react": "^18.0.0 || ^19.0.0"
+  },
   "devDependencies": {
     "@changesets/cli": "^2.28.1",
     "@changesets/changelog-github": "^0.5.0",

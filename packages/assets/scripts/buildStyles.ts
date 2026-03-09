@@ -1,7 +1,7 @@
 import { mkdir, writeFile, cp } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { generateAllCssVariables } from '@fast/tokens';
+import { generateAllCssVariables } from '../../tokens/dist/index.js';
 import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
 

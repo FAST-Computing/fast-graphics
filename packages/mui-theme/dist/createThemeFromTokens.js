@@ -1,5 +1,5 @@
 import { createTheme } from '@mui/material/styles';
-import { brandTokens } from '@fast/tokens';
+import { brandTokens } from '../../tokens/dist/index.js';
 export function createThemeFromTokens(brand, options = {}) {
     const t = brandTokens[brand];
     const theme = createTheme({

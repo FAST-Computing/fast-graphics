@@ -1,6 +1,6 @@
 import { createTheme } from '@mui/material/styles';
 import type { Theme } from '@mui/material/styles';
-import { brandTokens, type BrandName } from '@fast/tokens';
+import { brandTokens, type BrandName } from '../../tokens/dist/index.js';
 
 export type CreateThemeOptions = {
   /** If true, adds a few component defaults that match our layouts. */

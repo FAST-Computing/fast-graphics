@@ -1,15 +1,9 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "composite": true,
     "rootDir": "src",
     "outDir": "dist",
     "jsx": "react-jsx"
   },
-  "references": [
-    { "path": "../mui-theme" },
-    { "path": "../ui" },
-    { "path": "../tokens" }
-  ],
   "include": ["src/**/*.ts", "src/**/*.tsx"]
 }

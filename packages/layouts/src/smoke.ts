@@ -1,5 +1,5 @@
-import { createThemeFromTokens } from '@fast/mui-theme';
-import { brandTokens } from '@fast/tokens';
+import { createThemeFromTokens } from '../../mui-theme/dist/index.js';
+import { brandTokens } from '../../tokens/dist/index.js';
 import { DashboardLayout, LandingPageLayout } from './index.js';
 
 // Compile-time smoke test: just ensure modules resolve and basic calls typecheck.
