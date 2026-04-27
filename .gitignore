@@ -25,5 +25,5 @@ Thumbs.db
 *.tmp
 .sass-cache/
 
-
+.env
 .npmrc
