@@ -1,0 +1,35 @@
+name: Publish to GitHub Packages
+
+on:
+  push:
+    tags:
+      - 'v*' # Triggers on any tag starting with v (e.g. v1.2.3)
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          registry-url: 'https://npm.pkg.github.com'
+          # This automatically creates an .npmrc
+          scope: '@FAST-Computing'
+
+      - name: Install & Build
+        run: |
+          npm ci
+          npm run build --if-present
+
+      - name: Publish to GitHub Packages
+        run: npm publish
+        env:
+          # GitHub provides this token automatically for every run
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
