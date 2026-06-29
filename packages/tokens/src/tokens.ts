@@ -1,94 +1,160 @@
-export type BrandName = 'corporate' | 'argos' | 'atlas';
+export type BrandName = 
+    'fast_core' | 'fast_argos' | 'fast_atlas' | 'simplifica_core' | 'simplifica_burlo';
 
 export type BrandTokens = {
-  primary: string;
-  primaryDark: string;
-  primaryLight: string;
-  secondary: string;
-  background: string;
-  backgroundPaper: string;
+  primary: {
+    main: string;
+    dark: string;
+    light: string;
+  }
+  secondary: {
+    main: string;
+    dark: string;
+    light: string;
+  }
+  background: {
+    default: string;
+    paper: string
+  }
   text: {
     primary: string;
     secondary: string;
   };
-  fontFamily: string;
-  fontFamilyMono: string;
-  borderRadius: number;
-  spacing: number;
-
-  // Optional per-brand extensions
-  info?: string;
-  sidebarBg?: string;
-  sidebarText?: string;
-  gradientPrimary?: string;
-  gradientHero?: string;
-  shadowPrimary?: string;
-  shadowElevated?: string;
+  font: {
+    main: string;
+    mono: string;
+  }
 };
 
-/**
+/*
  * Source of truth for brand values.
  * Keep it framework-agnostic: no MUI types, no CSS preprocessor assumptions.
  */
 export const brandTokens: Record<BrandName, BrandTokens> = {
-  corporate: {
-    primary: '#FF6A00',
-    primaryDark: '#333000',
-    primaryLight: '#632986',
-    secondary: '#6c757d',
-    background: '#f8f9fa',
-    backgroundPaper: '#ffffff',
-    text: {
-      primary: '#212529',
-      secondary: '#6c757d',
+  fast_core: {
+    primary: {
+      main: '#FF6A00',
+      dark: '#d64800',
+      light: '#ff8055',
     },
-    fontFamily:
-      '"Montserrat", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-    fontFamilyMono: '"Fira Code", "Roboto Mono", monospace',
-    borderRadius: 8,
-    spacing: 8,
+    secondary: {
+      main: '#006b5e',
+      dark: '#005246',
+      light: '#54aa9b',
+    },
+    background: {
+      default: '#dfe0df',
+      paper: '#ffffff',
+    },
+    text: { 
+      primary: '#0f0f0f',
+      secondary: '#5a5a5a'
+    },
+    font: {
+      main: '"Google Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+      mono: '"Roboto Mono", monospace',
+    }
   },
 
-  argos: {
-    primary: '#FF00FF',
-    primaryDark: '#1a252f',
-    primaryLight: '#34495e',
-    secondary: '#95a5a6',
-    info: '#3498db',
-    background: '#ecf0f1',
-    backgroundPaper: '#ffffff',
-    sidebarBg: '#2c3e50',
-    sidebarText: '#ecf0f1',
-    text: {
-      primary: '#2c3e50',
-      secondary: '#7f8c8d',
+  fast_argos: {
+    primary: {
+      main: '#643f4d',
+      dark: '#554148',
+      light: '#bda5ad',
     },
-    fontFamily:
-      '"Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-    fontFamilyMono: '"Roboto Mono", monospace',
-    borderRadius: 6,
-    spacing: 8,
+    secondary: {
+      main: '#1d524e',
+      dark: '#00302c',
+      light: '#285c57',
+    },
+    background: {
+      default: '#bda5ad',
+      paper: '#ffffff',
+    },
+    text: { 
+      primary: '#0f0f0f', 
+      secondary: '#5a5a5a' 
+    },
+    font: {
+      main: '"Google Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+      mono: '"Roboto Mono", monospace',
+    }
   },
 
-  atlas: {
-    primary: '#334C66',
-    primaryDark: '#203244',
-    primaryLight: '#507F90',
-    secondary: '#FABA59', 
-    background: '#BDC7CF', 
-    backgroundPaper: '#FFFFFF',
-    text: {
-      primary: '#203244',
-      secondary: '#507F90',
+  fast_atlas: {
+    primary: {
+      main: '#334C66',
+      dark: '#203244',
+      light: '#507F90',
     },
-    gradientPrimary: 'linear-gradient(135deg, #334C66 0%, #203244 100%)',
-    gradientHero: 'linear-gradient(135deg, #203244 0%, #334C66 50%, #507F90 100%)',
-    fontFamily:
-      '"Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-    fontFamilyMono: '"Roboto Mono", monospace',
-    borderRadius: 12,
-    spacing: 8,
-    shadowPrimary: '0 8px 24px rgba(32, 50, 68, 0.25)',
-    shadowElevated: '0 10px 40px rgba(0, 0, 0, 0.1)',
+    secondary: {
+      main: '#FABA59',
+      dark: '#ca902f',
+      light: '#ffd9a0',
+    },
+    background: {
+      default: '#BDC7CF',
+      paper: '#FFFFFF',
+    },
+    text: { 
+      primary: '#0f0f0f', 
+      secondary: '#5a5a5a' 
+    },
+    font: {
+      main: '"Google Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+      mono: '"Roboto Mono", monospace',
+    }
   },
+
+  simplifica_core: {
+    primary: {
+      main: '#d9cb11',
+      dark: '#a9a000',
+      light: '#f1eb67',
+    },
+    secondary: {
+      main: '#7db741',
+      dark: '#58921a',
+      light: '#d2ff91',
+    },
+    background: {
+      default: '#f3f3f3',
+      paper: '#FFFFFF',
+    },
+    text: { 
+      primary: '#2e2e2e', 
+      secondary: '#77b844' 
+    },
+    font: {
+      main: '"Google Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+      mono: '"Roboto Mono", monospace',
+    }
+  },
+
+  simplifica_burlo: {
+    primary: {
+      main: '#1B9A75',
+      dark: '#0F6E56',
+      light: '#84c8bb',
+    },
+    secondary: {
+      main: '#FABA59',
+      dark: '#E09A30',
+      light: '#ffd9a0',
+    },
+    background: {
+      default: '#EDF4F5',
+      paper: '#FFFFFF',
+    },
+    text: { 
+      primary: '#1A1A1A', 
+      secondary: '#6B7280',
+    },
+    font: {
+      main: '"Google Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+      mono: '"Roboto Mono", monospace',
+    }
+  },
+
+  
 };
