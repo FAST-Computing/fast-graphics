@@ -14,14 +14,6 @@
     "./mui-theme": {
       "types": "./packages/mui-theme/dist/index.d.ts",
       "default": "./packages/mui-theme/dist/index.js"
-    },
-    "./ui": {
-      "types": "./packages/ui/dist/index.d.ts",
-      "default": "./packages/ui/dist/index.js"
-    },
-    "./layouts": {
-      "types": "./packages/layouts/dist/index.d.ts",
-      "default": "./packages/layouts/dist/index.js"
     }
   },
   "description": "FAST-Computing graphics release repo (@fast/* packages)",
@@ -29,12 +21,9 @@
     "packages/*"
   ],
   "scripts": {
-    "build": "npm run build:tokens && npm run build:mui-theme && npm run build:ui && npm run build:layouts && npm run build:assets",
+    "build": "npm run build:tokens && npm run build:mui-theme",
     "build:tokens": "cd packages/tokens && npm run build",
     "build:mui-theme": "cd packages/mui-theme && npm run build",
-    "build:ui": "cd packages/ui && npm run build",
-    "build:layouts": "cd packages/layouts && npm run build",
-    "build:assets": "cd packages/assets && npm run build",
     "clean": "rm -rf packages/*/dist",
     "typecheck": "tsc -b",
     "changeset": "changeset",
@@ -62,12 +51,12 @@
   "peerDependencies": {
     "@emotion/react": "^11.13.0",
     "@emotion/styled": "^11.13.0",
-    "@mui/material": "^7.0.0",
+    "@mui/material": "^9.1.2",
     "react": "^18.0.0 || ^19.0.0"
   },
   "devDependencies": {
-    "@changesets/cli": "^2.28.1",
     "@changesets/changelog-github": "^0.5.0",
+    "@changesets/cli": "^2.28.1",
     "@types/node": "^25.2.0",
     "sass": "^1.70.0",
     "tsx": "^4.21.0",

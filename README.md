@@ -1,213 +1,132 @@
-# FAST graphics packages (`@fast/*`)
+# @fast-computing/fast-graphics
 
-Repo per il rilascio della parte grafica FAST-Computing in forma di pacchetti versionati.
+Tokens: 
+- FAST Computing: **fast_core**, **fast_argos**, **fast_atlas**
+- Simplifica: **simplifica_core**, **simplifica_burlo**
 
-Supporta 3 temi:
 
-- **corporate**
-- **argos**
-- **atlas**
+## Quick Start
 
-## 📦 Packages
-
-- `@fast/tokens` — source of truth (design tokens)
-- `@fast/mui-theme` — MUI `Theme` derivato dai tokens
-- `@fast/assets` — asset consumabili ovunque:
-   - CSS variables (`styles.css`)
-   - **3 CSS compilati separati** (corporate/argos/atlas + min)
-   - fonts (se presenti)
-- `@fast/ui` — componenti React/MUI
-- `@fast/layouts` — layout React/MUI
-
-## ✅ Build
+### 1. Install
 
 ```bash
-npm install
-npm run build
+npm install @fast-computing/fast-graphics @mui/material @emotion/react @emotion/styled
 ```
 
-## 📦 Usare i CSS (non-Next / non-React)
+### 2. Provider
 
-Dopo la publish su registry, puoi consumare i file direttamente dal pacchetto `@fast/assets`:
+```tsx
+// components/ThemeProvider.tsx
+'use client';
 
-- `@fast/assets/styles.css`
-- `@fast/assets/css/corporate.css`
-- `@fast/assets/css/argos.css`
-- `@fast/assets/css/atlas.css`
+import { ThemeProvider } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+import { createThemeFromTokens } from '@fast-computing/fast-graphics/mui-theme';
+import type { BrandName } from '@fast-computing/fast-graphics/tokens';
 
-Sono disponibili anche le versioni `.min.css`.
+type Props = { brand?: BrandName; children: React.ReactNode };
 
-## 🗂️ Struttura repo
+export function AppThemeProvider({ brand = 'fast_core', children }: Props) {
+  const theme = createThemeFromTokens(brand, { withComponentDefaults: true });
+  return (
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      {children}
+    </ThemeProvider>
+  );
+}
+```
+
+### 3. `layout.tsx`
+
+```tsx
+// app/layout.tsx
+import { AppThemeProvider } from '@/components/ThemeProvider';
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="it">
+      <body>
+        <AppThemeProvider brand="fast_core">{children}</AppThemeProvider>
+      </body>
+    </html>
+  );
+}
+```
+
+## Usage in components
+
+### `sx` prop (idiomatic MUI)
+
+```tsx
+'use client';
+import { Box, Typography, Button } from '@mui/material';
+
+export function MyCard() {
+  return (
+    <Box sx={{ bgcolor: 'background.default', p: 3, borderRadius: 2 }}>
+      <Typography variant="h6" sx={{ color: 'text.primary' }}>
+        Hello FAST
+      </Typography>
+      <Typography variant="body2" sx={{ color: 'text.secondary', mb: 2 }}>
+        Secondary text
+      </Typography>
+      <Button variant="contained" color="primary">
+        Click
+      </Button>
+    </Box>
+  );
+}
+```
+
+### `useTheme()`
+
+```tsx
+'use client';
+import { useTheme } from '@mui/material/styles';
+
+export function MyCard() {
+  const theme = useTheme();
+
+  return (
+    <div style={{ background: theme.palette.background.default, padding: 24 }}>
+      <h2 style={{ color: theme.palette.text.primary }}>
+        Hello FAST
+      </h2>
+      <p style={{ color: theme.palette.text.secondary }}>
+        Secondary text
+      </p>
+    </div>
+  );
+}
+```
+
+> `useTheme` utile quando servono i valori puri (canvas, stili inline nativi, conditional logic). Per componenti MUI basta `sx`.
+
+---
+
+## API
+
+### `createThemeFromTokens(brand, options?)`
+
+| Param | Type | Default | Description |
+|-------|------|---------|-------------|
+| `brand` | `'fast_core' \| 'fast_argos' \| 'fast_atlas' \| 'simplifica_core' \| 'simplifica_burlo'` | — | Token name |
+| `options.withComponentDefaults` | `boolean` | `false` | Adds default MUI (AppBar color primary, Button variant contained) |
+
+---
+
+## Structure
 
 ```
 packages/
-   assets/
-   tokens/
-   mui-theme/
-   ui/
-   layouts/
+  tokens/       → design tokens + CSS vars generator
+  mui-theme/    → createThemeFromTokens()
 ```
 
-- Committa automaticamente i CSS compilati nel repository
+## Build
 
-### Aggiungere stili custom
-
-### Configurazione necessaria
-
-```scss
-
-// src/scss/argos/_custom.scssPer permettere alla GitHub Action di committare i file compilati:
-
-.mia-classe-argos {
-
-  background-color: $argos-accent;1. Vai in **Settings** → **Actions** → **General**
-
-  padding: 1rem;2. Sotto "Workflow permissions", seleziona **Read and write permissions**
-
-}3. Salva le modifiche
-
-```
-
-## 📦 Utilizzo dei CSS
-
-### Condividere codice tra brand
-
-### In HTML
-
-I file in `src/scss/_common/` sono condivisi da tutti i brand:```html
-
-<link rel="stylesheet" href="dist/css/brand.min.css">
-
-- **`_fonts.scss`** - Font comuni (Google Fonts o self-hosted)```
-
-- **`_variables-base.scss`** - Variabili di base che ogni brand può sovrascrivere
-
-- **`_mixins.scss`** - Mixin e funzioni riutilizzabili### Via CDN (dopo il rilascio)
-
-```html
-
-### Aggiungere font custom<!-- Sostituisci con il tuo CDN o GitHub Pages URL -->
-
-<link rel="stylesheet" href="https://cdn.example.com/brand/brand.min.css">
-
-Vedi la guida completa in [FONTS_GUIDE.md](./FONTS_GUIDE.md)```
-
-
-
-Quick esempio per Google Fonts:### Import in SASS/SCSS
-
-```scss```scss
-
-// src/scss/_common/_fonts.scss@import 'path/to/brand';
-
-@import url('https://fonts.googleapis.com/css2?family=TuoFont:wght@400;700&display=swap');```
-
-
-
-// src/scss/corporate/_variables.scss## 📝 Note
-
-$font-family-sans-serif: 'TuoFont', sans-serif !default;
-
-```- I file CSS compilati sono generati automaticamente - non modificarli manualmente
-
-- Tutte le modifiche devono essere fatte nei file `.scss` in `src/scss/`
-
-## 📦 Utilizzo dei CSS- La GitHub Action aggiunge `[skip ci]` al messaggio di commit per evitare loop infiniti
-
-
-
-### Corporate## 📄 Licenza
-
-```html
-
-<link rel="stylesheet" href="dist/css/corporate.min.css">MIT
-
-```
-
-### Argos
-```html
-<link rel="stylesheet" href="dist/css/argos.min.css">
-```
-
-### Atlas
-```html
-<link rel="stylesheet" href="dist/css/atlas.min.css">
-```
-
-## 🎯 Caratteristiche dei Brand
-
-### Corporate (Aziendale Generico)
-- **Colori**: Blu corporate professionale (#0066cc)
-- **Stile**: Classico, pulito, professionale
-- **Componenti**: Header gradient, footer scuro, card eleganti
-- **Uso**: Sito corporate aziendale principale
-
-### Argos (Portale Dashboard)
-- **Colori**: Blu scuro (#2c3e50), grigio argento
-- **Stile**: Dashboard professionale, layout sidebar
-- **Componenti**: Sidebar fissa, navbar top, stat cards, tabelle
-- **Uso**: Applicazioni web, dashboard, pannelli admin
-
-### Atlas (Portale Moderno)
-- **Colori**: Viola/Purple (#6f42c1), gradienti colorati
-- **Stile**: Moderno, colorato, dinamico
-- **Componenti**: Hero gradient, card elevate, bottoni rounded
-- **Uso**: Portali web moderni, landing page, app consumer
-
-## 🤖 GitHub Actions
-
-Il repository include una GitHub Action che:
-- Compila automaticamente **tutti e 3 i brand** ad ogni push
-- Genera artifacts scaricabili per ogni build
-- Committa automaticamente i CSS compilati (opzionale)
-
-### Configurazione necessaria
-
-Per il commit automatico:
-1. Vai in **Settings** → **Actions** → **General**
-2. Sotto "Workflow permissions", seleziona **Read and write permissions**
-
-## 🆕 Aggiungere un nuovo brand
-
-1. Crea una nuova cartella in `src/scss/nuovo-brand/`
-2. Copia i 3 file da un brand esistente:
-   - `nuovo-brand.scss`
-   - `_variables.scss`
-   - `_custom.scss`
-3. Personalizza i colori e gli stili
-4. Aggiungi gli script npm in `package.json`:
-   ```json
-   "build:nuovo-brand": "...",
-   "build:nuovo-brand:expanded": "...",
-   "build:nuovo-brand:minified": "..."
-   ```
-5. Aggiorna `build:all` per includere il nuovo brand
-
-## 📝 Best Practices
-
-1. **Non modificare Bootstrap direttamente** - Usa sempre le variabili
-2. **Mantieni i file `_common/`** - Condividi codice tra brand
-3. **Usa i mixin comuni** - Evita duplicazione del codice
-4. **Test su tutti i brand** - Quando modifichi `_common/`
-5. **Commit separati** - Per modifiche specifiche di un brand
-
-## 🐛 Troubleshooting
-
-### Build fallisce
 ```bash
-npm run clean
 npm install
 npm run build
 ```
-
-### Font non si caricano
-Verifica il percorso in `_common/_fonts.scss` e controlla la console browser
-
-### Modifiche non visibili
-1. Ricompila: `npm run build:{brand}`
-2. Svuota cache browser (Ctrl+Shift+R)
-3. Verifica di usare il CSS corretto
-
-## 📄 Licenza
-
-MIT

@@ -2,8 +2,8 @@
 node_modules/
 # package-lock.json  # Decommenta per escludere il lock file (sconsigliato)
 
-# Build output (commentare se si vuole committare i CSS compilati)
-# dist/
+# Build output
+dist/
 
 # Logs
 npm-debug.log*

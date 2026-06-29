@@ -12,24 +12,27 @@ export function createThemeFromTokens(brand: BrandName, options: CreateThemeOpti
 
   const theme = createTheme({
     palette: {
-      primary: { main: t.primary, dark: t.primaryDark, light: t.primaryLight },
-      secondary: { main: t.secondary },
+      primary: { 
+        main: t.primary.main, 
+        dark: t.primary.dark, 
+        light: t.primary.light 
+      },
+      secondary: { 
+        main: t.secondary.main, 
+        dark: t.secondary.dark, 
+        light: t.secondary.light 
+      },
       background: {
-        default: t.background,
-        paper: t.backgroundPaper,
+        default: t.background.default,
+        paper: t.background.paper,
       },
       text: {
         primary: t.text.primary,
         secondary: t.text.secondary,
       },
-      ...(brand === 'argos' && t.info ? { info: { main: t.info } } : null),
     },
-    shape: {
-      borderRadius: t.borderRadius,
-    },
-    spacing: t.spacing,
     typography: {
-      fontFamily: t.fontFamily,
+      fontFamily: t.font.main,
     },
   });
 

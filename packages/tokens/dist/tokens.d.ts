@@ -1,30 +1,27 @@
-export type BrandName = 'corporate' | 'argos' | 'atlas';
+export type BrandName = 'fast_core' | 'fast_argos' | 'fast_atlas' | 'simplifica_core' | 'simplifica_burlo';
 export type BrandTokens = {
-    primary: string;
-    primaryDark: string;
-    primaryLight: string;
-    secondary: string;
-    background: string;
-    backgroundPaper: string;
+    primary: {
+        main: string;
+        dark: string;
+        light: string;
+    };
+    secondary: {
+        main: string;
+        dark: string;
+        light: string;
+    };
+    background: {
+        default: string;
+        paper: string;
+    };
     text: {
         primary: string;
         secondary: string;
     };
-    fontFamily: string;
-    fontFamilyMono: string;
-    borderRadius: number;
-    spacing: number;
-    info?: string;
-    sidebarBg?: string;
-    sidebarText?: string;
-    gradientPrimary?: string;
-    gradientHero?: string;
-    shadowPrimary?: string;
-    shadowElevated?: string;
+    font: {
+        main: string;
+        mono: string;
+    };
 };
-/**
- * Source of truth for brand values.
- * Keep it framework-agnostic: no MUI types, no CSS preprocessor assumptions.
- */
 export declare const brandTokens: Record<BrandName, BrandTokens>;
 //# sourceMappingURL=tokens.d.ts.map

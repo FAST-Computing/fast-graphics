@@ -19,12 +19,6 @@ ${selector} {
 
   --brand-font-family: ${tokens.fontFamily};
   --brand-font-family-mono: ${tokens.fontFamilyMono};
-
-  --brand-border-radius: ${tokens.borderRadius}px;
-  --brand-spacing: ${tokens.spacing}px;
-
-  ${brand === 'argos' ? `--argos-sidebar-bg: ${tokens.sidebarBg};\n  --argos-sidebar-text: ${tokens.sidebarText};\n  --brand-info: ${tokens.info};` : ''}
-  ${brand === 'atlas' ? `--atlas-gradient-primary: ${tokens.gradientPrimary};\n  --atlas-gradient-hero: ${tokens.gradientHero};\n  --atlas-shadow-primary: ${tokens.shadowPrimary};\n  --atlas-shadow-elevated: ${tokens.shadowElevated};` : ''}
 }
 `.trim();
 }
