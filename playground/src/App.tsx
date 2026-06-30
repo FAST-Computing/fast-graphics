@@ -33,7 +33,7 @@ export default function App() {
       <Box sx={{ p: 3 }}>
         {/* Brand selector */}
         <Typography variant="h5" sx={{ mb: 1 }}>
-          @fast-graphics Playground
+          @fast/components — Playground
         </Typography>
         <ToggleButtonGroup
           value={brand}
