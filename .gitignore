@@ -1,9 +1,9 @@
 # Dependencies
 node_modules/
-# package-lock.json  # Decommenta per escludere il lock file (sconsigliato)
 
 # Build output
 dist/
+*.tgz
 
 # Logs
 npm-debug.log*
@@ -25,5 +25,6 @@ Thumbs.db
 *.tmp
 .sass-cache/
 
+# Env
 .env
 .npmrc

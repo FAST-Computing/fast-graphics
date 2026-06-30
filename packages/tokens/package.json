@@ -2,7 +2,7 @@
   "name": "@fast/tokens",
   "version": "0.1.0",
   "private": false,
-  "description": "FAST design tokens (source of truth) + CSS variables generator",
+  "description": "FAST design tokens",
   "license": "MIT",
   "type": "module",
   "sideEffects": false,

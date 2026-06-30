@@ -58,7 +58,7 @@ export const brandTokens = {
             light: '#507F90',
         },
         secondary: {
-            main: '#FABA59',
+            main: '#e19f20',
             dark: '#ca902f',
             light: '#ffd9a0',
         },

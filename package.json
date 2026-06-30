@@ -21,14 +21,15 @@
     "packages/*"
   ],
   "scripts": {
-    "build": "npm run build:tokens && npm run build:mui-theme",
+    "build": "npm run version:patch && npm run build:tokens && npm run build:mui-theme",
     "build:tokens": "cd packages/tokens && npm run build",
     "build:mui-theme": "cd packages/mui-theme && npm run build",
     "clean": "rm -rf packages/*/dist",
     "typecheck": "tsc -b",
     "changeset": "changeset",
     "version:packages": "changeset version",
-    "release": "changeset publish"
+    "release": "changeset publish",
+    "version:patch": "npm version patch --workspace=packages/tokens --workspace=packages/mui-theme --workspace=. --include-workspace-root"
   },
   "repository": {
     "type": "git",
