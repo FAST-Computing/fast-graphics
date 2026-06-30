@@ -13,6 +13,15 @@ Tokens:
 npm install @fast-computing/fast-graphics @mui/material @emotion/react @emotion/styled
 ```
 
+> [!WARNING]
+> `fast-graphics ^1.0.0` requires `@mui/material ^9.0.0`. If upgrading from an older `fast-graphics` version, upgrade `@mui/material` simultaneously, as shown above. Additionally, some syntax incompatibilities may arise due to the MUI update.
+
+If you just need to install a specific >=1.0.0 version:
+
+```bash
+npm install @fast-computing/fast-graphics@version
+```
+
 ### 2. Provider
 
 ```tsx
@@ -26,6 +35,7 @@ import type { BrandName } from '@fast-computing/fast-graphics/tokens';
 
 type Props = { brand?: BrandName; children: React.ReactNode };
 
+/* default token/brand, don't change it here */
 export function AppThemeProvider({ brand = 'fast_core', children }: Props) {
   const theme = createThemeFromTokens(brand, { withComponentDefaults: true });
   return (
@@ -47,6 +57,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="it">
       <body>
+        {/* Token/brand selection */}
         <AppThemeProvider brand="fast_core">{children}</AppThemeProvider>
       </body>
     </html>
@@ -55,6 +66,28 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 ```
 
 ## Usage in components
+
+### `useTheme()`
+
+```tsx
+'use client';
+import { useTheme } from '@mui/material/styles';
+
+export function MyCard() {
+  const theme = useTheme();
+
+  return (
+    <div style={{ background: theme.palette.background.default, padding: 24 }}>
+      <h2 style={{ color: theme.palette.text.primary }}>
+        Hello FAST
+      </h2>
+      <p style={{ color: theme.palette.text.secondary }}>
+        Secondary text
+      </p>
+    </div>
+  );
+}
+```
 
 ### `sx` prop (idiomatic MUI)
 
@@ -79,28 +112,6 @@ export function MyCard() {
 }
 ```
 
-### `useTheme()`
-
-```tsx
-'use client';
-import { useTheme } from '@mui/material/styles';
-
-export function MyCard() {
-  const theme = useTheme();
-
-  return (
-    <div style={{ background: theme.palette.background.default, padding: 24 }}>
-      <h2 style={{ color: theme.palette.text.primary }}>
-        Hello FAST
-      </h2>
-      <p style={{ color: theme.palette.text.secondary }}>
-        Secondary text
-      </p>
-    </div>
-  );
-}
-```
-
 > `useTheme` utile quando servono i valori puri (canvas, stili inline nativi, conditional logic). Per componenti MUI basta `sx`.
 
 ---
@@ -116,12 +127,38 @@ export function MyCard() {
 
 ---
 
+## Components
+
+Ready-made branded components importable via `@fast-computing/fast-graphics/components`.
+
+### `BrandPreview`
+
+Renders a visual dashboard of the active brand's palette, typography, and sample UI. Useful for quick brand QA inside any app.
+
+```tsx
+'use client';
+import { BrandPreview } from '@fast-computing/fast-graphics/components';
+
+export function PreviewPage() {
+  return (
+    <AppThemeProvider brand="fast_core">
+      <BrandPreview />
+    </AppThemeProvider>
+  );
+}
+```
+
+Swap the `brand` prop on `AppThemeProvider` to preview each brand identity instantly.
+
+---
+
 ## Structure
 
 ```
 packages/
-  tokens/       → design tokens + CSS vars generator
+  tokens/       → design tokens
   mui-theme/    → createThemeFromTokens()
+  components/   → BrandPreview + future branded components
 ```
 
 ## Build
@@ -136,7 +173,7 @@ npm run build
 Rebuild + generate .tgz for local use:
 
 ```bash
-npm run build && cd ../tokens && npm pack && cd ../mui-theme && npm pack
+npm run build && cd packages/tokens && npm pack && cd ../mui-theme && npm pack && cd ../components && npm pack
 ```
 
 ## Versioning
@@ -153,6 +190,6 @@ git push origin v<version>
 ```
 
 Versioning notes:
-- *Core* package changes needs to be marked as **major** updates (ex. 1.1.5 -> 2.0.0) - update required in every app
-- *Low impact* changes, such as adding new tokens, needs to be marked as **minor** updates (ex. 1.1.5 -> 1.2.0)
-- *Localized, small* changes, such as fixing a token, needs to be marked as **fix** updates (ex. 1.1.5 -> 1.1.6 ) - only specific apps need to be updated
+- *Core* package changes needs to be marked as **major** updates (ex. v1.1.5 -> v2.0.0) - update required in every app
+- *Low impact* changes, such as adding new tokens, needs to be marked as **minor** updates (ex. v1.1.5 -> v1.2.0)
+- *Localized, small* changes, such as fixing a token, needs to be marked as **fix** updates (ex. v1.1.5 -> v1.1.6 ) - only specific apps need to be updated

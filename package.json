@@ -14,6 +14,10 @@
     "./mui-theme": {
       "types": "./packages/mui-theme/dist/index.d.ts",
       "default": "./packages/mui-theme/dist/index.js"
+    },
+    "./components": {
+      "types": "./packages/components/dist/index.d.ts",
+      "default": "./packages/components/dist/index.js"
     }
   },
   "description": "FAST-Computing graphics release repo (@fast/* packages)",
@@ -21,9 +25,10 @@
     "packages/*"
   ],
   "scripts": {
-    "build": "npm run build:tokens && npm run build:mui-theme",
+    "build": "npm run build:tokens && npm run build:mui-theme && npm run build:components",
     "build:tokens": "cd packages/tokens && npm run build",
     "build:mui-theme": "cd packages/mui-theme && npm run build",
+    "build:components": "cd packages/components && npm run build",
     "clean": "rm -rf packages/*/dist",
     "typecheck": "tsc -b",
     "changeset": "changeset",
