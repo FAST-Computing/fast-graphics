@@ -131,18 +131,18 @@ export function MyCard() {
 
 Ready-made branded components importable via `@fast-computing/fast-graphics/components`.
 
-### `BrandPreview`
+### `TestComponent`
 
 Renders a visual dashboard of the active brand's palette, typography, and sample UI. Useful for quick brand QA inside any app.
 
 ```tsx
 'use client';
-import { BrandPreview } from '@fast-computing/fast-graphics/components';
+import { TestComponent } from '@fast-computing/fast-graphics/packages/components';
 
 export function PreviewPage() {
   return (
     <AppThemeProvider brand="fast_core">
-      <BrandPreview />
+      <TestComponent />
     </AppThemeProvider>
   );
 }
@@ -158,7 +158,7 @@ Swap the `brand` prop on `AppThemeProvider` to preview each brand identity insta
 packages/
   tokens/       → design tokens
   mui-theme/    → createThemeFromTokens()
-  components/   → BrandPreview + future branded components
+  components/   → branded components
 ```
 
 ## Build
