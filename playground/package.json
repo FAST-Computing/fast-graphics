@@ -1,0 +1,27 @@
+{
+  "name": "@fast/playground",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.13.0",
+    "@emotion/styled": "^11.13.0",
+    "@fast/components": "file:../packages/components",
+    "@fast/mui-theme": "file:../packages/mui-theme",
+    "@fast/tokens": "file:../packages/tokens",
+    "@mui/material": "^9.1.2",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^4.4.0",
+    "typescript": "^5.7.0",
+    "vite": "^6.3.0"
+  }
+}

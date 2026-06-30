@@ -22,13 +22,15 @@
   },
   "description": "FAST-Computing graphics release repo (@fast/* packages)",
   "workspaces": [
-    "packages/*"
+    "packages/*",
+    "playground"
   ],
   "scripts": {
     "build": "npm run build:tokens && npm run build:mui-theme && npm run build:components",
     "build:tokens": "cd packages/tokens && npm run build",
     "build:mui-theme": "cd packages/mui-theme && npm run build",
     "build:components": "cd packages/components && npm run build",
+    "dev": "npm run dev -w playground",
     "clean": "rm -rf packages/*/dist",
     "typecheck": "tsc -b",
     "changeset": "changeset",
