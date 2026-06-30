@@ -129,7 +129,7 @@ export function MyCard() {
 
 ## Components
 
-Ready-made branded components importable via `@fast-computing/fast-graphics/components`.
+Ready-made branded components importable via `@fast-computing/fast-graphics/packages/components`.
 
 ### `TestComponent`
 
