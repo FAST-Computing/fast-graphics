@@ -3,7 +3,16 @@
   "compilerOptions": {
     "outDir": "dist",
     "rootDir": "src",
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "baseUrl": ".",
+    "paths": {
+      "@fast/tokens": ["../packages/tokens/src"],
+      "@fast/tokens/*": ["../packages/tokens/src/*"],
+      "@fast/mui-theme": ["../packages/mui-theme/src"],
+      "@fast/mui-theme/*": ["../packages/mui-theme/src/*"],
+      "@fast/components": ["../packages/components/src"],
+      "@fast/components/*": ["../packages/components/src/*"]
+    }
   },
   "include": ["src"]
 }
