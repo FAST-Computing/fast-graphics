@@ -21,7 +21,7 @@
     "packages/*"
   ],
   "scripts": {
-    "build": "npm run version:patch && npm run build:tokens && npm run build:mui-theme",
+    "build": "npm run build:tokens && npm run build:mui-theme",
     "build:tokens": "cd packages/tokens && npm run build",
     "build:mui-theme": "cd packages/mui-theme && npm run build",
     "clean": "rm -rf packages/*/dist",
