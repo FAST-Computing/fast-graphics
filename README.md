@@ -126,7 +126,33 @@ packages/
 
 ## Build
 
+Rebuild package:
+
 ```bash
 npm install
 npm run build
 ```
+
+Rebuild + generate .tgz for local use:
+
+```bash
+npm run build && cd ../tokens && npm pack && cd ../mui-theme && npm pack
+```
+
+## Versioning
+
+To publish a new version to GitHub Packages:
+
+1. Bump version in `package.json` (root + packages).
+2. Commit changes.
+3. Tag the commit with the version:
+
+```bash
+git tag v<version>
+git push origin v<version>
+```
+
+Versioning notes:
+- *Core* package changes needs to be marked as **major** updates (ex. 1.1.5 -> 2.0.0) - update required in every app
+- *Low impact* changes, such as adding new tokens, needs to be marked as **minor** updates (ex. 1.1.5 -> 1.2.0)
+- *Localized, small* changes, such as fixing a token, needs to be marked as **fix** updates (ex. 1.1.5 -> 1.1.6 ) - only specific apps need to be updated
