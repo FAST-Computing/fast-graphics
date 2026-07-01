@@ -2,7 +2,7 @@
 
 import { Box, Typography, Button, Paper, Stack, Chip } from '@mui/material';
 
-/** Drop this inside an MUI ThemeProvider to preview active brand tokens. */
+/** Drop this inside an MUI ThemeProvider */
 export function TestComponent() {
   return (
     <Box sx={{ p: 4, bgcolor: 'background.default', minHeight: '100vh' }}>
