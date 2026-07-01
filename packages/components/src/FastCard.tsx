@@ -1,26 +1,23 @@
 'use client';
 
-import { Box, Typography, Paper, Stack, Chip } from '@mui/material';
+import { Box, Typography, Paper } from '@mui/material';
 import { FastButton } from './FastButton.js';
 
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 
 /** Drop this inside an MUI ThemeProvider */
-export function TestComponent() {
+export function FastCard() {
   return (
     <Box sx={{ bgcolor: 'background.default', pb: 4 }}>
-      {/* Sample card */}
       <Paper sx={{ p: 3, maxWidth: 360 }}>
         <Typography variant="h6" sx={{ color: 'text.primary', mb: 0.5 }}>
           Fast Card
         </Typography>
-        <Typography variant="body2" sx={{ color: 'text.secondary', mb: 2 }}>
-          A simple card powered by current brand tokens.
+        <Typography variant="body2" sx={{ color: 'text.primary', mb: 2 }}>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam ultrices velit id leo elementum tempor. 
+          Integer fringilla luctus euismod. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
         </Typography>
-        <Stack direction="row" spacing={1} sx={{ mb: 2 }}>
-          <Chip label="Token" color="primary" size="small" />
-          <Chip label="MUI" color="secondary" size="small" />
-        </Stack>
+
         <FastButton label="Default" icon={<DarkModeIcon />} color="primary" width={300} height={40} />
       </Paper>
     </Box>

@@ -112,8 +112,6 @@ export function MyCard() {
 }
 ```
 
-> `useTheme` utile quando servono i valori puri (canvas, stili inline nativi, conditional logic). Per componenti MUI basta `sx`.
-
 ---
 
 ## API
@@ -139,24 +137,25 @@ playground/   → local testing
 
 ## Components
 
-Ready-made branded components importable via `@fast-computing/fast-graphics/packages/components`.
+Ready-made branded components are importable via `@fast/components`.
 
 ```tsx
 'use client';
-import { TestComponent } from '@fast-computing/fast-graphics/packages/components';
+import { FastButton } from '@fast/components';
+import { YourIcon } from '@mui/icons-material/';
 
 export function PreviewPage() {
   return (
-    <AppThemeProvider brand="fast_core">
-      <TestComponent />
-    </AppThemeProvider>
+    <ThemeProvider brand="fast_core">
+      <FastButton label="Test Button" color="primary" icon={<YourIcon />} width={130} height={40} />
+    </ThemeProvider>
   );
 }
 ```
 
 ### Playground
 
-New components can also be easily created, exported and tested in the playground.
+New components can be also created, exported and tested in the playground.
 
 ```bash
 npm run dev
@@ -173,7 +172,7 @@ npm install
 npm run build
 ```
 
-Rebuild + generate .tgz for local use:
+Rebuild + generate .tgz for local use in another repo:
 
 ```bash
 npm run build && cd packages/tokens && npm pack && cd ../mui-theme && npm pack && cd ../components && npm pack
