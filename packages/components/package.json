@@ -27,6 +27,7 @@
     "react": "^18.0.0 || ^19.0.0"
   },
   "dependencies": {
-    "@fast/tokens": "file:../tokens"
+    "@fast/tokens": "file:../tokens",
+    "@tanstack/react-table": "^8.21.3"
   }
 }

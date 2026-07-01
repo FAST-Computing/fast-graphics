@@ -127,6 +127,16 @@ export function MyCard() {
 
 ---
 
+## Structure
+
+```
+packages/
+  tokens/       → design tokens
+  mui-theme/    → createThemeFromTokens()
+  components/   → branded components
+playground/   → local testing
+```
+
 ## Components
 
 Ready-made branded components importable via `@fast-computing/fast-graphics/packages/components`.
@@ -144,22 +154,15 @@ export function PreviewPage() {
 }
 ```
 
----
+### Playground
 
-## Structure
-
-```
-packages/
-  tokens/       → design tokens
-  mui-theme/    → createThemeFromTokens()
-  components/   → branded components
-```
-
-## Local Testing
+New components can also be easily created, exported and tested in the playground.
 
 ```bash
 npm run dev
 ```
+
+---
 
 ## Build
 
