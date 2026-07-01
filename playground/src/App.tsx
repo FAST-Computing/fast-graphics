@@ -12,11 +12,13 @@ import {
 } from '@mui/material';
 
 import EggAltIcon from '@mui/icons-material/EggAlt';
+import CakeIcon from '@mui/icons-material/Cake';
+import IcecreamIcon from '@mui/icons-material/Icecream';
 
 import { createThemeFromTokens } from '@fast/mui-theme';
 import type { BrandName } from '@fast/tokens';
 
-import { TestComponent, FastButton, FastTable } from '@fast/components';
+import { FastCard, FastButton, FastBurger, FastTable } from '@fast/components';
 
 const BRANDS: BrandName[] = [
   'fast_core',
@@ -36,7 +38,7 @@ export default function App() {
       <Box sx={{ p: 3 }}>
         {/* Brand selector */}
         <Typography variant="h5" sx={{ mb: 1 }}>
-          @fast/components — Playground
+          @fast/components - Playground
         </Typography>
         <ToggleButtonGroup
           value={brand}
@@ -55,11 +57,24 @@ export default function App() {
         <Divider sx={{ mb: 3 }} />
 
         {/* Live components preview */}
-        <TestComponent />
-        <FastButton label="Egg" color="primary" icon={<EggAltIcon />} width={130} height={40} />
+        <FastCard />
+
+        <Box sx={{ display: 'flex', gap: 2 }}>
+          <FastButton label="Egg" color="primary" icon={<EggAltIcon />} width={130} height={40} animated/>
+          <FastButton label="Cake" color="secondary" icon={<CakeIcon />} width={130} height={40} animated/>
+          <FastButton label="Icecream" color="primary" icon={<IcecreamIcon />} width={130} height={40} />
+        </Box>
+
         <Divider sx={{ my: 3 }} />
 
-        <FastTable color="secondary" width="50%" />
+        <Box sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
+          <FastBurger color="primary" defaultChecked />
+          <FastBurger color="secondary" />
+        </Box>
+
+        <Divider sx={{ my: 3 }} />
+
+        <FastTable color="secondary" width="50%" sortable pageable />
 
       </Box>
     </ThemeProvider>

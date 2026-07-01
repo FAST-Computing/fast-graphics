@@ -63,9 +63,9 @@ export const brandTokens: Record<BrandName, BrandTokens> = {
       light: '#bda5ad',
     },
     secondary: {
-      main: '#1d524e',
-      dark: '#00302c',
-      light: '#285c57',
+      main: '#e98527',
+      dark: '#c46e1d',
+      light: '#fcad64',
     },
     background: {
       default: '#bda5ad',
