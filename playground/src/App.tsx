@@ -10,10 +10,13 @@ import {
   Typography,
   Divider,
 } from '@mui/material';
+
+import EggAltIcon from '@mui/icons-material/EggAlt';
+
 import { createThemeFromTokens } from '@fast/mui-theme';
 import type { BrandName } from '@fast/tokens';
 
-import { TestComponent } from '@fast/components';
+import { TestComponent, FastButton, FastTable } from '@fast/components';
 
 const BRANDS: BrandName[] = [
   'fast_core',
@@ -51,8 +54,13 @@ export default function App() {
 
         <Divider sx={{ mb: 3 }} />
 
-        {/* Live component preview */}
+        {/* Live components preview */}
         <TestComponent />
+        <FastButton label="Egg" color="primary" icon={<EggAltIcon />} width={130} height={40} />
+        <Divider sx={{ my: 3 }} />
+
+        <FastTable color="secondary" width="50%" />
+
       </Box>
     </ThemeProvider>
   );
