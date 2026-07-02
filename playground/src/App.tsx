@@ -1,14 +1,13 @@
 'use client';
 
 import { useState } from 'react';
-import { ThemeProvider } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
 import {
   Box,
   ToggleButton,
   ToggleButtonGroup,
-  Typography,
   Divider,
+  Button,
+  Typography,
 } from '@mui/material';
 
 import EggAltIcon from '@mui/icons-material/EggAlt';
@@ -16,10 +15,18 @@ import CakeIcon from '@mui/icons-material/Cake';
 import IcecreamIcon from '@mui/icons-material/Icecream';
 import SetMealIcon from '@mui/icons-material/SetMeal';
 
-import { createThemeFromTokens } from '@fast/mui-theme';
 import type { BrandName } from '@fast/tokens';
-
-import { FastCard, FastButton, FastBurger, FastTable } from '@fast/components';
+import {
+  FastCard,
+  FastButton,
+  FastBurger,
+  FastTable,
+  FastLoader,
+  FastThemeProvider,
+  FastTextField,
+  FastDialog,
+  FastCheckbox,
+} from '@fast/components';
 import { defaultData, defaultColumns } from './data/tableData.js';
 
 const BRANDS: BrandName[] = [
@@ -32,14 +39,13 @@ const BRANDS: BrandName[] = [
 
 export default function App() {
   const [brand, setBrand] = useState<BrandName>('fast_core');
-  const theme = createThemeFromTokens(brand, { withComponentDefaults: true });
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [textValue, setTextValue] = useState('');
 
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
+    <FastThemeProvider brand={brand}>
       <Box sx={{ p: 3 }}>
-        {/* Brand selector */}
-        <Typography variant="h5" sx={{ mb: 1 }}>
+        <Typography variant="h4" sx={{ mb: 1, fontWeight: 'bold' }}>
           @fast/components - Playground
         </Typography>
         <ToggleButtonGroup
@@ -58,72 +64,163 @@ export default function App() {
 
         <Divider sx={{ mb: 3 }} />
 
-        {/* Live components preview */}
+        {/* Components demo */}
+        <Typography variant="h4" sx={{ mb: 2, fontWeight: 'bold' }}>
+          FAST Cats
+        </Typography>
+        <Typography sx={{ mb: 2 }}>
+          Cats are the best, and these cards are the best way to show them off. You can customize the card's width, height, and content. 
+        </Typography>
 
         <Box sx={{ display: 'flex', gap: 2 }}>
-          <FastCard width={360} height={600}>
+          <FastCard width="25%" height="auto">
             <Box
               component="img"
               src="/cat1.jpg"
               alt=""
-              sx={{ width: '100%', height: 'auto', mb: 2, borderRadius: 1 }}
+              sx={{ width: '100%', height: '420px', mb: 2 }}
             />
-            <Typography variant="body2" sx={{ color: 'text.primary', mb: 2, flexGrow: 1 }}>
-              This card accepts custom children, button label, icon and button color, and also images. 
+            <Typography variant="h6" sx={{ mb: 0.5 }}>
+              Nice cat
+            </Typography>
+            <Typography variant="body2" sx={{ mb: 2, flexGrow: 1 }}>
+              This card accepts custom children, button label, icon and button color, and also images.
               That's quite a nice cat!
             </Typography>
             <Box sx={{ display: 'flex', gap: 2, alignItems: 'center', justifyContent: 'center' }}>
-              <FastButton label="Feed the cat" icon={<SetMealIcon />} color="primary" width={180} height={40} animated/>
-              <FastButton label="Pet" icon={<CakeIcon />} color="secondary" width={120} height={40} animated/>
+              <FastButton label="Feed the cat" icon={<SetMealIcon />} color="primary" width="50%" height={40} animated/>
+              <FastButton label="Pet the cat" icon={<CakeIcon />} color="secondary" width="50%" height={40} animated/>
             </Box>
           </FastCard>
-          <FastCard width={260} height={300}>
-            <Typography variant="h6" sx={{ color: 'text.primary', mb: 0.5 }}>
-              Fast Card 2
+          <FastCard width="25%" height="auto">
+            <Box
+              component="img"
+              src="/cat2.jpg"
+              alt=""
+              sx={{ width: '100%', height: '420px', objectFit: 'cover', mb: 2 }}
+            />
+            <Typography variant="h6" sx={{ mb: 0.5 }}>
+              Another nice cat
             </Typography>
-            <Typography variant="body2" sx={{ color: 'text.primary', mb: 2, flexGrow: 1 }}>
-              This card accepts custom children, button label, icon and button color. 
-              It's also definitely shorter! Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-              Nam ultrices velit id leo elementum tempor.
+            <Typography variant="body2" sx={{ mb: 2, flexGrow: 1 }}>
+              This card accepts custom children, button label, icon and button color, and also images.
+              You can't pet the cat.
             </Typography>
-            <FastButton label="Free Icecream" icon={<IcecreamIcon />} color="primary" width={210} height={40} animated/>
+            <Box sx={{ display: 'flex', gap: 2, alignItems: 'center', justifyContent: 'center' }}>
+              <FastButton label="Feed the cat" icon={<SetMealIcon />} color="primary" width="100%" height={40} animated/>
+            </Box>
           </FastCard>
-          <FastCard width={420} height={410}>
-            <Typography variant="h6" sx={{ color: 'text.primary', mb: 0.5 }}>
-              Fast Card 3
-            </Typography>
+          <FastCard width="25%" height="100%">
             <Box
               component="img"
               src="/cat4.jpg"
               alt=""
-              sx={{ width: '100%', height: 'auto', mb: 2, borderRadius: 1 }}
+              sx={{ width: '100%', height: '420px', objectFit: 'cover', mb: 2 }}
             />
-            <Typography variant="body2" sx={{ color: 'text.primary', flexGrow: 1 }}>
-              Meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow. 
-              Said the cat.
+            <Typography variant="h6" sx={{ mb: 0.5 }}>
+              Sleepy cat
             </Typography>
+            <Typography variant="body2" sx={{ mb: 2, flexGrow: 1 }}>
+              This card accepts custom children, button label, icon and button color, and also images.
+              The cat is sleeping.
+            </Typography>
+            <Box sx={{ display: 'flex', gap: 2, alignItems: 'center', justifyContent: 'center' }}>
+              <FastButton label="Don't wake up the cat" icon={<EggAltIcon />} color="primary" width="100%" height={40} />
+            </Box>
           </FastCard>
         </Box>
 
-        <Box sx={{ display: 'flex', gap: 2 }}>
-          <FastButton label="Egg" color="primary" icon={<EggAltIcon />} width={130} height={40} animated/>
-          <FastButton label="Cake" color="secondary" icon={<CakeIcon />} width={130} height={40} animated/>
-          <FastButton label="Not Animated" color="primary" icon={<IcecreamIcon />} width={200} height={40} />
-          <FastButton label="Egg" color="secondary" icon={<EggAltIcon />} width={250} height={40} animated/>
-        </Box>
+        <Divider sx={{ my: 3 }} />
+
+        <Typography variant="h5" sx={{ mb: 2, fontWeight: 'bold' }}>
+          Important cat data
+        </Typography>
+        <Typography sx={{ mb: 2 }}>
+          A very relevant study about cats in the neighborhood, with sortable and pageable table.
+        </Typography>
+
+        <FastTable data={defaultData} columns={defaultColumns} color="secondary" width="75%" sortable pageable />
 
         <Divider sx={{ my: 3 }} />
 
         <Box sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
           <FastBurger color="primary" defaultChecked />
           <FastBurger color="secondary" />
+
+          <FastLoader color="primary" size={128} />
+          <FastLoader color="secondary" size={128} />
         </Box>
 
         <Divider sx={{ my: 3 }} />
 
-        <FastTable data={defaultData} columns={defaultColumns} color="secondary" width="50%" sortable pageable />
+        <Box sx={{ display: 'flex', gap: 3, alignItems: 'center' }}>
+          <FastCheckbox color="primary" />Whiskers is the best cat.
+          <FastCheckbox color="secondary" />Also Luna is a good cat.
+        </Box>
 
+        <Box sx={{ display: 'flex', gap: 3, alignItems: 'center' }}>
+          <FastCheckbox color="primary" disabled checked />Uncheck if cats are bad.
+          <FastCheckbox color="secondary" disabled />Check if cats are bad.
+        </Box>
+
+        <Divider sx={{ my: 3 }} />
+
+        <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', alignItems: 'center' }}>
+          <FastTextField
+            label="Default"
+            value={textValue}
+            onChange={(e) => setTextValue(e.target.value)}
+            sx={{ minWidth: 200 }}
+          />
+          <FastTextField
+            label="With error"
+            error
+            helperText="This field is required"
+            sx={{ minWidth: 200 }}
+          />
+          <FastTextField
+            label="Disabled"
+            disabled
+            defaultValue="Cannot edit"
+            sx={{ minWidth: 200 }}
+          />
+          <FastTextField
+            label="Secondary color"
+            color="secondary"
+            defaultValue="Secondary focus"
+            sx={{ minWidth: 200 }}
+          />
+        </Box>
+
+        <Divider sx={{ my: 3 }} />
+
+        <FastButton label="Open Dialog" onClick={() => setDialogOpen(true)} width={180} height={40} />
+        <FastDialog
+          open={dialogOpen}
+          onClose={() => setDialogOpen(false)}
+          title="Example Dialog"
+          actions={
+            <>
+              <Button onClick={() => setDialogOpen(false)}>Cancel</Button>
+              <Button
+                variant="contained"
+                onClick={() => setDialogOpen(false)}
+              >
+                Confirm
+              </Button>
+            </>
+          }
+        >
+          <Typography variant="body1" sx={{ mt: 2 }}>
+            This is a branded dialog with a themed header bar.
+            The header background uses the brand's primary color with auto-contrasting text.
+          </Typography>
+          <FastTextField
+            label="Your name"
+            sx={{ mt: 2, minWidth: 300 }}
+          />
+        </FastDialog>
       </Box>
-    </ThemeProvider>
+    </FastThemeProvider>
   );
 }

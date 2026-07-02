@@ -28,6 +28,7 @@
   },
   "dependencies": {
     "@fast/tokens": "file:../tokens",
+    "@fast/mui-theme": "file:../mui-theme",
     "@tanstack/react-table": "^8.21.3"
   }
 }
