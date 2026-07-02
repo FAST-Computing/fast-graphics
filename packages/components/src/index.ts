@@ -1,4 +1,9 @@
 export { FastCard } from './FastCard.js';
 export { FastButton } from './FastButton.js';
 export { FastBurger } from './FastBurger.js';
+export { FastLoader } from './FastLoader.js';
 export { FastTable } from './FastTable.js';
+export { FastThemeProvider } from './FastThemeProvider.js';
+export { FastTextField } from './FastTextField.js';
+export { FastDialog } from './FastDialog.js';
+export { FastCheckbox } from './FastCheckbox.js';

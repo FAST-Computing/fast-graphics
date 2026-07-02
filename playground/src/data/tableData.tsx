@@ -1,55 +1,55 @@
 import { createColumnHelper, type ColumnDef } from '@tanstack/react-table';
 
-export type Person = {
-  firstName: string;
-  lastName: string;
-  age: number;
-  visits: number;
-  status: string;
-  progress: number;
+export type Cat = {
+  name: string;
+  breed: string;
+  age: number; // in human years
+  napHours: number; // per day
+  temperament: string;
+  zoomiesProgress: number; // percentage completed for the day
 };
 
-export const defaultData: Person[] = [
-  { firstName: 'tanner', lastName: 'linsley', age: 24, visits: 100, status: 'In Relationship', progress: 50 },
-  { firstName: 'tandy', lastName: 'miller', age: 40, visits: 40, status: 'Single', progress: 80 },
-  { firstName: 'joe', lastName: 'dirte', age: 45, visits: 20, status: 'Complicated', progress: 10 },
-  { firstName: 'alice', lastName: 'wonder', age: 28, visits: 75, status: 'Married', progress: 90 },
-  { firstName: 'bob', lastName: 'builder', age: 35, visits: 55, status: 'Single', progress: 65 },
-  { firstName: 'charlie', lastName: 'brown', age: 31, visits: 12, status: 'Single', progress: 25 },
-  { firstName: 'diana', lastName: 'prince', age: 32, visits: 150, status: 'In Relationship', progress: 95 },
-  { firstName: 'ethan', lastName: 'hunt', age: 42, visits: 85, status: 'Complicated', progress: 40 },
-  { firstName: 'fiona', lastName: 'shrek', age: 29, visits: 60, status: 'Married', progress: 70 },
-  { firstName: 'gordon', lastName: 'ramsay', age: 55, visits: 210, status: 'Married', progress: 85 },
+export const defaultData: Cat[] = [
+  { name: 'Whiskers', breed: 'Tabby', age: 3, napHours: 16, temperament: 'Affectionate', zoomiesProgress: 90 },
+  { name: 'Garfield', breed: 'Persian', age: 7, napHours: 22, temperament: 'Lazy', zoomiesProgress: 5 },
+  { name: 'Luna', breed: 'Siamese', age: 2, napHours: 14, temperament: 'Vocal', zoomiesProgress: 100 },
+  { name: 'Simba', breed: 'Maine Coon', age: 5, napHours: 15, temperament: 'Gentle Giant', zoomiesProgress: 60 },
+  { name: 'Felix', breed: 'Tuxedo', age: 4, napHours: 18, temperament: 'Mischievous', zoomiesProgress: 85 },
+  { name: 'Oliver', breed: 'British Shorthair', age: 6, napHours: 17, temperament: 'Calm', zoomiesProgress: 40 },
+  { name: 'Bella', breed: 'Ragdoll', age: 1, napHours: 19, temperament: 'Floppy & Sweet', zoomiesProgress: 75 },
+  { name: 'Loki', breed: 'Sphynx', age: 3, napHours: 13, temperament: 'Chaotic energetic', zoomiesProgress: 95 },
+  { name: 'Chloe', breed: 'Calico', age: 8, napHours: 16, temperament: 'Sassy', zoomiesProgress: 50 },
+  { name: 'Salem', breed: 'Bombay', age: 10, napHours: 20, temperament: 'Sassy Wizard', zoomiesProgress: 30 },
 ];
 
-const columnHelper = createColumnHelper<Person>();
+const columnHelper = createColumnHelper<Cat>();
 
-export const defaultColumns: ColumnDef<Person, any>[] = [
-  columnHelper.accessor('firstName', {
-    header: 'First Name',
+export const defaultColumns: ColumnDef<Cat, any>[] = [
+  columnHelper.accessor('name', {
+    header: 'Cat Name',
     cell: (info) => info.getValue(),
     footer: (info) => info.column.id,
   }),
-  columnHelper.accessor('lastName', {
-    header: 'Last Name',
+  columnHelper.accessor('breed', {
+    header: 'Breed',
     cell: (info) => <i>{info.getValue()}</i>,
     footer: (info) => info.column.id,
   }),
   columnHelper.accessor('age', {
-    header: 'Age',
+    header: 'Age (Years)',
     cell: (info) => info.renderValue(),
     footer: (info) => info.column.id,
   }),
-  columnHelper.accessor('visits', {
-    header: 'Visits',
+  columnHelper.accessor('napHours', {
+    header: 'Daily Nap Hours',
     footer: (info) => info.column.id,
   }),
-  columnHelper.accessor('status', {
-    header: 'Status',
+  columnHelper.accessor('temperament', {
+    header: 'Temperament',
     footer: (info) => info.column.id,
   }),
-  columnHelper.accessor('progress', {
-    header: 'Profile Progress',
+  columnHelper.accessor('zoomiesProgress', {
+    header: 'Zoomies Progress (%)',
     footer: (info) => info.column.id,
   }),
 ];

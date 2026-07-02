@@ -14,9 +14,22 @@ export function FastCard({
   width = 360,
   height,
 }: FastCardProps) {
+  const isPct = typeof width === 'string';
   return (
-    <Box sx={{ bgcolor: 'background.default', pb: 4 }}>
-      <Paper sx={{ p: 3, maxWidth: width, height, display: 'flex', flexDirection: 'column' }}>
+    <Box sx={{
+      bgcolor: 'background.default',
+      pb: 4,
+      width: isPct ? width : undefined,
+    }}>
+      <Paper sx={{
+        p: 2,
+        borderRadius: 0,
+        width: isPct ? '100%' : undefined,
+        maxWidth: isPct ? undefined : width,
+        height,
+        display: 'flex',
+        flexDirection: 'column',
+      }}>
         {children}
       </Paper>
     </Box>

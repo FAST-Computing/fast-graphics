@@ -19,12 +19,14 @@ export interface FastButtonProps {
   icon?: React.ReactNode;
   /** Which palette color to use. Text auto-contrasts. */
   color?: FastButtonColor;
-  /** Button width (NOTE: PERCENTAGE VALUES CURRENTLY BREAK ANIMATIONS!) */
+  /** Button width (currently low % break animation)*/
   width?: number | string;
   /** Button height */
   height?: number | string;
   /** Enable hover/active animations. Default true. */
   animated?: boolean;
+  /** Click handler */
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }
 
 /** Wallet-style button with mix-blend-mode hover effect.
@@ -42,11 +44,13 @@ export function FastButton({
     width = 130,
     height = 40,
     animated = false,
+    onClick,
 }: FastButtonProps) {
-  const size = typeof width === 'number' && typeof height === 'number' ? Math.max(width, height) : Math.max(130, 40);
+  const isPct = typeof width === 'string';
+  const heightNum = typeof height === 'number' ? height : parseInt(height) || 40;
   return (
-    <StyledWrapper $color={color} $w={width} $h={height} $size={size} $animated={animated} $isPct={typeof width === 'string'}>
-      <button className="Btn">
+    <StyledWrapper $color={color} $w={width} $h={height} $animated={animated} $isPct={isPct} $hNum={heightNum}>
+      <button className="Btn" onClick={onClick}>
         <span className="Btn-content">
           {label}
           {icon}
@@ -56,9 +60,14 @@ export function FastButton({
   );
 }
 
-const StyledWrapper = styled('div')<{ $color: FastButtonColor; $w: number | string; $h: number | string; $size: number; $animated: boolean; $isPct: boolean }>`
+const StyledWrapper = styled('div')<{ $color: FastButtonColor; $w: number | string; $h: number | string; $animated: boolean; $isPct: boolean; $hNum: number }>`
+  ${p => p.$isPct
+    ? `width: ${p.$w}; display: block;`
+    : `width: ${p.$w}px; display: inline-flex;`
+  }
+
   .Btn {
-    width: ${p => p.$isPct ? p.$w : `${p.$w}px`};
+    width: 100%;
     height: ${p => (typeof p.$h === 'string' ? p.$h : `${p.$h}px`)};
     display: flex;
     align-items: center;
@@ -85,13 +94,13 @@ const StyledWrapper = styled('div')<{ $color: FastButtonColor; $w: number | stri
   ${p => p.$animated && `
 
   .Btn::before {
-    width: ${p.$size}px;
-    height: ${p.$size}px;
+    width: max(100%, ${p.$hNum}px);
+    aspect-ratio: 1;
+    border-radius: 50%;
     position: absolute;
     z-index: 0;
     content: "";
     background-color: ${(p.theme.palette[p.$color] as PaletteColor).contrastText};
-    border-radius: 50%;
     left: -100%;
     top: 0;
     transition-duration: .5s;
@@ -104,7 +113,7 @@ const StyledWrapper = styled('div')<{ $color: FastButtonColor; $w: number | stri
 
   .Btn:hover::before {
     transition-duration: .3s;
-    transform: translate(100%,-50%);
+    transform: translate(100%, -50%);
     border-radius: 0;
   }
 
