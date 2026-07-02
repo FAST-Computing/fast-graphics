@@ -19,10 +19,10 @@ export interface FastButtonProps {
   icon?: React.ReactNode;
   /** Which palette color to use. Text auto-contrasts. */
   color?: FastButtonColor;
-  /** Button width */
-  width?: number;
+  /** Button width (NOTE: PERCENTAGE VALUES CURRENTLY BREAK ANIMATIONS!) */
+  width?: number | string;
   /** Button height */
-  height?: number;
+  height?: number | string;
   /** Enable hover/active animations. Default true. */
   animated?: boolean;
 }
@@ -31,8 +31,8 @@ export interface FastButtonProps {
  *  Text color auto-contrasts against the background, just like MUI Button.
  *
  *  ```tsx
- *  import { EggAltIcon } from '@mui/icons-material';
- *  <FastButton color="primary" icon={<EggAltIcon />} />
+ *  import { Icon } from '@mui/icons-material';
+ *  <FastButton color="primary" icon={<Icon />} />
  *  ```
  */
 export function FastButton({ 
@@ -43,9 +43,9 @@ export function FastButton({
     height = 40,
     animated = false,
 }: FastButtonProps) {
-  const size = Math.max(width, height);
+  const size = typeof width === 'number' && typeof height === 'number' ? Math.max(width, height) : Math.max(130, 40);
   return (
-    <StyledWrapper $color={color} $w={width} $h={height} $size={size} $animated={animated}>
+    <StyledWrapper $color={color} $w={width} $h={height} $size={size} $animated={animated} $isPct={typeof width === 'string'}>
       <button className="Btn">
         <span className="Btn-content">
           {label}
@@ -56,10 +56,10 @@ export function FastButton({
   );
 }
 
-const StyledWrapper = styled('div')<{ $color: FastButtonColor; $w: number; $h: number; $size: number; $animated: boolean }>`
+const StyledWrapper = styled('div')<{ $color: FastButtonColor; $w: number | string; $h: number | string; $size: number; $animated: boolean; $isPct: boolean }>`
   .Btn {
-    width: ${p => p.$w}px;
-    height: ${p => p.$h}px;
+    width: ${p => p.$isPct ? p.$w : `${p.$w}px`};
+    height: ${p => (typeof p.$h === 'string' ? p.$h : `${p.$h}px`)};
     display: flex;
     align-items: center;
     justify-content: center;
