@@ -65,7 +65,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 }
 ```
 
-## Usage in components
+## Usage
 
 ### `useTheme()`
 
@@ -132,7 +132,7 @@ packages/
   tokens/       → design tokens
   mui-theme/    → createThemeFromTokens()
   components/   → branded components
-playground/   → local testing
+playground/     → local testing
 ```
 
 ## Components

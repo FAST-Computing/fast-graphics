@@ -11,20 +11,27 @@ declare module '@emotion/react' {
 }
 
 export type FastButtonColor = 'primary' | 'secondary';
+export type FastButtonVariant = 'default' | 'outlined' | 'text';
 
 export interface FastButtonProps {
   /** Button text */
   label?: string;
   /** MUI icon node, e.g. <Payment /> */
   icon?: React.ReactNode;
-  /** Which palette color to use. Text auto-contrasts. */
+  /** Which palette color to use. */
   color?: FastButtonColor;
-  /** Button width (currently low % break animation)*/
+  /** Visual variant */
+  variant?: FastButtonVariant;
+  /** Button width */
   width?: number | string;
   /** Button height */
   height?: number | string;
+  /** Text font size. Number = px, string = raw CSS. */
+  fontSize?: number | string;
   /** Enable hover/active animations. Default true. */
   animated?: boolean;
+  /** Disable button */
+  disabled?: boolean;
   /** Click handler */
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }
@@ -38,19 +45,22 @@ export interface FastButtonProps {
  *  ```
  */
 export function FastButton({ 
-    label = 'Default', 
+    label = '', 
     icon, 
     color = 'primary',
+    variant = 'default',
     width = 130,
     height = 40,
+    fontSize,
     animated = false,
+    disabled = false,
     onClick,
 }: FastButtonProps) {
   const isPct = typeof width === 'string';
   const heightNum = typeof height === 'number' ? height : parseInt(height) || 40;
   return (
-    <StyledWrapper $color={color} $w={width} $h={height} $animated={animated} $isPct={isPct} $hNum={heightNum}>
-      <button className="Btn" onClick={onClick}>
+    <StyledWrapper $color={color} $variant={variant} $w={width} $h={height} $animated={animated} $isPct={isPct} $hNum={heightNum} $fs={fontSize}>
+      <button className="Btn" onClick={onClick} disabled={disabled}>
         <span className="Btn-content">
           {label}
           {icon}
@@ -60,7 +70,21 @@ export function FastButton({
   );
 }
 
-const StyledWrapper = styled('div')<{ $color: FastButtonColor; $w: number | string; $h: number | string; $animated: boolean; $isPct: boolean; $hNum: number }>`
+type StyledProps = {
+  $color: FastButtonColor;
+  $variant: FastButtonVariant;
+  $w: number | string;
+  $h: number | string;
+  $animated: boolean;
+  $isPct: boolean;
+  $hNum: number;
+  $fs?: number | string;
+};
+
+const pc = (p: StyledProps & { theme: MuiTheme }) =>
+  p.theme.palette[p.$color] as PaletteColor;
+
+const StyledWrapper = styled('div')<StyledProps>`
   ${p => p.$isPct
     ? `width: ${p.$w}; display: block;`
     : `width: ${p.$w}px; display: inline-flex;`
@@ -72,12 +96,14 @@ const StyledWrapper = styled('div')<{ $color: FastButtonColor; $w: number | stri
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: ${p => (p.theme.palette[p.$color] as PaletteColor).main};
-    border: none;
+    background-color: ${p => (p.$variant === 'default' ? pc(p).main : 'transparent')};
+    border: ${p => (p.$variant === 'outlined' ? `2px solid ${pc(p).main}` : 'none')};
     cursor: pointer;
-    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.103);
+    box-shadow: ${p => (p.$variant === 'default' ? '5px 5px 10px rgba(0, 0, 0, 0.103)' : 'none')};
     position: relative;
     overflow: hidden;
+    font-family: inherit;
+    line-height: inherit;
   }
 
   .Btn-content {
@@ -87,34 +113,41 @@ const StyledWrapper = styled('div')<{ $color: FastButtonColor; $w: number | stri
     align-items: center;
     justify-content: center;
     gap: 8px;
-    color: ${p => (p.theme.palette[p.$color] as PaletteColor).contrastText};
+    color: ${p => (p.$variant === 'default' ? pc(p).contrastText : pc(p).main)};
     font-weight: 600;
+    font-size: ${p => (p.$fs !== undefined ? (typeof p.$fs === 'number' ? `${p.$fs}px` : p.$fs) : 'inherit')};
+    transition: color 0.25s ease;
   }
 
   ${p => p.$animated && `
 
   .Btn::before {
-    width: max(100%, ${p.$hNum}px);
-    aspect-ratio: 1;
-    border-radius: 50%;
     position: absolute;
+    inset: 0;
     z-index: 0;
     content: "";
-    background-color: ${(p.theme.palette[p.$color] as PaletteColor).contrastText};
-    left: -100%;
-    top: 0;
-    transition-duration: .5s;
+    background-color: ${p.$variant === 'default' ? pc(p).contrastText : pc(p).main};
+    clip-path: circle(0% at 0% 100%);
+    transition: clip-path 0.45s ease;
   }
 
   `}
+  
+  ${p => `
   .Btn:hover .Btn-content {
-    filter: invert(1);
+    ${p.$variant === 'default' ? 'filter: invert(1);' : `color: ${pc(p).contrastText};`}
   }
 
   .Btn:hover::before {
-    transition-duration: .3s;
-    transform: translate(100%, -50%);
-    border-radius: 0;
+    clip-path: circle(150% at 0% 100%);
+    transition-duration: 0.5s;
+  }
+  `}
+
+  .Btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    pointer-events: none;
   }
 
   .Btn:active {

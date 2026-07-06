@@ -9,14 +9,14 @@ declare module '@emotion/react' {
   export interface Theme extends MuiTheme {}
 }
 
-export type FastCheckboxColor = 'primary' | 'secondary';
+export type FastRadioColor = 'primary' | 'secondary';
 
-export interface FastCheckboxProps {
+export interface FastRadioProps {
   /** Which palette color to use when checked. */
-  color?: FastCheckboxColor;
-  /** Checkbox size in px. Default 28. */
+  color?: FastRadioColor;
+  /** Radio size in px. Default 28. */
   size?: number;
-  /** Label text shown next to the checkbox. */
+  /** Label text shown next to the radio. */
   label?: string;
   /** Controlled checked state */
   checked?: boolean;
@@ -26,9 +26,13 @@ export interface FastCheckboxProps {
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   /** Disabled state */
   disabled?: boolean;
+  /** Group name */
+  name?: string;
+  /** Radio value */
+  value?: string;
 }
 
-export function FastCheckbox({
+export function FastRadio({
   color = 'primary',
   size = 28,
   label,
@@ -36,49 +40,53 @@ export function FastCheckbox({
   defaultChecked,
   onChange,
   disabled,
-}: FastCheckboxProps) {
+  name,
+  value,
+}: FastRadioProps) {
   return (
     <StyledWrapper $color={color} $size={size} $disabled={!!disabled}>
-      <label className="checkbox-label">
+      <label className="radio-label">
         <input
-          type="checkbox"
+          type="radio"
           checked={checked}
           defaultChecked={defaultChecked}
           onChange={onChange}
           disabled={disabled}
+          name={name}
+          value={value}
         />
-        <svg viewBox="0 0 32 32" className="checkbox-svg">
+        <svg viewBox="0 0 32 32" className="radio-svg">
           <rect className="box" x="3" y="3" width="26" height="26" />
-          <path className="check" d="M10 17l5 5 8-8" />
+          <rect className="dot" x="9" y="9" width="14" height="14" />
         </svg>
-        {label && <span className="checkbox-text">{label}</span>}
+        {label && <span className="radio-text">{label}</span>}
       </label>
     </StyledWrapper>
   );
 }
 
-const StyledWrapper = styled('div')<{ $color: FastCheckboxColor; $size: number; $disabled: boolean }>`
+const StyledWrapper = styled('div')<{ $color: FastRadioColor; $size: number; $disabled: boolean }>`
   display: inline-flex;
   opacity: ${p => p.$disabled ? 0.35 : 1};
 
-  .checkbox-label {
+  .radio-label {
     cursor: ${p => p.$disabled ? 'default' : 'pointer'};
     display: inline-flex;
     align-items: center;
     gap: 6px;
   }
 
-  .checkbox-label input {
+  .radio-label input {
     display: none;
   }
 
-  .checkbox-text {
+  .radio-text {
     font-weight: 500;
     font-size: 0.875rem;
     color: ${p => (p.theme.palette.text.primary)};
   }
 
-  .checkbox-svg {
+  .radio-svg {
     width: ${p => p.$size}px;
     height: ${p => p.$size}px;
     display: block;
@@ -92,30 +100,25 @@ const StyledWrapper = styled('div')<{ $color: FastCheckboxColor; $size: number; 
     transition: fill 0.2s ease;
   }
 
-  .check {
-    fill: none;
-    stroke: ${p => (p.theme.palette[p.$color] as PaletteColor).contrastText};
-    stroke-width: 3;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    stroke-dasharray: 20;
-    stroke-dashoffset: 20;
-    transition: stroke-dashoffset 0.25s ease;
+  .dot {
+    fill: ${p => (p.theme.palette[p.$color] as PaletteColor).contrastText};
+    opacity: 0;
+    transition: opacity 0.2s ease;
   }
 
   input:checked + svg .box {
     fill: ${p => (p.theme.palette[p.$color] as PaletteColor).main};
   }
 
-  input:checked + svg .check {
-    stroke-dashoffset: 0;
+  input:checked + svg .dot {
+    opacity: 1;
   }
 
-  .checkbox-label:active .checkbox-svg {
+  .radio-label:active .radio-svg {
     transform: translateY(2px);
   }
 
-  .checkbox-label .checkbox-svg {
+  .radio-label .radio-svg {
     transition: transform 0.05s ease;
   }
 `;
