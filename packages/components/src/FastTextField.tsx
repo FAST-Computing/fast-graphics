@@ -14,20 +14,34 @@ export type FastTextFieldColor = 'primary' | 'secondary';
 
 export interface FastTextFieldProps extends Omit<TextFieldProps, 'color'> {
   color?: FastTextFieldColor;
+  width?: number | string;
+  height?: number | string;
 }
 
 export function FastTextField({
   color = 'primary',
+  width,
+  height,
   ...rest
 }: FastTextFieldProps) {
-  return <StyledTextField $accent={color} {...rest} />;
+  return <StyledTextField $accent={color} $w={width} $h={height} $isPct={typeof width === 'string'} {...rest} />;
 }
 
 const StyledTextField = styled(TextField, {
-  shouldForwardProp: (prop) => prop !== '$accent',
-})<{ $accent: FastTextFieldColor }>`
+  shouldForwardProp: (prop) => prop !== '$accent' && prop !== '$w' && prop !== '$h' && prop !== '$isPct',
+})<{ $accent: FastTextFieldColor; $w?: number | string; $h?: number | string; $isPct: boolean }>`
+  ${p => p.$w !== undefined
+    ? `width: ${p.$isPct ? p.$w : `${p.$w}px`};`
+    : ''
+  }
+
   & .MuiOutlinedInput-root {
     border-radius: 0px;
+    ${p => p.$h !== undefined
+      ? `height: ${typeof p.$h === 'number' ? `${p.$h}px` : p.$h};`
+      : ''
+    }
+
     &.Mui-focused .MuiOutlinedInput-notchedOutline {
       border-color: ${(p) => (p.theme.palette[p.$accent] as PaletteColor).main};
       border-width: 2px;

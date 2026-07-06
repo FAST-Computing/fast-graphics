@@ -4,6 +4,7 @@ import styled from '@emotion/styled';
 import type { Theme as MuiTheme, PaletteColor } from '@mui/material/styles';
 
 import { useState } from 'react';
+import type React from 'react';
 
 import {
   flexRender,
@@ -47,6 +48,10 @@ export interface FastTableProps<T extends RowData> {
   pageable?: boolean;
   /** Default page size (used when pageable) */
   defaultPageSize?: number;
+  /** Optional function that renders action buttons per row. */
+  renderActions?: (row: T) => React.ReactNode;
+  /** Header text for the actions column. Default "Actions". */
+  actionsHeader?: string;
 }
 
 
@@ -61,6 +66,8 @@ export function FastTable<T extends RowData>({
   sortable = false,
   pageable = false,
   defaultPageSize = 5,
+  renderActions,
+  actionsHeader = 'Actions',
 }: FastTableProps<T>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [pagination, setPagination] = useState<PaginationState>({
@@ -82,64 +89,6 @@ export function FastTable<T extends RowData>({
 
   return (
     <StyledWrapper $color={color} $w={width} $hoverable={hoverable} $striped={striped} $sortable={sortable}>
-      <table>
-        <thead>
-          {table.getHeaderGroups().map((headerGroup) => (
-            <tr key={headerGroup.id}>
-              {headerGroup.headers.map((header) => (
-                <th
-                  key={header.id}
-                  onClick={header.column.getToggleSortingHandler()}
-                >
-                  {header.isPlaceholder
-                    ? null
-                    : flexRender(
-                        header.column.columnDef.header,
-                        header.getContext(),
-                      )}
-                  {sortable && (
-                    <SortIndicator>
-                      {{
-                        asc: ' ▲',
-                        desc: ' ▼',
-                      }[header.column.getIsSorted() as string] ?? ''}
-                    </SortIndicator>
-                  )}
-                </th>
-              ))}
-            </tr>
-          ))}
-        </thead>
-        <tbody>
-          {table.getRowModel().rows.map((row) => (
-            <tr key={row.id}>
-              {row.getVisibleCells().map((cell) => (
-                <td key={cell.id}>
-                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                </td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-        {showFooter && (
-          <tfoot>
-            {table.getFooterGroups().map((footerGroup) => (
-              <tr key={footerGroup.id}>
-                {footerGroup.headers.map((header) => (
-                  <th key={header.id}>
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
-                          header.column.columnDef.footer,
-                          header.getContext(),
-                        )}
-                  </th>
-                ))}
-              </tr>
-            ))}
-          </tfoot>
-        )}
-      </table>
       {pageable && (
         <PaginationBar>
           <PageSizeGroup>
@@ -199,6 +148,70 @@ export function FastTable<T extends RowData>({
           </NavGroup>
         </PaginationBar>
       )}
+      <table>
+        <thead>
+          {table.getHeaderGroups().map((headerGroup) => (
+            <tr key={headerGroup.id}>
+              {headerGroup.headers.map((header) => (
+                <th
+                  key={header.id}
+                  onClick={header.column.getToggleSortingHandler()}
+                >
+                  {header.isPlaceholder
+                    ? null
+                    : flexRender(
+                        header.column.columnDef.header,
+                        header.getContext(),
+                      )}
+                  {sortable && (
+                    <SortIndicator>
+                      {{
+                        asc: ' ▲',
+                        desc: ' ▼',
+                      }[header.column.getIsSorted() as string] ?? ''}
+                    </SortIndicator>
+                  )}
+                </th>
+              ))}
+              {renderActions && <th className="actions-header">{actionsHeader}</th>}
+            </tr>
+          ))}
+        </thead>
+        <tbody>
+          {table.getRowModel().rows.map((row) => (
+            <tr key={row.id}>
+              {row.getVisibleCells().map((cell) => (
+                <td key={cell.id}>
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                </td>
+              ))}
+              {renderActions && (
+                <td className="actions-cell">
+                  {renderActions(row.original)}
+                </td>
+              )}
+            </tr>
+          ))}
+        </tbody>
+        {showFooter && (
+          <tfoot>
+            {table.getFooterGroups().map((footerGroup) => (
+              <tr key={footerGroup.id}>
+                {footerGroup.headers.map((header) => (
+                  <th key={header.id}>
+                    {header.isPlaceholder
+                      ? null
+                      : flexRender(
+                          header.column.columnDef.footer,
+                          header.getContext(),
+                        )}
+                  </th>
+                ))}
+              </tr>
+            ))}
+          </tfoot>
+        )}
+      </table>
     </StyledWrapper>
   );
 }
@@ -240,6 +253,15 @@ const StyledWrapper = styled('div')<{
     font-size: 0.875rem;
     color: ${(p) => p.theme.palette.text.primary};
     border-bottom: 1px solid ${(p) => p.theme.palette.divider};
+  }
+
+  .actions-header {
+    text-align: center;
+  }
+
+  .actions-cell {
+    text-align: center;
+    white-space: nowrap;
   }
 
   tbody tr {
@@ -309,7 +331,6 @@ const PageSizeLabel = styled('span')`
 const PageSizeSelect = styled('select')`
   padding: 4px 8px;
   border: 1px solid ${(p) => p.theme.palette.divider};
-  border-radius: 4px;
   font-size: 0.8125rem;
   background: ${(p) => p.theme.palette.background.paper};
   color: ${(p) => p.theme.palette.text.primary};
@@ -325,7 +346,6 @@ const NavGroup = styled('div')`
 const NavButton = styled('button')`
   padding: 4px 10px;
   border: 1px solid ${(p) => p.theme.palette.divider};
-  border-radius: 4px;
   background: ${(p) => p.theme.palette.background.paper};
   color: ${(p) => p.theme.palette.text.primary};
   font-size: 0.8125rem;
@@ -354,7 +374,6 @@ const PageInput = styled('input')`
   width: 48px;
   padding: 4px 6px;
   border: 1px solid ${(p) => p.theme.palette.divider};
-  border-radius: 4px;
   font-size: 0.8125rem;
   text-align: center;
   background: ${(p) => p.theme.palette.background.paper};

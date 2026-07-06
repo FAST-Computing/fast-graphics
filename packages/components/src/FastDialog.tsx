@@ -12,6 +12,8 @@ import {
 } from '@mui/material';
 import type { DialogProps } from '@mui/material';
 
+import CloseIcon from '@mui/icons-material/Close';
+
 declare module '@emotion/react' {
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
   export interface Theme extends MuiTheme {}
@@ -40,7 +42,7 @@ export function FastDialog({
     <StyledDialog open={open} onClose={onClose} maxWidth={maxWidth} {...rest} $accent={color}>
       {title && (
         <StyledHeader $accent={color}>
-          <DialogTitle sx={{ color: 'inherit', fontWeight: 600, px: 3, py: 2 }}>
+          <DialogTitle sx={{ color: 'inherit', fontSize: '1rem', fontWeight: 600, px: 3, py: 1 }}>
             {title}
           </DialogTitle>
           <IconButton
@@ -48,9 +50,7 @@ export function FastDialog({
             onClick={onClose}
             sx={{ color: 'inherit', mr: 1 }}
           >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M18 6 6 18M6 6l12 12" />
-            </svg>
+            <CloseIcon />
           </IconButton>
         </StyledHeader>
       )}
