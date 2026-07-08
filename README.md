@@ -6,7 +6,7 @@ Design tokens + MUI theme factory + branded React components for FAST-Computing 
 packages/
   tokens/       → design tokens (brand colors, fonts)
   mui-theme/    → createThemeFromTokens()
-  components/   → 12 branded components
+  components/   → branded components
   playground/   → local testing via Vite
 ```
 
@@ -61,22 +61,7 @@ import { FastButton } from '@fast/components';
 
 ## Components
 
-All 12 components live in `@fast/components`. See [COMPONENTS.md](./COMPONENTS.md) for full API.
-
-| Component | Description |
-|-----------|-------------|
-| `FastThemeProvider` | Theme + CssBaseline from a brand name |
-| `FastButton` | Wallet-style button, 3 variants, animated hover |
-| `FastCard` | Simple Paper card wrapper |
-| `FastCardFA` | Full-image card with gradient fade overlay |
-| `FastTextField` | Branded text input (MUI TextField wrapper) |
-| `FastDialog` | Modal dialog with branded header |
-| `FastCheckbox` | Squared checkbox with animated checkmark |
-| `FastRadio` | Squared radio button (inline dot) |
-| `FastRadioBox` | Tile-style radio selector (icon + label) |
-| `FastBurger` | Animated hamburger menu icon |
-| `FastLoader` | Pulsing chevron loading indicator |
-| `FastTable` | Data table with sort, pagination, actions |
+All 14 components live in `@fast/components`. See [COMPONENTS.md](./COMPONENTS.md) for full API.
 
 
 ## Development

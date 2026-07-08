@@ -352,6 +352,74 @@ type FastRadioColor = 'primary' | 'secondary';
 
 ---
 
+## FastToggle
+
+Toggle switch with squared thumb and overshoot bounce animation.
+
+```tsx
+import { FastToggle } from '@fast/components';
+```
+
+### Types
+
+```tsx
+type FastToggleColor = 'primary' | 'secondary';
+```
+
+### Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `color` | `FastToggleColor` | `'primary'` | Checked accent color |
+| `label` | `string` | – | Label text next to toggle |
+| `checked` | `boolean` | – | Controlled checked state |
+| `defaultChecked` | `boolean` | – | Uncontrolled initial state |
+| `onChange` | `(e) => void` | – | Change handler |
+| `disabled` | `boolean` | – | Disabled state |
+
+### Example
+
+```tsx
+<FastToggle color="primary" label="Enable" defaultChecked />
+```
+
+---
+
+## FastSlider
+
+Custom MUI Slider with squared thumb, brand-colored track, and optional label.
+
+```tsx
+import { FastSlider } from '@fast/components';
+```
+
+### Types
+
+```tsx
+type FastSliderColor = 'primary' | 'secondary';
+```
+
+### Props
+
+Extends MUI `SliderProps`.
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `color` | `FastSliderColor` | `'primary'` | Track / thumb accent color |
+| `width` | `number \| string` | – | Slider width |
+| `height` | `number \| string` | `6` | Track height |
+| `label` | `string` | – | Label text above slider |
+
+All MUI `Slider` props pass through (`value`, `onChange`, `min`, `max`, `step`, `marks`, `valueLabelDisplay`, `orientation`, `disabled`, etc.).
+
+### Example
+
+```tsx
+<FastSlider label="Volume" color="primary" width="50%" defaultValue={50} marks valueLabelDisplay="auto" />
+```
+
+---
+
 ## FastBurger
 
 Animated hamburger menu icon. Uses SVG paths that morph on toggle via CSS transitions.
@@ -380,6 +448,42 @@ type FastBurgerColor = 'primary' | 'secondary';
 
 ```tsx
 <FastBurger color="primary" defaultChecked />
+```
+
+---
+
+## FastDropdown
+
+Dropdown menu toggled by a `FastBurger`. Menu appears below and to the right of the burger. Closes on outside click.
+
+```tsx
+import { FastDropdown } from '@fast/components';
+```
+
+### Types
+
+```tsx
+type FastDropdownColor = 'primary' | 'secondary';
+```
+
+### Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `color` | `FastDropdownColor` | `'primary'` | Burger stroke color |
+| `open` | `boolean` | – | Controlled open state |
+| `defaultOpen` | `boolean` | `false` | Uncontrolled initial state |
+| `onOpenChange` | `(open: boolean) => void` | – | Open state change handler |
+| `children` | `ReactNode` | – | Menu items (buttons, links, etc.) |
+
+### Example
+
+```tsx
+<FastDropdown color="primary">
+  <button type="button" onClick={() => alert('Edit')}>Edit profile</button>
+  <button type="button" onClick={() => alert('Settings')}>Settings</button>
+  <button type="button" onClick={() => alert('Logout')}>Logout</button>
+</FastDropdown>
 ```
 
 ---
@@ -460,24 +564,3 @@ type FastTableColor = 'primary' | 'secondary';
 />
 ```
 
----
-
-## Design tokens reference
-
-The underlying `fast_core` brand values used across all components:
-
-| Token | Value |
-|-------|-------|
-| Primary `main` | `#FF6A00` |
-| Primary `dark` | `#d64800` |
-| Primary `light` | `#ff8055` |
-| Secondary `main` | `#006b5e` |
-| Secondary `dark` | `#005246` |
-| Secondary `light` | `#54aa9b` |
-| Background `default` | `#dfe0df` |
-| Background `paper` | `#ffffff` |
-| Text `primary` | `#0f0f0f` |
-| Text `secondary` | `#5a5a5a` |
-| Font | `"Google Sans", -apple-system, …` |
-| Shadow | `5px 5px 10px rgba(0,0,0,0.103)` |
-| Corners | `border-radius: 0` (squared) |

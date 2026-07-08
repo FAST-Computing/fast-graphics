@@ -10,3 +10,6 @@ export { FastDialog } from './FastDialog.js';
 export { FastCheckbox } from './FastCheckbox.js';
 export { FastRadio } from './FastRadio.js';
 export { FastRadioBox } from './FastRadioBox.js';
+export { FastSlider } from './FastSlider.js';
+export { FastToggle } from './FastToggle.js';
+export { FastDropdown } from './FastDropdown.js';
