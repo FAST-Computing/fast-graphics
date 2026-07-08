@@ -317,7 +317,6 @@ export default function App() {
 
         <Divider sx={{ my: 3 }} />
 
-        
       </Box>
     </FastThemeProvider>
   );

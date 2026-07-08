@@ -1,197 +1,103 @@
-# @fast-computing/fast-graphics
+# @fast/graphics
 
-Tokens: 
-- FAST Computing: **fast_core**, **fast_argos**, **fast_atlas**
-- Simplifica: **simplifica_core**, **simplifica_burlo**
+Design tokens + MUI theme factory + branded React components for FAST-Computing and Simplifica.
+
+```
+packages/
+  tokens/       → design tokens (brand colors, fonts)
+  mui-theme/    → createThemeFromTokens()
+  components/   → 12 branded components
+  playground/   → local testing via Vite
+```
 
 
 ## Quick Start
 
-### 1. Install
+### Install
 
 ```bash
-npm install @fast-computing/fast-graphics @mui/material @emotion/react @emotion/styled
+npm install @fast/tokens @fast/mui-theme @fast/components \
+  @mui/material @emotion/react @emotion/styled
 ```
 
-> [!WARNING]
-> `fast-graphics ^1.0.0` requires `@mui/material ^9.0.0`. If upgrading from an older `fast-graphics` version, upgrade `@mui/material` simultaneously, as shown above. Additionally, some syntax incompatibilities may arise due to the MUI update.
-
-If you just need to install a specific >=1.0.0 version:
-
-```bash
-npm install @fast-computing/fast-graphics@version
-```
-
-### 2. Provider
-
-```tsx
-// components/ThemeProvider.tsx
-'use client';
-
-import { ThemeProvider } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
-import { createThemeFromTokens } from '@fast-computing/fast-graphics/mui-theme';
-import type { BrandName } from '@fast-computing/fast-graphics/tokens';
-
-type Props = { brand?: BrandName; children: React.ReactNode };
-
-/* default token/brand, don't change it here */
-export function AppThemeProvider({ brand = 'fast_core', children }: Props) {
-  const theme = createThemeFromTokens(brand, { withComponentDefaults: true });
-  return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      {children}
-    </ThemeProvider>
-  );
-}
-```
-
-### 3. `layout.tsx`
+### Provider
 
 ```tsx
 // app/layout.tsx
-import { AppThemeProvider } from '@/components/ThemeProvider';
+import { FastThemeProvider } from '@fast/components';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="it">
+    <html lang="en">
       <body>
-        {/* Token/brand selection */}
-        <AppThemeProvider brand="fast_core">{children}</AppThemeProvider>
+        <FastThemeProvider brand="fast_core">
+          {children}
+        </FastThemeProvider>
       </body>
     </html>
   );
 }
 ```
 
-## Usage
-
-### `useTheme()`
-
-```tsx
-'use client';
-import { useTheme } from '@mui/material/styles';
-
-export function MyCard() {
-  const theme = useTheme();
-
-  return (
-    <div style={{ background: theme.palette.background.default, padding: 24 }}>
-      <h2 style={{ color: theme.palette.text.primary }}>
-        Hello FAST
-      </h2>
-      <p style={{ color: theme.palette.text.secondary }}>
-        Secondary text
-      </p>
-    </div>
-  );
-}
-```
-
-### `sx` prop (idiomatic MUI)
-
-```tsx
-'use client';
-import { Box, Typography, Button } from '@mui/material';
-
-export function MyCard() {
-  return (
-    <Box sx={{ bgcolor: 'background.default', p: 3, borderRadius: 2 }}>
-      <Typography variant="h6" sx={{ color: 'text.primary' }}>
-        Hello FAST
-      </Typography>
-      <Typography variant="body2" sx={{ color: 'text.secondary', mb: 2 }}>
-        Secondary text
-      </Typography>
-      <Button variant="contained" color="primary">
-        Click
-      </Button>
-    </Box>
-  );
-}
-```
-
----
-
-## API
-
-### `createThemeFromTokens(brand, options?)`
-
-| Param | Type | Default | Description |
-|-------|------|---------|-------------|
-| `brand` | `'fast_core' \| 'fast_argos' \| 'fast_atlas' \| 'simplifica_core' \| 'simplifica_burlo'` | — | Token name |
-| `options.withComponentDefaults` | `boolean` | `false` | Adds default MUI (AppBar color primary, Button variant contained) |
-
----
-
-## Structure
-
-```
-packages/
-  tokens/       → design tokens
-  mui-theme/    → createThemeFromTokens()
-  components/   → branded components
-playground/     → local testing
-```
-
-## Components
-
-Ready-made branded components are importable via `@fast/components`.
+### Use a component
 
 ```tsx
 'use client';
 import { FastButton } from '@fast/components';
-import { YourIcon } from '@mui/icons-material/';
 
-export function PreviewPage() {
-  return (
-    <ThemeProvider brand="fast_core">
-      <FastButton label="Test Button" color="primary" icon={<YourIcon />} width={130} height={40} />
-    </ThemeProvider>
-  );
-}
+<FastButton label="Click me" color="primary" width={180} height={40} animated />
 ```
 
-### Playground
 
-New components can be also created, exported and tested in the playground.
+## Brands
+
+| Brand | Name |
+|-------|------|
+| FAST Computing Core | `fast_core` |
+| FAST Computing Argos | `fast_argos` |
+| FAST Computing Atlas | `fast_atlas` |
+| Simplifica Core | `simplifica_core` |
+| Simplifica Burlo | `simplifica_burlo` |
+
+## Components
+
+All 12 components live in `@fast/components`. See [COMPONENTS.md](./COMPONENTS.md) for full API.
+
+| Component | Description |
+|-----------|-------------|
+| `FastThemeProvider` | Theme + CssBaseline from a brand name |
+| `FastButton` | Wallet-style button, 3 variants, animated hover |
+| `FastCard` | Simple Paper card wrapper |
+| `FastCardFA` | Full-image card with gradient fade overlay |
+| `FastTextField` | Branded text input (MUI TextField wrapper) |
+| `FastDialog` | Modal dialog with branded header |
+| `FastCheckbox` | Squared checkbox with animated checkmark |
+| `FastRadio` | Squared radio button (inline dot) |
+| `FastRadioBox` | Tile-style radio selector (icon + label) |
+| `FastBurger` | Animated hamburger menu icon |
+| `FastLoader` | Pulsing chevron loading indicator |
+| `FastTable` | Data table with sort, pagination, actions |
+
+
+## Development
 
 ```bash
+# dev server (Vite playground)
 npm run dev
-```
 
----
-
-## Build
-
-Rebuild package:
-
-```bash
-npm install
+# build all packages
 npm run build
-```
-
-Rebuild + generate .tgz for local use in another repo:
-
-```bash
-npm run build && cd packages/tokens && npm pack && cd ../mui-theme && npm pack && cd ../components && npm pack
 ```
 
 ## Versioning
 
-To publish a new version to GitHub Packages:
+- **Major** — core package changes (affects all apps)
+- **Minor** — new tokens or components
+- **Fix** — localized fixes
 
-1. Bump version in `package.json` (root + packages).
-2. Commit changes.
-3. Tag the commit with the version:
+Tag commits and push to trigger GitHub Packages publish:
 
 ```bash
 git tag v<version>
 git push origin v<version>
 ```
-
-Versioning notes:
-- *Core* package changes needs to be marked as **major** updates (ex. v1.1.5 -> v2.0.0) - update required in every app
-- *Low impact* changes, such as adding new tokens, needs to be marked as **minor** updates (ex. v1.1.5 -> v1.2.0)
-- *Localized, small* changes, such as fixing a token, needs to be marked as **fix** updates (ex. v1.1.5 -> v1.1.6 ) - only specific apps need to be updated
