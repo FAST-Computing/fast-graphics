@@ -29,6 +29,9 @@ import {
   FastCheckbox,
   FastRadioBox,
   FastRadio,
+  FastSlider,
+  FastToggle,
+  FastDropdown,
 } from '@fast/components';
 import { defaultData, defaultColumns } from './data/tableData.js';
 
@@ -279,12 +282,58 @@ export default function App() {
 
         <Divider sx={{ my: 3 }} />
 
-        <Box sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
-          <FastBurger color="primary" defaultChecked />
-          <FastBurger color="secondary" />
+        <Typography variant="h6" sx={{ mb: 2, fontWeight: 'bold' }}>
+          Customize your cat's stats
+        </Typography>
+        <Box sx={{ px: 1, gap: 2, display: 'flex', flexDirection: 'column' }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+            <FastSlider color="primary" width="25%" defaultValue={40} label="Laziness" valueLabelDisplay="auto" />
+          </Box>
+          
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+            <FastSlider color="secondary" width="25%" defaultValue={70} step={5} label="Cuteness" marks valueLabelDisplay="auto" />
+          </Box>
+          
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+            <FastSlider color="primary" width="25%" defaultValue={100} label="Happiness" disabled />
+          </Box>
+        </Box>
 
+        <br />
+        
+        <Box sx={{ px: 1, gap: 2, display: 'flex', flexDirection: 'column' }}>
+          <Box sx={{ display: 'flex', gap: 3, alignItems: 'center' }}>
+            <FastToggle color="primary" defaultChecked label="Soft fur" />
+            <FastToggle color="secondary" label="Big eyes" />
+            <FastToggle color="primary" disabled checked label="Always nice" />
+          </Box>
+        </Box>
+
+        <Divider sx={{ my: 3 }} />
+
+        <Box sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
           <FastLoader color="primary" size={128} />
           <FastLoader color="secondary" size={128} />
+        </Box>
+
+        <Divider sx={{ my: 3 }} />
+
+        <Box sx={{ display: 'flex', gap: 3, alignItems: 'flex-start' }}>
+          <FastDropdown color="primary" label="Actions" width="15%">
+            <button type="button" onClick={() => alert('Edit')}>Edit profile</button>
+            <button type="button" onClick={() => alert('Settings')}>Settings</button>
+            <button type="button" onClick={() => alert('Logout')}>Logout</button>
+          </FastDropdown>
+          <FastDropdown color="secondary" label="Cat treats" variant="outlined" defaultOpen>
+            <button type="button" onClick={() => alert('Fish')}>Fish</button>
+            <button type="button" onClick={() => alert('Chicken')}>Chicken</button>
+            <button type="button" onClick={() => alert('Beef')}>Beef</button>
+          </FastDropdown>
+          <FastDropdown color="primary" label="More treats" variant="text">
+            <button type="button" onClick={() => alert('Fish')}>Fish</button>
+            <button type="button" onClick={() => alert('Chicken')}>Chicken</button>
+            <button type="button" onClick={() => alert('Beef')}>Beef</button>
+          </FastDropdown>
         </Box>
 
         <Divider sx={{ my: 3 }} />
