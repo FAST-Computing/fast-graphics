@@ -1,4 +1,74 @@
-# @fast-graphics
+# @fast/graphics
+
+## 1.1.0
+
+New `@fast/components` package with 14 branded React components. Major FastButton rework, new form controls, and improved percentage-width support across the board.
+
+### Packages
+
+- **`@fast/components`** — new package with 14 ready-made branded components, built on `@fast/tokens` + `@fast/mui-theme`.
+
+### New components
+
+- `FastThemeProvider` — wraps `ThemeProvider` + `CssBaseline`, accepts `brand` prop.
+- `FastTextField` — branded MUI TextField wrapper with `width`/`height` props and focus ring styling.
+- `FastDialog` — branded modal dialog with colored header bar, squared corners.
+- `FastCheckbox` — squared checkbox with animated checkmark draw, `label` prop.
+- `FastRadio` — squared radio button with inner dot, `label` prop.
+- `FastRadioBox` — tile-style radio selector with icon + label, outlined/solid states.
+- `FastToggle` — toggle switch with squared thumb and overshoot bounce animation.
+- `FastSlider` — MUI Slider wrapper with squared thumb, brand track, `label`/`width`/`height` props.
+- `FastDropdown` — button + burger-menu dropdown, supports `default`/`outlined`/`text` variants.
+- `FastCardFA` — full-image card with gradient fade, backdrop-filter blur, `inverted` dark mode.
+- `FastTypography` — thin wrapper around MUI Typography with branded defaults.
+
+### FastButton — major rework
+
+- **New `variant` prop**: `default` (filled), `outlined` (transparent + border), `text` (no bg).
+- **New `disabled` prop**: 0.4 opacity, `pointer-events: none`, no hover effects.
+- **New `fontSize` prop**: number → px, string → raw CSS.
+- **New `onClick` prop**: native click handler.
+- **Hover animation**: replaced sliding circle with `clip-path: circle()` reveal from bottom-left corner — works at any size.
+- **Variant hover behavior**: `default` uses `filter: invert(1)`, `outlined`/`text` switch to `contrastText`.
+- **Color transitions**: `transition: color 0.25s` on content for smooth outlined/text hover.
+- **Font fix**: added `font-family: inherit` to `<button>` element — was rendering in browser default font instead of Google Sans.
+- **Width/height**: wrapper now owns width, inner button fills at 100%. Fixes `width="100%"` not filling parent.
+
+### FastCard
+
+- **New `inverted` prop**: dark mode — Paper bg becomes `grey.900`, text becomes `grey.100`.
+- Removed `pb: 4` from outer Box to prevent visible gap when Box and Paper have different backgrounds.
+- Fixed percentage width: Box gets width, Paper fills.
+
+### FastCardFA
+
+- **Backdrop-filter blur**: `blur(2px)` with `mask-image` fade for smooth blur reveal.
+- **New `inverted` prop**: fade to `text.primary` instead of `background.paper`, text inverts.
+
+### FastTable
+
+- **New `renderActions` prop**: function `(row: T) => ReactNode` renders an extra actions column.
+- **New `actionsHeader` prop**: custom header text (default "Actions").
+- Actions column centered with `white-space: nowrap`.
+
+### FastCheckbox / FastRadio
+
+- **New `label` prop**: text rendered inline next to the control with `gap: 6px`.
+
+### FastBurger
+
+- Burger stroke color controlled by parent when used inside FastDropdown.
+
+### Dependencies
+
+- `@fast/components` adds `@fast/mui-theme` as a dependency (previously only had `@fast/tokens`).
+
+### Documentation
+
+- `COMPONENTS.md` — full API reference for all 14 components with props, types, and examples.
+- `README.md` — updated quick-start with `FastThemeProvider`, brand table, complete component list, development commands, versioning guide.
+
+---
 
 ## 1.0.0
 
