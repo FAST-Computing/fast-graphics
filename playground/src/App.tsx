@@ -79,12 +79,12 @@ export default function App() {
         </Typography>
 
         <Box sx={{ display: 'flex', gap: 2 }}>
-          <FastCard width="25%" height="auto">
+          <FastCard width="25%" height="auto" inverted>
             <Box
               component="img"
               src="/cat6.jpg"
               alt=""
-              sx={{ width: '100%', height: '420px', mb: 2 }}
+              sx={{ objectFit: 'cover', mb: 2, border: '2px solid', borderColor: 'divider' }}
             />
             <Typography variant="h5" sx={{ mb: 0.5, fontWeight: 700 }}>
               Garfield
@@ -103,7 +103,7 @@ export default function App() {
               component="img"
               src="/cat2.jpg"
               alt=""
-              sx={{ width: '100%', height: '420px', objectFit: 'cover', mb: 2 }}
+              sx={{ objectFit: 'cover', mb: 2, border: '2px solid', borderColor: 'divider' }}
             />
             <Typography variant="h5" sx={{ mb: 0.5, fontWeight: 700 }}>
               Simba
@@ -117,12 +117,12 @@ export default function App() {
               <FastButton icon={<SetMealIcon />} color="secondary" width="20%" height={40} variant="text" animated/>
             </Box>
           </FastCard>
-          <FastCard width="25%" height="100%">
+          <FastCard width="25%" height="auto">
             <Box
               component="img"
               src="/cat4.jpg"
               alt=""
-              sx={{ width: '100%', height: '420px', objectFit: 'cover', mb: 2 }}
+              sx={{ objectFit: 'cover', mb: 2, border: '2px solid', borderColor: 'divider' }}
             />
             <Typography variant="h5" sx={{ mb: 0.5, fontWeight: 700 }}>
               Felix
@@ -140,7 +140,7 @@ export default function App() {
         <Divider sx={{ my: 3 }} />
 
         <Box sx={{ display: 'flex', gap: 3 }}>
-          <FastCardFA src="/cat3.jpg" width={300} height={420}>
+          <FastCardFA src="/cat8.jpg" width={300} height={420} inverted>
             <Typography variant="h6" sx={{ fontWeight: 700, color: 'inherit' }}>
               Whiskers
             </Typography>
@@ -152,7 +152,7 @@ export default function App() {
               <FastButton label="Feed" color="secondary" width="50%" height={30} animated/>
             </Box>
           </FastCardFA>
-          <FastCardFA src="/cat5.jpg" width={300} height={420}>
+          <FastCardFA src="/cat9.jpg" width={300} height={420}>
             <Typography variant="h6" sx={{ fontWeight: 700, color: 'inherit' }}>
               Luna
             </Typography>

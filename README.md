@@ -1,4 +1,4 @@
-# @fast/graphics
+# @fast-graphics
 
 Design tokens + MUI theme factory + branded React components for FAST-Computing and Simplifica.
 
@@ -46,6 +46,24 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 import { FastButton } from '@fast/components';
 
 <FastButton label="Click me" color="primary" width={180} height={40} animated />
+```
+
+#### Fallback to MaterialUI components
+
+```tsx
+import { IconButton } from "@mui/material";
+
+<IconButton
+  sx={{
+    color: theme.palette.primary.main,
+    p: "10px",
+    fontSize: "1.75rem",
+  }}
+    onClick={onUpdateRender}
+  >
+    <PlayArrowIcon fontSize="inherit" />
+</IconButton>
+
 ```
 
 
