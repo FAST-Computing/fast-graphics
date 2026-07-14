@@ -1,5 +1,49 @@
 # @fast/graphics
 
+## 1.2.0
+
+Extended color palette, selected state, alignment control, global table search, and dark mode toggle on cards.
+
+### FastButton — new props
+
+- **Extended `color` palette**: `primaryMain`, `primaryLight`, `primaryDark`, `secondaryMain`, `secondaryLight`, `secondaryDark`, `paper` (white), `text` (dark). Each resolves to the exact theme color.
+- **New `selected` prop**: when `true`, fills background with the color's own `main` value regardless of `variant`. Main/dark/light stay at their own shade — no swapping.
+- **New `iconPosition` prop**: `'left'` (default) or `'right'` — controls icon order relative to label.
+- **New `align` prop**: `'center'` (default), `'left'`, `'right'` — controls content alignment within the button.
+- **Selected transitions**: added `transition: background-color 0.2s ease, box-shadow 0.2s ease` on `.Btn` for smooth fill/unfill.
+- Removed `justify-content: center` from `.Btn` and added `flex: 1` on `.Btn-content` — fixes `align` prop overriding the parent centering.
+- **`getColorSet`** exported and reused in `FastDropdown` for consistent color resolution across components.
+
+### FastCard / FastCardFA
+
+- **New `inverted` prop**: dark mode toggle. Swaps fade gradient (white↔near-black), background, and text colors using theme values (`background.paper`, `text.primary`).
+- FastCardFA: `backdrop-filter: blur(2px)` with `mask-image` fade for smooth blur reveal on the bottom overlay.
+- FastCardFA: image alt prop renamed from `alt` to `imgAlt` to avoid conflict with the `inverted` prop.
+
+### FastTable
+
+- **New `searchable` prop**: adds a global search input next to "Show X elements" in the pagination bar. Filters all columns via `@tanstack/react-table`'s `getFilteredRowModel()`.
+
+### FastToggle
+
+- New component: squared toggle switch with overshoot bounce animation (`cubic-bezier(0.34, 1.56, 0.64, 1)`). Supports `color`, `label`, `checked`/`defaultChecked`/`onChange`, `disabled`.
+
+### FastSlider
+
+- **New `label` prop**: renders a label text above the slider.
+- Width now applied to the wrapper div instead of the slider — slider fills at `width: 100%`.
+
+### FastDropdown
+
+- Updated color type to match `FastButtonColor`. Uses shared `getColorSet` from FastButton for consistent color rendering across all extended colors.
+
+### Documentation
+
+- `COMPONENTS.md` — added FastToggle, FastSlider, FastDropdown API sections.
+- `CHANGELOG.md` — this entry.
+
+---
+
 ## 1.1.0
 
 New `@fast/components` package with 14 branded React components. Major FastButton rework, new form controls, and improved percentage-width support across the board.
