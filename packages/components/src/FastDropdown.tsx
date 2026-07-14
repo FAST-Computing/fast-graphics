@@ -2,16 +2,18 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import styled from '@emotion/styled';
-import type { Theme as MuiTheme, PaletteColor } from '@mui/material/styles';
+import type { Theme as MuiTheme } from '@mui/material/styles';
 import { FastBurger } from './FastBurger.js';
 import type { FastBurgerColor } from './FastBurger.js';
+import type { FastButtonColor } from './FastButton.js';
+import { getColorSet } from './FastButton.js';
 
 declare module '@emotion/react' {
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
   export interface Theme extends MuiTheme {}
 }
 
-export type FastDropdownColor = FastBurgerColor;
+export type FastDropdownColor = FastButtonColor;
 export type FastDropdownVariant = 'default' | 'outlined' | 'text';
 
 export interface FastDropdownProps {
@@ -70,7 +72,7 @@ export function FastDropdown({
       <button type="button" className="dropdown-trigger" onClick={toggle}>
         <span className="trigger-label">{label}</span>
         <span className="trigger-burger">
-          <FastBurger color={color} checked={open} onChange={toggle} />
+          <FastBurger color={color as FastBurgerColor} checked={open} onChange={toggle} />
         </span>
       </button>
       {open && (
@@ -90,7 +92,7 @@ type StyledProps = {
   theme: MuiTheme;
 };
 
-const pc = (p: StyledProps) => p.theme.palette[p.$color] as PaletteColor;
+const cs = (p: StyledProps) => getColorSet(p.$color, p.theme, false);
 
 const StyledWrapper = styled('div')<{ $color: FastDropdownColor; $variant: FastDropdownVariant; $w?: number | string; $isPct: boolean }>`
   position: relative;
@@ -114,18 +116,18 @@ const StyledWrapper = styled('div')<{ $color: FastDropdownColor; $variant: FastD
 
     ${p => p.$variant === 'default'
       ? `
-        color: ${pc(p).contrastText};
-        background-color: ${pc(p).main};
-        &:hover { background-color: ${pc(p).dark}; }
+        color: ${cs(p).contrastText};
+        background-color: ${cs(p).main};
+        &:hover { background-color: ${cs(p).dark}; }
       `
       : `
-        color: ${pc(p).main};
+        color: ${cs(p).main};
         background-color: transparent;
         &:hover { background-color: ${p.theme.palette.action.hover}; }
       `
     }
 
-    ${p => p.$variant === 'outlined' ? `border: 2px solid ${pc(p).main};` : ''}
+    ${p => p.$variant === 'outlined' ? `border: 2px solid ${cs(p).main};` : ''}
   }
 
   .dropdown-trigger:active {
@@ -148,7 +150,7 @@ const StyledWrapper = styled('div')<{ $color: FastDropdownColor; $variant: FastD
   }
 
   .trigger-burger svg {
-    stroke: ${p => (p.$variant === 'default' ? pc(p).contrastText : pc(p).main)} !important;
+    stroke: ${p => (p.$variant === 'default' ? cs(p).contrastText : cs(p).main)} !important;
   }
 
   .dropdown-menu {

@@ -11,6 +11,7 @@ import {
   getCoreRowModel,
   getSortedRowModel,
   getPaginationRowModel,
+  getFilteredRowModel,
   useReactTable,
   type ColumnDef,
   type RowData,
@@ -48,6 +49,8 @@ export interface FastTableProps<T extends RowData> {
   pageable?: boolean;
   /** Default page size (used when pageable) */
   defaultPageSize?: number;
+  /** Enable global text search across all columns. */
+  searchable?: boolean;
   /** Optional function that renders action buttons per row. */
   renderActions?: (row: T) => React.ReactNode;
   /** Header text for the actions column. Default "Actions". */
@@ -66,6 +69,7 @@ export function FastTable<T extends RowData>({
   sortable = false,
   pageable = false,
   defaultPageSize = 5,
+  searchable = false,
   renderActions,
   actionsHeader = 'Actions',
 }: FastTableProps<T>) {
@@ -74,16 +78,19 @@ export function FastTable<T extends RowData>({
     pageIndex: 0,
     pageSize: defaultPageSize,
   });
+  const [globalFilter, setGlobalFilter] = useState('');
 
   const table = useReactTable({
     data,
     columns,
-    state: { sorting, pagination },
+    state: { sorting, pagination, globalFilter },
     onSortingChange: setSorting,
     onPaginationChange: setPagination,
+    onGlobalFilterChange: setGlobalFilter,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
     enableSorting: sortable,
   });
 
@@ -92,6 +99,14 @@ export function FastTable<T extends RowData>({
       {pageable && (
         <PaginationBar>
           <PageSizeGroup>
+            {searchable && (
+              <SearchInput
+                type="text"
+                placeholder="Search…"
+                value={globalFilter}
+                onChange={(e) => setGlobalFilter(e.target.value)}
+              />
+            )}
             <PageSizeLabel>Show</PageSizeLabel>
             <PageSizeSelect
               value={table.getState().pagination.pageSize}
@@ -310,7 +325,7 @@ const PaginationBar = styled('div')`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 16px;
+  padding: 12px 0px;
   font-size: 0.8125rem;
   color: ${(p) => p.theme.palette.text.secondary};
   border-top: 1px solid ${(p) => p.theme.palette.divider};
@@ -335,6 +350,27 @@ const PageSizeSelect = styled('select')`
   background: ${(p) => p.theme.palette.background.paper};
   color: ${(p) => p.theme.palette.text.primary};
   cursor: pointer;
+`;
+
+const SearchInput = styled('input')`
+  margin-right: 16px;
+  padding: 4px 10px;
+  border: 1px solid ${(p) => p.theme.palette.divider};
+  font-size: 0.8125rem;
+  font-family: inherit;
+  background: ${(p) => p.theme.palette.background.paper};
+  color: ${(p) => p.theme.palette.text.primary};
+  outline: none;
+  width: 200px;
+  transition: border-color 0.15s ease;
+
+  &:focus {
+    border-color: ${(p) => p.theme.palette.primary.main};
+  }
+
+  &::placeholder {
+    color: ${(p) => p.theme.palette.text.secondary};
+  }
 `;
 
 const NavGroup = styled('div')`

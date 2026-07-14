@@ -47,6 +47,7 @@ export default function App() {
   const [brand, setBrand] = useState<BrandName>('fast_core');
   const [dialogOpen, setDialogOpen] = useState(false);
   const [textValue, setTextValue] = useState('');
+  const [selectedBtn, setSelectedBtn] = useState('');
 
   return (
     <FastThemeProvider brand={brand}>
@@ -132,7 +133,7 @@ export default function App() {
               The cat is very sleepy.
             </Typography>
             <Box sx={{ display: 'flex', gap: 2, alignItems: 'center', justifyContent: 'center' }}>
-              <FastButton label="Don't wake up the cat" icon={<EggAltIcon />} color="primary" width="100%" height={40} disabled/>
+              <FastButton label="Don't wake up the cat" icon={<EggAltIcon />} color="primary" width="100%" height={40} disabled iconPosition="right"/>
             </Box>
           </FastCard>
         </Box>
@@ -180,6 +181,33 @@ export default function App() {
         <Divider sx={{ my: 3 }} />
 
         <Typography variant="h5" sx={{ mb: 2, fontWeight: 'bold' }}>
+          Cats love icecream (click to toggle)
+        </Typography>
+        <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', alignItems: 'center' }}>
+          <FastButton label="Paper" icon={<IcecreamIcon />} color="paper" variant="text" selected={selectedBtn === '1'} onClick={() => setSelectedBtn('1')} />
+          <FastButton label="Text" icon={<IcecreamIcon />} color="text" variant="text" selected={selectedBtn === '2'} onClick={() => setSelectedBtn('2')} />
+          <FastButton label="PMain" icon={<IcecreamIcon />} color="primary" variant="text" selected={selectedBtn === '3'} onClick={() => setSelectedBtn('3')} />
+          <FastButton label="PLight" icon={<IcecreamIcon />} color="primaryLight" variant="text" selected={selectedBtn === '4'} onClick={() => setSelectedBtn('4')} />
+          <FastButton label="PDark" icon={<IcecreamIcon />} color="primaryDark" variant="text" selected={selectedBtn === '5'} onClick={() => setSelectedBtn('5')} />
+          <FastButton label="SMain" icon={<IcecreamIcon  />} color="secondary" variant="text" selected={selectedBtn === '6'} onClick={() => setSelectedBtn('6')} />
+          <FastButton label="SLight" icon={<IcecreamIcon />} color="secondaryLight" variant="text" selected={selectedBtn === '7'} onClick={() => setSelectedBtn('7')} />
+          <FastButton label="SDark" icon={<IcecreamIcon />} color="secondaryDark" variant="text" selected={selectedBtn === '8'} onClick={() => setSelectedBtn('8')} />
+        </Box>
+
+        <Divider sx={{ my: 3 }} />
+
+        <Typography variant="h5" sx={{ mb: 2, fontWeight: 'bold' }}>
+          Alignment
+        </Typography>
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1, maxWidth: 300 }}>
+          <FastButton label="Cats" icon={<IcecreamIcon />} iconPosition="left" color="primary" align="left" width="100%" animated/>
+          <FastButton label="Love" icon={<IcecreamIcon />} iconPosition="left" color="secondary" align="center" width="100%" animated/>
+          <FastButton label="Icecream" icon={<IcecreamIcon />} iconPosition="right" color="paper" align="right" width="100%" animated/>
+        </Box>
+
+        <Divider sx={{ my: 3 }} />
+
+        <Typography variant="h5" sx={{ mb: 2, fontWeight: 'bold' }}>
           Important cat data
         </Typography>
         <Typography sx={{ mb: 2 }}>
@@ -193,6 +221,7 @@ export default function App() {
           width="75%"
           sortable
           pageable
+          searchable
           renderActions={(row) => (
             <Box sx={{ display: 'flex', gap: 0.5 }}>
               <FastButton icon={<WavingHandIcon />} color="primary" variant="text" width="50%" height={26} fontSize={10} onClick={() => alert(`Petted ${row.name}!`)} />
