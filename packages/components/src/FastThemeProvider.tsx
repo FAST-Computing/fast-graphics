@@ -3,8 +3,8 @@
 import type { ReactNode } from 'react';
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import { createThemeFromTokens } from '@fast/mui-theme';
-import type { BrandName } from '@fast/tokens';
+import { createThemeFromTokens } from '../../mui-theme/dist/index.js';
+import type { BrandName } from '../../tokens/dist/index.js';
 
 export interface FastThemeProviderProps {
   brand: BrandName;

@@ -36,9 +36,9 @@ const StyledWrapper = styled('div')<{ $w?: number | string; $isPct: boolean; $di
 
   .slider-label {
     display: block;
-    margin-bottom: 4px;
-    font-size: 0.8125rem;
-    font-weight: 600;
+    margin-bottom: 2px;
+    font-size: 0.9rem;
+    font-weight: 500;
     color: ${p => p.theme.palette.text.primary};
   }
 `;
@@ -85,7 +85,7 @@ const StyledSlider = styled(Slider, {
     background: ${(p) => (p.theme.palette[p.$accent] as PaletteColor).main};
     font-family: inherit;
     font-size: 0.75rem;
-    font-weight: 600;
+    font-weight: 500;
     padding: 2px 8px;
 
     &::before {

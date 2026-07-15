@@ -25,6 +25,7 @@ import {
   FastLoader,
   FastThemeProvider,
   FastTextField,
+  FastDateInput,
   FastDialog,
   FastCheckbox,
   FastRadioBox,
@@ -217,7 +218,7 @@ export default function App() {
         <FastTable
           data={defaultData}
           columns={defaultColumns}
-          color="secondary"
+          color="primary"
           width="75%"
           sortable
           pageable
@@ -252,24 +253,9 @@ export default function App() {
             You are safe in this custom dialog. You can tell us who is your favourite cat without any ripercussion.
           </Typography>
           <FastTextField
-            label="Insert your favourite cat"
-            sx={{ mt: 2 }}
+            placeholder="Insert your favourite cat"
           />
         </FastDialog>
-
-        <br />
-
-        <Box sx={{ display: 'flex', gap: 3, alignItems: 'center' }}>
-          <FastCheckbox color="primary" label="Zoomies are good." />
-          <FastCheckbox color="secondary" label="Napping is also good." />
-        </Box>
-
-        <br />
-
-        <Box sx={{ display: 'flex', gap: 3, alignItems: 'center' }}>
-          <FastCheckbox color="primary" disabled checked label="Uncheck if cats are bad." />
-          <FastCheckbox color="secondary" disabled label="Check if cats are bad." />
-        </Box>
 
         <Divider sx={{ my: 3 }} />
         
@@ -366,31 +352,59 @@ export default function App() {
         </Box>
 
         <Divider sx={{ my: 3 }} />
+        
+
+        <Typography variant="h6" sx={{  mb: 2, fontWeight: 'bold' }}>
+          Cat form
+        </Typography>
+        <Typography sx={{ mb: 2 }}>
+          A form to register your cat. You can use the date input and text field components to fill in the cat's information.
+        </Typography>
+        <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', alignItems: 'center', mt: 2 }}>
+          <FastDateInput placeholder="Adoption date" width={200} required />
+          <FastDateInput placeholder="Vaccination" color="secondary" width={200} />
+          <FastDateInput placeholder="Expired" disabled width={200} defaultValue="2025-06-15" />
+        </Box>
+
+        <br />
 
         <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', alignItems: 'center' }}>
           <FastTextField
-            label="This is short"
+            placeholder="Name"
             value={textValue}
             onChange={(e) => setTextValue(e.target.value)}
+            required
             width="10%"
           />
           <FastTextField
-            label="And this is long. With error."
-            error
-            helperText="This field is required"
-            width="25%"
+            placeholder="Surname"
+            width="15%"
+            required
           />
           <FastTextField
-            label="Thin and disabled"
-            disabled
-            defaultValue="Cannot edit"
-            height={32}
+            placeholder="Address"
+            width="20%"
           />
           <FastTextField
-            label="Secondary color"
+            placeholder="Secondary color"
             color="secondary"
-            defaultValue="Secondary focus"
+            disabled
+            defaultValue="Disabled"
           />
+        </Box>
+
+        <br />
+
+        <Box sx={{ display: 'flex', gap: 3, alignItems: 'center' }}>
+          <FastCheckbox color="primary" label="Zoomies are good." />
+          <FastCheckbox color="secondary" label="Napping is also good." />
+        </Box>
+
+        <br />
+
+        <Box sx={{ display: 'flex', gap: 3, alignItems: 'center' }}>
+          <FastCheckbox color="primary" disabled checked label="Uncheck if cats are bad." />
+          <FastCheckbox color="secondary" disabled label="Check if cats are bad." />
         </Box>
 
         <Divider sx={{ my: 3 }} />

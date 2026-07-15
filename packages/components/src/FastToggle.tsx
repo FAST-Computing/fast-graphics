@@ -70,7 +70,7 @@ const StyledWrapper = styled('div')<{ $color: FastToggleColor; $disabled: boolea
 
   .toggle-text {
     font-weight: 500;
-    font-size: 0.875rem;
+    font-size: 0.9rem;
     color: ${p => p.theme.palette.text.primary};
   }
 

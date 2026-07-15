@@ -1,5 +1,38 @@
 # @fast/graphics
 
+## 1.3.0
+
+Complete redesign of FastTextField and FastDateInput with floating labels and brand styling. Required field validation, wider click targets, and external package import compatibility.
+
+### FastTextField — full redesign
+
+- **Floating label**: placeholder floats to top-left corner when value exists or input is focused. Smooth `0.15s` transition.
+- **Brand-styled container**: `2px solid main` border, squared corners, same hover background tint as FastDateInput.
+- **Click-to-focus**: clicking anywhere in the outlined container focuses the input via ref.
+- **New `required` prop**: shows red asterisk `*` on the label. Auto-triggers error on blur if empty — red border, red helper text "This field is required". Error clears on type.
+- **Error colors**: `.float-label` and `.field-input` turn `error.main` when required validation fails.
+- **Default height**: `52px` (up from 44px) to accommodate floating label + value text.
+- **`height` prop**: `number` → `Npx`, `string` → raw CSS.
+
+### FastDateInput — full redesign
+
+- **Floating label**: same pattern as FastTextField — placeholder floats to top-left when date is selected or focused.
+- **New `required` prop**: asterisk, auto-validation on blur, error clears on date select.
+- **Error colors**: `.float-label`, `.date-label`, `.date-icon` all turn `error.main` when error state is active.
+- **Focus/blur tracking**: moved to the wrapper element with `tabIndex` and `role="button"` for consistent behavior.
+- **Hidden input overlay**: `position: absolute; opacity: 0; pointer-events: none` — picker anchors correctly below the component.
+- **Default height**: `52px`.
+
+### FastThemeProvider — import fix
+
+- Changed imports from workspace names (`@fast/mui-theme`, `@fast/tokens`) to relative paths (`../../mui-theme/dist/index.js`, `../../tokens/dist/index.js`). Fixes resolution errors when the published package is installed in an external project.
+
+### Documentation
+
+- `CHANGELOG.md` — this entry.
+
+---
+
 ## 1.2.0
 
 Extended color palette, selected state, alignment control, global table search, and dark mode toggle on cards.

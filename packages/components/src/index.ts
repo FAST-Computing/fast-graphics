@@ -13,3 +13,4 @@ export { FastRadioBox } from './FastRadioBox.js';
 export { FastSlider } from './FastSlider.js';
 export { FastToggle } from './FastToggle.js';
 export { FastDropdown } from './FastDropdown.js';
+export { FastDateInput } from './FastDateInput.js';

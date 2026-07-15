@@ -42,7 +42,7 @@ import { FastButton } from '@fast/components';
 ### Types
 
 ```tsx
-type FastButtonColor = 'primary' | 'secondary';
+type FastButtonColor = 'primaryMain' | 'primaryLight'| 'primaryDark' | 'secondaryMain' | 'secondaryLight'| 'secondaryDark' | 'paper' | 'text';
 type FastButtonVariant = 'default' | 'outlined' | 'text';
 ```
 
