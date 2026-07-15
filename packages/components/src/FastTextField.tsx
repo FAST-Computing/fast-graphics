@@ -75,6 +75,18 @@ export function FastTextField({
     if (!isControlled) setInternalValue(raw);
   }, [isControlled]);
 
+  const emitChange = useCallback((raw: string) => {
+    if (onChange) {
+      const nativeInput = inputRef.current;
+      if (nativeInput) {
+        Object.getOwnPropertyDescriptor(
+          HTMLInputElement.prototype, 'value'
+        )?.set?.call(nativeInput, raw);
+        nativeInput.dispatchEvent(new Event('input', { bubbles: true }));
+      }
+    }
+  }, [onChange]);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let raw = e.target.value;
     if (numeric && raw !== '') {
@@ -96,6 +108,7 @@ export function FastTextField({
         const clamped = clamp(num, min, max);
         const formatted = precision !== undefined ? clamped.toFixed(precision) : String(clamped);
         commitValue(formatted);
+        emitChange(formatted);
       }
     }
   };
@@ -105,6 +118,7 @@ export function FastTextField({
     const next = clamp(current + dir * step, min, max);
     const formatted = precision !== undefined ? next.toFixed(precision) : String(next);
     commitValue(formatted);
+    emitChange(formatted);
     inputRef.current?.focus();
   };
 

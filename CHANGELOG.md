@@ -1,5 +1,20 @@
 # @fast/graphics
 
+## 1.3.2
+
+Critical controlled-mode fixes for stepper and date picker hydration.
+
+### FastTextField
+
+- **Stepper + blur clamping now emit `onChange`**: `stepValue()` and `handleBlur()` call `emitChange(formatted)` via native input mutation + `dispatchEvent`. Previously only called `commitValue()` which is a no-op in controlled mode. Fixes RHF/react-hook-form compatibility.
+- `emitChange` uses `Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value')` to set the native value and dispatches a synthetic `input` event so React Hook Form picks up the change.
+
+### FastDateInput
+
+- **Fixed `showPicker()` crash during Next.js hydration replay**: wrapped in `try/catch`. Old `?.() || .click()` short-circuited on exception instead of falsy, so the fallback `click()` never ran. Now `catch` block calls `click()` reliably.
+
+---
+
 ## 1.3.1
 
 Numeric fields with stepper, required prop on all form controls, external error messages, and button type support.

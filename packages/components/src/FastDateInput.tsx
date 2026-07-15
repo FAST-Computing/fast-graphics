@@ -75,7 +75,7 @@ export function FastDateInput({
   };
 
   const handleClick = () => {
-    inputRef.current?.showPicker?.() || inputRef.current?.click();
+    try { inputRef.current?.showPicker(); } catch { inputRef.current?.click(); }
   };
 
   return (

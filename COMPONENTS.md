@@ -250,6 +250,45 @@ Extends MUI `DialogProps` (minus `color`, `title`).
 
 ---
 
+## FastDateInput
+
+Date picker with floating label and brand-styled button. Click to open the native date picker.
+
+```tsx
+import { FastDateInput } from '@fast/components';
+```
+
+### Types
+
+```tsx
+type FastDateInputColor = 'primary' | 'secondary';
+```
+
+### Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `color` | `FastDateInputColor` | `'primary'` | Accent color |
+| `placeholder` | `string` | `'Select date'` | Floating label text |
+| `value` | `string` | – | Controlled value (YYYY-MM-DD) |
+| `defaultValue` | `string` | – | Uncontrolled initial value |
+| `onChange` | `(e) => void` | – | Change handler |
+| `disabled` | `boolean` | – | Disabled state |
+| `width` | `number \| string` | – | Input width |
+| `height` | `number \| string` | `52` | Input height |
+| `required` | `boolean` | – | Shows asterisk, auto-validates on blur |
+| `errorMessage` | `string` | – | Error message shown in red below |
+
+### Example
+
+```tsx
+<FastDateInput placeholder="Adoption date" required />
+<FastDateInput color="secondary" placeholder="Vaccination" />
+<FastDateInput placeholder="Expired" disabled defaultValue="2025-06-15" />
+```
+
+---
+
 ## FastCheckbox
 
 Squared checkbox with brand colors. SVG-based with animated checkmark draw.
