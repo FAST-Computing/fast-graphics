@@ -1,5 +1,32 @@
 # @fast/graphics
 
+## 1.3.1
+
+Numeric fields with stepper, required prop on all form controls, external error messages, and button type support.
+
+### FastTextField
+
+- **New `numeric` prop**: restricts input to numeric values (int or float). Filters non-numeric characters on input.
+- **New `stepper` prop**: shows up/down buttons on the right side of the field. Implies `numeric`. Hover fills buttons with brand color.
+- **New `step`/`min`/`max`/`precision` props**: configure stepper increment, bounds, and decimal places.
+- **New `errorMessage` prop**: string shown in red below the field. Implies error styling. Overrides auto-required message.
+- **Fixed uncontrolled value binding**: input now uses `value={displayValue}` instead of separate `value`/`defaultValue`, fixing stepper updates and label overlap on blur.
+- **`hasValue`** now checks `displayValue !== ''` for robust empty detection.
+
+### FastDateInput
+
+- **New `errorMessage` prop**: same behavior as FastTextField — string shown in red below the field.
+
+### FastCheckbox / FastRadio / FastRadioBox
+
+- **New `required` prop**: shows red asterisk `*` next to the label text. Passes `required` to the native input for browser validation.
+
+### FastButton
+
+- **New `type` prop**: `'button' | 'submit' | 'reset'`. Default `'button'` to prevent accidental form submits.
+
+---
+
 ## 1.3.0
 
 Complete redesign of FastTextField and FastDateInput with floating labels and brand styling. Required field validation, wider click targets, and external package import compatibility.

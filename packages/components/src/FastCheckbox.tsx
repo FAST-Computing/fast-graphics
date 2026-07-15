@@ -12,20 +12,14 @@ declare module '@emotion/react' {
 export type FastCheckboxColor = 'primary' | 'secondary';
 
 export interface FastCheckboxProps {
-  /** Which palette color to use when checked. */
   color?: FastCheckboxColor;
-  /** Checkbox size in px. Default 28. */
   size?: number;
-  /** Label text shown next to the checkbox. */
   label?: string;
-  /** Controlled checked state */
   checked?: boolean;
-  /** Default checked state (uncontrolled) */
   defaultChecked?: boolean;
-  /** Change handler */
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  /** Disabled state */
   disabled?: boolean;
+  required?: boolean;
 }
 
 export function FastCheckbox({
@@ -36,6 +30,7 @@ export function FastCheckbox({
   defaultChecked,
   onChange,
   disabled,
+  required,
 }: FastCheckboxProps) {
   return (
     <StyledWrapper $color={color} $size={size} $disabled={!!disabled}>
@@ -46,12 +41,13 @@ export function FastCheckbox({
           defaultChecked={defaultChecked}
           onChange={onChange}
           disabled={disabled}
+          required={required}
         />
         <svg viewBox="0 0 32 32" className="checkbox-svg">
           <rect className="box" x="3" y="3" width="26" height="26" />
           <path className="check" d="M10 17l5 5 8-8" />
         </svg>
-        {label && <span className="checkbox-text">{label}</span>}
+        {label && <span className="checkbox-text">{label}{required && <span className="asterisk"> *</span>}</span>}
       </label>
     </StyledWrapper>
   );
@@ -76,6 +72,10 @@ const StyledWrapper = styled('div')<{ $color: FastCheckboxColor; $size: number; 
     font-weight: 500;
     font-size: 0.9rem;
     color: ${p => (p.theme.palette.text.primary)};
+  }
+
+  .asterisk {
+    color: ${p => p.theme.palette.error.main};
   }
 
   .checkbox-svg {

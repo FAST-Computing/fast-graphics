@@ -18,6 +18,7 @@ export type FastButtonColor =
 export type FastButtonVariant = 'default' | 'outlined' | 'text';
 export type FastButtonIconPosition = 'left' | 'right';
 export type FastButtonAlign = 'center' | 'left' | 'right';
+export type FastButtonType = 'button' | 'submit' | 'reset';
 
 export interface FastButtonProps {
   label?: string;
@@ -32,6 +33,8 @@ export interface FastButtonProps {
   fontSize?: number | string;
   animated?: boolean;
   disabled?: boolean;
+  /** HTML button type attribute. Default "button" to prevent accidental form submits. */
+  type?: FastButtonType;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }
 
@@ -82,13 +85,14 @@ export function FastButton({
     fontSize,
     animated = false,
     disabled = false,
+    type = 'button',
     onClick,
 }: FastButtonProps) {
   const isPct = typeof width === 'string';
   const heightNum = typeof height === 'number' ? height : parseInt(height) || 40;
   return (
     <StyledWrapper $color={color} $variant={variant} $w={width} $h={height} $animated={animated} $isPct={isPct} $hNum={heightNum} $fs={fontSize} $selected={selected} $iconPos={iconPosition} $align={align}>
-      <button className="Btn" onClick={onClick} disabled={disabled}>
+      <button className="Btn" type={type} onClick={onClick} disabled={disabled}>
         <span className="Btn-content">
           {iconPosition === 'left' && icon}
           {label}

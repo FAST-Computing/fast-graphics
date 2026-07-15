@@ -12,24 +12,16 @@ declare module '@emotion/react' {
 export type FastRadioColor = 'primary' | 'secondary';
 
 export interface FastRadioProps {
-  /** Which palette color to use when checked. */
   color?: FastRadioColor;
-  /** Radio size in px. Default 28. */
   size?: number;
-  /** Label text shown next to the radio. */
   label?: string;
-  /** Controlled checked state */
   checked?: boolean;
-  /** Default checked state (uncontrolled) */
   defaultChecked?: boolean;
-  /** Change handler */
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  /** Disabled state */
   disabled?: boolean;
-  /** Group name */
   name?: string;
-  /** Radio value */
   value?: string;
+  required?: boolean;
 }
 
 export function FastRadio({
@@ -42,6 +34,7 @@ export function FastRadio({
   disabled,
   name,
   value,
+  required,
 }: FastRadioProps) {
   return (
     <StyledWrapper $color={color} $size={size} $disabled={!!disabled}>
@@ -54,12 +47,13 @@ export function FastRadio({
           disabled={disabled}
           name={name}
           value={value}
+          required={required}
         />
         <svg viewBox="0 0 32 32" className="radio-svg">
           <rect className="box" x="3" y="3" width="26" height="26" />
           <rect className="dot" x="9" y="9" width="14" height="14" />
         </svg>
-        {label && <span className="radio-text">{label}</span>}
+        {label && <span className="radio-text">{label}{required && <span className="asterisk"> *</span>}</span>}
       </label>
     </StyledWrapper>
   );
@@ -84,6 +78,10 @@ const StyledWrapper = styled('div')<{ $color: FastRadioColor; $size: number; $di
     font-weight: 500;
     font-size: 0.9rem;
     color: ${p => (p.theme.palette.text.primary)};
+  }
+
+  .asterisk {
+    color: ${p => p.theme.palette.error.main};
   }
 
   .radio-svg {

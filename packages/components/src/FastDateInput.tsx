@@ -29,8 +29,10 @@ export interface FastDateInputProps {
   width?: number | string;
   /** Input height. */
   height?: number | string;
-  /** Mark as required — shows asterisk and auto-triggers error if empty. */
+  /** Mark as required — shows asterisk and auto-triggers error on blur if empty. */
   required?: boolean;
+  /** Custom error message shown in red below the field. Implies error styling. */
+  errorMessage?: string;
 }
 
 function formatDisplay(dateStr: string): string {
@@ -49,6 +51,7 @@ export function FastDateInput({
   width,
   height = 52,
   required,
+  errorMessage,
 }: FastDateInputProps) {
   const isControlled = controlledValue !== undefined;
   const [internalValue, setInternalValue] = useState(defaultValue || '');
@@ -56,7 +59,8 @@ export function FastDateInput({
   const [touched, setTouched] = useState(false);
   const displayValue = isControlled ? controlledValue : internalValue;
   const hasValue = !!displayValue;
-  const showError = !!(required && touched && !hasValue);
+  const showError = !!(errorMessage || (required && touched && !hasValue));
+  const errorMsg = errorMessage || (required && touched && !hasValue ? '*This field is required' : '');
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -99,8 +103,8 @@ export function FastDateInput({
         disabled={disabled}
         className="native-input"
       />
-      {required && touched && !hasValue && (
-        <span className="field-helper">*This field is required</span>
+      {errorMsg && (
+        <span className="field-helper">{errorMsg}</span>
       )}
     </StyledWrapper>
   );

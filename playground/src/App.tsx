@@ -393,10 +393,17 @@ export default function App() {
           />
         </Box>
 
+        <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', alignItems: 'center', mt: 2 }}>
+          <FastTextField placeholder="Age" numeric stepper step={1} min={0} max={99} width={120} required />
+          <FastTextField placeholder="Height (cm)" numeric stepper step={0.5} precision={1} min={0} width={180} required />
+          <FastTextField placeholder="Weight (kg)" numeric step={0.1} precision={1} width={160} />
+          <FastTextField placeholder="Cats count" numeric stepper precision={0} width={140} />
+        </Box>
+
         <br />
 
         <Box sx={{ display: 'flex', gap: 3, alignItems: 'center' }}>
-          <FastCheckbox color="primary" label="Zoomies are good." />
+          <FastCheckbox color="primary" label="Zoomies are good." required />
           <FastCheckbox color="secondary" label="Napping is also good." />
         </Box>
 

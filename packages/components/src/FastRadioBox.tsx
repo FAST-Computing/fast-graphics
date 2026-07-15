@@ -12,28 +12,18 @@ declare module '@emotion/react' {
 export type FastRadioColor = 'primary' | 'secondary';
 
 export interface FastRadioProps {
-  /** Which palette color to use when checked. */
   color?: FastRadioColor;
-  /** Icon node displayed inside the tile. */
   icon?: React.ReactNode;
-  /** Label text below the icon. */
   label?: string;
-  /** Tile width. */
   width?: number | string;
-  /** Tile height. */
   height?: number | string;
-  /** Controlled checked state */
   checked?: boolean;
-  /** Default checked state (uncontrolled) */
   defaultChecked?: boolean;
-  /** Change handler */
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  /** Disabled state */
   disabled?: boolean;
-  /** Group name */
   name?: string;
-  /** Radio value */
   value?: string;
+  required?: boolean;
 }
 
 export function FastRadioBox({
@@ -48,6 +38,7 @@ export function FastRadioBox({
   disabled,
   name,
   value,
+  required,
 }: FastRadioProps) {
   return (
     <StyledWrapper $color={color} $w={width} $h={height} $disabled={!!disabled} $isPct={typeof width === 'string'}>
@@ -60,10 +51,11 @@ export function FastRadioBox({
           disabled={disabled}
           name={name}
           value={value}
+          required={required}
         />
         <div className="radio-tile">
           {icon && <span className="radio-icon">{icon}</span>}
-          {label && <span className="radio-text">{label}</span>}
+          {label && <span className="radio-text">{label}{required && <span className="asterisk"> *</span>}</span>}
         </div>
       </label>
     </StyledWrapper>
@@ -120,6 +112,10 @@ const StyledWrapper = styled('div')<{
     font-weight: 600;
     font-size: 0.8125rem;
     line-height: 1;
+  }
+
+  .asterisk {
+    color: ${p => p.theme.palette.error.main};
   }
 
   input:checked + .radio-tile {

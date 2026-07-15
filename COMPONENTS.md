@@ -59,6 +59,7 @@ type FastButtonVariant = 'default' | 'outlined' | 'text';
 | `fontSize` | `number \| string` | `inherit` | Text size. Number → `px`, string → raw CSS |
 | `animated` | `boolean` | `false` | Enable hover reveal animation |
 | `disabled` | `boolean` | `false` | Disabled state (opacity 0.4, no interactions) |
+| `type` | `'button' \| 'submit' \| 'reset'` | `'button'` | Native button type |
 | `onClick` | `MouseEventHandler` | – | Click handler |
 
 ### Variant behavior
@@ -155,7 +156,7 @@ Pass `sx={{ color: 'inherit' }}` on MUI `Typography` children to inherit the car
 
 ## FastTextField
 
-Branded text input wrapping MUI `TextField`. Focus ring uses the brand palette color.
+Branded text input with floating label, squared outline, and optional numeric stepper.
 
 ```tsx
 import { FastTextField } from '@fast/components';
@@ -169,27 +170,34 @@ type FastTextFieldColor = 'primary' | 'secondary';
 
 ### Props
 
-Extends MUI `TextFieldProps` (minus `color`).
-
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `color` | `FastTextFieldColor` | `'primary'` | Focus accent color |
-| `width` | `number \| string` | – | Input width |
-| `height` | `number \| string` | – | Input root height |
-
-All other MUI `TextField` props are passed through (`label`, `value`, `onChange`, `error`, `helperText`, `disabled`, `multiline`, etc.).
+| `color` | `FastTextFieldColor` | `'primary'` | Accent color for border/text |
+| `placeholder` | `string` | – | Floating label text |
+| `value` | `string` | – | Controlled value |
+| `defaultValue` | `string` | – | Uncontrolled initial value |
+| `onChange` | `(e) => void` | – | Change handler |
+| `disabled` | `boolean` | `false` | Disabled state |
+| `width` | `number \| string` | – | Field width |
+| `height` | `number \| string` | `52` | Field height |
+| `error` | `boolean` | `false` | Red error styling |
+| `errorMessage` | `string` | – | Error message shown below. Implies error styling |
+| `helperText` | `string` | – | Helper text below (gray, or red when `error`) |
+| `required` | `boolean` | `false` | Shows asterisk, auto-validates on blur if empty |
+| `numeric` | `boolean` | `false` | Restrict to numeric input (int or float) |
+| `stepper` | `boolean` | `false` | Show up/down stepper buttons. Implies `numeric` |
+| `step` | `number` | `1` | Stepper increment |
+| `min` | `number` | – | Minimum value (numeric) |
+| `max` | `number` | – | Maximum value (numeric) |
+| `precision` | `number` | – | Decimal places (numeric) |
 
 ### Example
 
 ```tsx
-<FastTextField
-  label="Email"
-  value={email}
-  onChange={(e) => setEmail(e.target.value)}
-  width="100%"
-  error={!isValid}
-  helperText="Enter a valid email"
-/>
+<FastTextField placeholder="Email" required />
+<FastTextField placeholder="Age" numeric stepper min={0} max={99} width={120} />
+<FastTextField placeholder="Price" numeric step={0.5} precision={2} />
+<FastTextField errorMessage="Invalid format" />
 ```
 
 ---
@@ -267,11 +275,12 @@ type FastCheckboxColor = 'primary' | 'secondary';
 | `defaultChecked` | `boolean` | – | Uncontrolled initial state |
 | `onChange` | `(e) => void` | – | Change handler |
 | `disabled` | `boolean` | – | Disabled state |
+| `required` | `boolean` | – | Shows asterisk, browser-native validation |
 
 ### Example
 
 ```tsx
-<FastCheckbox color="primary" label="Accept terms" defaultChecked />
+<FastCheckbox color="primary" label="Accept terms" required />
 ```
 
 ---
@@ -303,11 +312,12 @@ type FastRadioColor = 'primary' | 'secondary';
 | `disabled` | `boolean` | – | Disabled state |
 | `name` | `string` | – | Group name (radio behavior) |
 | `value` | `string` | – | Radio value |
+| `required` | `boolean` | – | Shows asterisk, browser-native validation |
 
 ### Example
 
 ```tsx
-<FastRadio color="primary" name="pet" label="Cat" defaultChecked />
+<FastRadio color="primary" name="pet" label="Cat" required />
 <FastRadio color="primary" name="pet" label="Dog" />
 ```
 
@@ -342,11 +352,12 @@ type FastRadioColor = 'primary' | 'secondary';
 | `disabled` | `boolean` | – | Disabled state |
 | `name` | `string` | – | Group name |
 | `value` | `string` | – | Radio value |
+| `required` | `boolean` | – | Shows asterisk, browser-native validation |
 
 ### Example
 
 ```tsx
-<FastRadioBox color="primary" name="cat" icon={<CakeIcon />} label="Whiskers" />
+<FastRadioBox color="primary" name="cat" icon={<CakeIcon />} label="Whiskers" required />
 <FastRadioBox color="primary" name="cat" icon={<EggIcon />} label="Luna" />
 ```
 
