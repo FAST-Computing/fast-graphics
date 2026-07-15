@@ -176,7 +176,7 @@ const StyledWrapper = styled('div')<{
     font-family: inherit;
     font-size: 0.9375rem;
     font-weight: 500;
-    color: ${p => p.$error ? p.theme.palette.error.main : (p.theme.palette[p.$color] as PaletteColor).main};
+    color: ${p => p.$error ? p.theme.palette.error.main : p.theme.palette.text.primary};
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -204,7 +204,7 @@ const StyledWrapper = styled('div')<{
     flex-shrink: 0;
     margin-right: 10px;
     font-size: 1.5rem;
-    color: ${p => p.$error ? p.theme.palette.error.main : (p.theme.palette[p.$color] as PaletteColor).main};
+    color: ${p => p.$error ? p.theme.palette.error.main : p.theme.palette.text.primary};
     transition: color 0.2s ease;
   }
 

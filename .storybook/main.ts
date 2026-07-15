@@ -1,0 +1,33 @@
+import type { StorybookConfig } from '@storybook/react-vite';
+import { dirname } from "path";
+import { fileURLToPath } from "url";
+import path from 'path';
+
+function getAbsolutePath(value: string) {
+  return dirname(fileURLToPath(import.meta.resolve(`${value}/package.json`)))
+}
+const currentDir = fileURLToPath(new URL('.', import.meta.url));
+
+const config: StorybookConfig = {
+  stories: [
+    "../stories/**/*.stories.@(ts|tsx)",
+  ],
+  addons: [
+    getAbsolutePath('@chromatic-com/storybook'),
+    getAbsolutePath('@storybook/addon-vitest'),
+    getAbsolutePath('@storybook/addon-a11y'),
+    getAbsolutePath('@storybook/addon-docs'),
+  ],
+  framework: getAbsolutePath('@storybook/react-vite'),
+  async viteFinal(vite) {
+    vite.resolve = vite.resolve || {};
+    vite.resolve.alias = {
+      ...((vite.resolve?.alias as object) || {}),
+      '@fast/tokens': path.resolve(currentDir, '../packages/tokens/src'),
+      '@fast/mui-theme': path.resolve(currentDir, '../packages/mui-theme/src'),
+      '@fast/components': path.resolve(currentDir, '../packages/components/src'),
+    };
+    return vite;
+  },
+};
+export default config;

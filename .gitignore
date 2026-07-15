@@ -30,3 +30,5 @@ Thumbs.db
 .npmrc
 
 /components
+*storybook.log
+storybook-static

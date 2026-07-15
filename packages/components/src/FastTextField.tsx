@@ -194,7 +194,7 @@ const StyledWrapper = styled('div')<{
   }
 
   &:hover:not(:disabled) .field-input {
-    color: ${p => p.$error ? p.theme.palette.error.main : (p.theme.palette[p.$accent] as PaletteColor).main};
+    color: ${p => p.$error ? p.theme.palette.error.main : p.theme.palette.text.primary};
   }
 
   .field-input {
@@ -205,7 +205,7 @@ const StyledWrapper = styled('div')<{
     font-family: inherit;
     font-size: 0.9375rem;
     font-weight: 500;
-    color: ${p => p.$error ? p.theme.palette.error.main : (p.theme.palette[p.$accent] as PaletteColor).main};
+    color: ${p => p.$error ? p.theme.palette.error.main : p.theme.palette.text.primary};
     padding: 0 14px;
     padding-right: ${p => (p.$stepper ? '36px' : '14px')};
     padding-top: ${p => (p.$float ? '10px' : '0')};

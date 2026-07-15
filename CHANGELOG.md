@@ -1,5 +1,28 @@
 # @fast/graphics
 
+## 1.4.0
+
+Storybook documentation suite, input text color refinement, and CI/CD for component showcase.
+
+### FastTextField / FastDateInput
+
+- **Input text color changed** from `palette[accent].main` (brand orange) to `palette.text.primary` (standard dark). Accent color retained for borders, labels, stepper buttons, and focus rings. Error state still uses `error.main` (red).
+- FastDateInput `.date-label` and `.date-icon` also use `text.primary` with the same error fallback.
+
+### Storybook
+
+- **16 story files** covering all components: FastThemeProvider, FastButton, FastCard, FastCardFA, FastTextField, FastDateInput, FastCheckbox, FastRadio, FastRadioBox, FastToggle, FastSlider, FastBurger, FastLoader, FastDialog, FastDropdown, FastTable.
+- **Auto-generated docs** (`tags: ['autodocs']`) with interactive Controls for every prop.
+- **Global decorator**: all stories wrapped in `FastThemeProvider` with brand selector.
+- **Vite aliases** configured for `@fast/*` packages in `.storybook/main.ts`.
+- **A11y checks** enabled via `@storybook/addon-a11y`.
+
+### CI/CD
+
+- **New GitHub Actions workflow** (`.github/workflows/storybook.yml`): builds Storybook on push to `main`/`master` and deploys to GitHub Pages via `actions/upload-pages-artifact` + `actions/deploy-pages`.
+
+---
+
 ## 1.3.2
 
 Critical controlled-mode fixes for stepper and date picker hydration.
