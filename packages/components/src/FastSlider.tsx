@@ -14,8 +14,11 @@ declare module '@emotion/react' {
 export type FastSliderColor = 'primary' | 'secondary';
 
 export interface FastSliderProps extends SliderProps {
+  /** Accent color for track and thumb. */
   color?: FastSliderColor;
+  /** Slider width. Number → px, string → raw CSS. */
   width?: number | string;
+  /** Track height in px. Default 6. */
   height?: number | string;
   /** Label text shown above the slider. */
   label?: string;

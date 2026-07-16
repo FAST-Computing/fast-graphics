@@ -20,7 +20,6 @@ import {
   FastCard,
   FastCardFA,
   FastButton,
-  FastBurger,
   FastTable,
   FastLoader,
   FastThemeProvider,
@@ -33,6 +32,11 @@ import {
   FastSlider,
   FastToggle,
   FastDropdown,
+  FastSnackbar,
+  FastEmptyState,
+  FastTextArea,
+  FastTooltip,
+  FastUpload,
 } from '@fast/components';
 import { defaultData, defaultColumns } from './data/tableData.js';
 
@@ -49,6 +53,9 @@ export default function App() {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [textValue, setTextValue] = useState('');
   const [selectedBtn, setSelectedBtn] = useState('');
+  const [snackMsg, setSnackMsg] = useState('');
+  const [snackType, setSnackType] = useState<'success' | 'error' | 'warning' | 'default'>('default');
+  const [snackOpen, setSnackOpen] = useState(false);
 
   return (
     <FastThemeProvider brand={brand}>
@@ -400,6 +407,12 @@ export default function App() {
           <FastTextField placeholder="Cats count" numeric stepper precision={0} width={140} />
         </Box>
 
+        <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', alignItems: 'center', mt: 2 }}>
+          <FastTextArea placeholder="Cat biography" width={320} rows={4} />
+          <FastTextArea placeholder="Notes (required)" required width={320} rows={3} />
+          <FastTextArea placeholder="Disabled" disabled width={320} rows={2} defaultValue="Cannot edit" />
+        </Box>
+
         <br />
 
         <Box sx={{ display: 'flex', gap: 3, alignItems: 'center' }}>
@@ -415,6 +428,55 @@ export default function App() {
         </Box>
 
         <Divider sx={{ my: 3 }} />
+
+        <Typography variant="h6" sx={{ mb: 2, fontWeight: 'bold' }}>
+          Cat snacks
+        </Typography>
+        <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', alignItems: 'center' }}>
+          <FastTooltip title="This is a nice tooltip" color="secondary">
+            <FastButton label="Success" icon=<IcecreamIcon/> color="primary" width={140} height={40} animated onClick={() => { setSnackMsg('Profile saved!'); setSnackType('success'); setSnackOpen(true); }} />
+          </FastTooltip>
+          <FastTooltip title="Also this one is nice" color="paper" placement="top" arrow>
+            <FastButton label="Warning" color="primary" width={140} height={40} onClick={() => { setSnackMsg('Warning: cat is hungry.'); setSnackType('warning'); setSnackOpen(true); }} />
+          </FastTooltip>
+          <FastButton label="Error" color="secondary" width={140} height={40} onClick={() => { setSnackMsg('Something went wrong.'); setSnackType('error'); setSnackOpen(true); }} />
+          <FastButton label="With action" color="primary" variant="outlined" width={140} height={40} animated onClick={() => { setSnackMsg('Cat adopted!'); setSnackType('default'); setSnackOpen(true); }} />
+        </Box>
+        <FastSnackbar
+          open={snackOpen}
+          message={snackMsg}
+          type={snackType}
+          autoHideDuration={4000}
+          onClose={() => setSnackOpen(false)}
+          actionLabel={snackType === 'default' ? 'Undo' : undefined}
+          onAction={() => { alert('Undone!'); setSnackOpen(false); }}
+        />
+
+        <Divider sx={{ my: 3 }} />
+
+        <Typography variant="h6" sx={{ mb: 2, fontWeight: 'bold' }}>
+          File upload
+        </Typography>
+        <Box sx={{ display: 'flex', gap: 3, flexWrap: 'wrap' }}>
+          <FastUpload label="Cat photo" accept="image/*" width={200} height={160} required />
+          <FastUpload label="Documents" color="secondary" multiple accept=".pdf,.doc,.txt" width={260} height={160} helperText='Document formats are required'/>
+          <FastUpload label="Disabled" disabled width={260} height={160} />
+        </Box>
+
+        <Divider sx={{ my: 3 }} />
+
+        <Typography variant="h6" sx={{ mb: 2, fontWeight: 'bold' }}>
+          Empty state
+        </Typography>
+        <Box sx={{ display: 'flex', gap: 4, flexWrap: 'wrap', justifyContent: 'center' }}>
+          <FastEmptyState
+            title="No results"
+            description="Try adjusting your search or filters."
+            action={<FastButton label="Clear filters" color="primary" variant="outlined" width={140} height={38} fontSize={13} animated />}
+            imgWidth={160}
+            imgHeight={160}
+          />
+        </Box>
 
       </Box>
     </FastThemeProvider>

@@ -18,17 +18,25 @@ export default meta;
 type Story = StoryObj<typeof FastDialog>;
 
 export const Default: Story = {
+  args: {
+    title: 'Cats cove',
+  },
   render: (args) => {
     const [open, setOpen] = useState(false);
     return (
       <Box>
         <FastButton label="Open Dialog" onClick={() => setOpen(true)} width={160} height={40} />
-        <FastDialog {...args} open={open} onClose={() => setOpen(false)} title="Example Dialog"
-          actions={<><Button onClick={() => setOpen(false)}>Cancel</Button><Button variant="contained" onClick={() => setOpen(false)}>Confirm</Button></>}
+        <FastDialog
+          {...args}
+          open={open}
+          onClose={() => setOpen(false)}
         >
-          <Typography>This is a branded dialog.</Typography>
+          <Typography variant="body1">
+            You are safe in this custom dialog.
+          </Typography>
         </FastDialog>
       </Box>
     );
   },
 };
+

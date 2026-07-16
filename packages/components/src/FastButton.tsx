@@ -21,20 +21,33 @@ export type FastButtonAlign = 'center' | 'left' | 'right';
 export type FastButtonType = 'button' | 'submit' | 'reset';
 
 export interface FastButtonProps {
+  /** Button text content. */
   label?: string;
+  /** MUI icon or any React node to display alongside the label. */
   icon?: React.ReactNode;
+  /** Color from the extended palette. */
   color?: FastButtonColor;
+  /** Visual style variant. */
   variant?: FastButtonVariant;
+  /** Whether the icon appears before or after the label text. */
   iconPosition?: FastButtonIconPosition;
+  /** Content alignment within the button. */
   align?: FastButtonAlign;
+  /** Visually selected state — fills background with the color's own main value regardless of variant. */
   selected?: boolean;
+  /** Button width. Number → px, string → raw CSS (e.g. "100%"). */
   width?: number | string;
+  /** Button height. Number → px, string → raw CSS. */
   height?: number | string;
+  /** Text font size. Number → px */
   fontSize?: number | string;
+  /** Enable the clip-path circular reveal animation on hover. */
   animated?: boolean;
+  /** Disabled state — 0.4 opacity, no pointer events. */
   disabled?: boolean;
-  /** HTML button type attribute. Default "button" to prevent accidental form submits. */
+  /** Native HTML button type. Defaults to "button" to prevent accidental form submits. */
   type?: FastButtonType;
+  /** Click handler. */
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }
 
@@ -72,7 +85,7 @@ export function getColorSet(color: FastButtonColor, theme: MuiTheme, _selected: 
   return base;
 }
 
-export function FastButton({
+export const FastButton = React.forwardRef<HTMLDivElement, FastButtonProps>(function FastButton({
     label = '',
     icon,
     color = 'primary',
@@ -87,11 +100,12 @@ export function FastButton({
     disabled = false,
     type = 'button',
     onClick,
-}: FastButtonProps) {
+    ...rest
+}, ref) {
   const isPct = typeof width === 'string';
   const heightNum = typeof height === 'number' ? height : parseInt(height) || 40;
   return (
-    <StyledWrapper $color={color} $variant={variant} $w={width} $h={height} $animated={animated} $isPct={isPct} $hNum={heightNum} $fs={fontSize} $selected={selected} $iconPos={iconPosition} $align={align}>
+    <StyledWrapper ref={ref} $color={color} $variant={variant} $w={width} $h={height} $animated={animated} $isPct={isPct} $hNum={heightNum} $fs={fontSize} $selected={selected} $iconPos={iconPosition} $align={align} {...rest}>
       <button className="Btn" type={type} onClick={onClick} disabled={disabled}>
         <span className="Btn-content">
           {iconPosition === 'left' && icon}
@@ -101,7 +115,7 @@ export function FastButton({
       </button>
     </StyledWrapper>
   );
-}
+});
 
 type StyledProps = {
   $color: FastButtonColor;

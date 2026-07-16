@@ -6,10 +6,11 @@ Design tokens + MUI theme factory + branded React components for FAST-Computing 
 packages/
   tokens/       → design tokens (brand colors, fonts)
   mui-theme/    → createThemeFromTokens()
-  components/   → branded components
+  components/   → 16 branded components
   playground/   → local testing via Vite
 ```
 
+---
 
 ## Quick Start
 
@@ -23,10 +24,9 @@ npm install @fast/tokens @fast/mui-theme @fast/components \
 ### Provider
 
 ```tsx
-// app/layout.tsx
 import { FastThemeProvider } from '@fast/components';
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
@@ -42,30 +42,21 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 ### Use a component
 
 ```tsx
-'use client';
 import { FastButton } from '@fast/components';
 
-<FastButton label="Click me" color="primary" width={180} height={40} animated />
+<FastButton label="Click me" color="primary" animated />
 ```
 
-#### Fallback to MaterialUI components
+### Fallback to MUI
 
 ```tsx
-import { IconButton } from "@mui/material";
+import { Button } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 
-<IconButton
-  sx={{
-    color: theme.palette.primary.main,
-    p: "10px",
-    fontSize: "1.75rem",
-  }}
-    onClick={onUpdateRender}
-  >
-    <PlayArrowIcon fontSize="inherit" />
-</IconButton>
-
+<Button variant="contained" color="primary">MUI works too</Button>
 ```
 
+---
 
 ## Brands
 
@@ -77,28 +68,34 @@ import { IconButton } from "@mui/material";
 | Simplifica Core | `simplifica_core` |
 | Simplifica Burlo | `simplifica_burlo` |
 
+---
+
 ## Components
 
-All 14 components live in `@fast/components`. See [COMPONENTS.md](./COMPONENTS.md) for full API.
+Full API documentation on [fast-graphics's Storybook](https://fast-computing.github.io/fast-graphics/).
 
+---
 
 ## Development
 
 ```bash
-# dev server (Vite playground)
-npm run dev
-
-# build all packages
-npm run build
+npm run dev          # Vite playground (port 5173)
+npm run storybook    # Storybook (port 6006)
+npm run build        # build all packages
+npm run build-storybook  # static Storybook output
 ```
+
+Storybook is auto-deployed to GitHub Pages on push to `main`.
+
+---
 
 ## Versioning
 
-- **Major** — core package changes (affects all apps)
+- **Major** — core changes (affects all apps)
 - **Minor** — new tokens or components
 - **Fix** — localized fixes
 
-Tag commits and push to trigger GitHub Packages publish:
+Tag & push to publish to GitHub Packages:
 
 ```bash
 git tag v<version>

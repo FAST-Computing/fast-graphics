@@ -1,5 +1,35 @@
 # @fast/graphics
 
+## 1.5.0
+
+FastTooltip, FastUpload, FastTextArea, FastEmptyState, forwardRef support on FastButton, JSDoc documentation across all components.
+
+### New components
+
+- **`FastTooltip`** — styled MUI Tooltip wrapper with `slotProps` for portal-safe styling. Squared corners, brand-colored background, same shadow as other components. Supports `color` (primary/secondary/paper/text), `placement`, `arrow`. Styled via `slotProps.tooltip.sx` — works with MUI v9 Portals.
+- **`FastUpload`** — drag & drop file upload with dashed border empty state, filled file list with previews, remove button, multiple file support, `maxSize` validation, and `required` validation. Uses `CloudUploadIcon` and `ClearIcon` from MUI icons. Hover fills brand accent.
+- **`FastTextArea`** — multiline text area with floating label, same brand border/focus/hover as FastTextField. Supports `rows`, `resize` (none/vertical), `minHeight`, `required`, `errorMessage`. Input color uses `text.primary`.
+- **`FastEmptyState`** — placeholder image and message to cover for empty data pages or 404.
+
+### FastButton — forwardRef + rest spread
+
+- **`React.forwardRef`** wrapping — enables MUI Tooltip (and other wrapper components) to attach event handlers via ref.
+- **`...rest` spread** on `StyledWrapper` — unknown props (e.g. `onMouseEnter`, `onMouseLeave` injected by Tooltip) are now passed to the DOM element instead of being silently lost.
+- **New `type` prop**: `'button' | 'submit' | 'reset'`. Default `'button'` to prevent accidental form submits.
+
+### Storybook
+
+- **Icon mapping for FastButton** — `icon` control now uses a `select` with `mapping` to 8 common MUI icons (Payment, Favorite, Cart, Send, Delete, Edit, Settings, Search).
+- **New stories**: FastTextArea (6 variants), FastTooltip (3 variants), FastUpload (5 variants).
+- **Width/height controls** changed from `{ control: 'number' }` to `{ control: 'text' }` across FastButton, FastCard, FastCardFA — allows entering percentage values like `"100%"`.
+- **JSDoc comments** added to every prop of every component — all visible in Storybook autodocs tables.
+
+### Input text color
+
+- FastTextField, FastTextArea, FastDateInput `.field-input` and `.date-label`/`.date-icon` now use `palette.text.primary` instead of the brand accent color. Accent retained on borders, labels, focus rings, and hover effects.
+
+---
+
 ## 1.4.0
 
 Storybook documentation suite, input text color refinement, and CI/CD for component showcase.

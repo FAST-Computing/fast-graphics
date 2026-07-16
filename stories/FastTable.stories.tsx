@@ -8,6 +8,27 @@ const data: Person[] = [
   { name: 'Bob', age: 25, email: 'bob@example.com' },
   { name: 'Charlie', age: 35, email: 'charlie@example.com' },
   { name: 'Diana', age: 28, email: 'diana@example.com' },
+  { name: 'Ethan', age: 32, email: 'ethan@example.com' },
+  { name: 'Fiona', age: 27, email: 'fiona@example.com' },
+  { name: 'George', age: 41, email: 'george@example.com' },
+  { name: 'Hannah', age: 29, email: 'hannah@example.com' },
+  { name: 'Ian', age: 34, email: 'ian@example.com' },
+  { name: 'Julia', age: 31, email: 'julia@example.com' },
+  { name: 'Kevin', age: 26, email: 'kevin@example.com' },
+  { name: 'Laura', age: 33, email: 'laura@example.com' },
+  { name: 'Marcus', age: 38, email: 'marcus@example.com' },
+  { name: 'Natalie', age: 24, email: 'natalie@example.com' },
+  { name: 'Oliver', age: 45, email: 'oliver@example.com' },
+  { name: 'Penelope', age: 29, email: 'penelope@example.com' },
+  { name: 'Quentin', age: 36, email: 'quentin@example.com' },
+  { name: 'Rachel', age: 30, email: 'rachel@example.com' },
+  { name: 'Samuel', age: 27, email: 'samuel@example.com' },
+  { name: 'Tina', age: 42, email: 'tina@example.com' },
+  { name: 'Victor', age: 31, email: 'victor@example.com' },
+  { name: 'Wendy', age: 25, email: 'wendy@example.com' },
+  { name: 'Xavier', age: 39, email: 'xavier@example.com' },
+  { name: 'Yasmin', age: 28, email: 'yasmin@example.com' },
+  { name: 'Zachary', age: 33, email: 'zachary@example.com' }
 ];
 const ch = createColumnHelper<Person>();
 const columns: ColumnDef<Person, any>[] = [
@@ -36,7 +57,7 @@ export default meta;
 type Story = StoryObj<typeof FastTable<Person>>;
 
 export const Default: Story = {
-  args: { data, columns, width: '600px' },
+  args: { data, columns, width: '100%' },
 };
 
 export const Sortable: Story = {

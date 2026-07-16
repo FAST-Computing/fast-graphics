@@ -12,24 +12,41 @@ declare module '@emotion/react' {
 export type FastTextFieldColor = 'primary' | 'secondary';
 
 export interface FastTextFieldProps {
+  /** Accent color for border, label, and focus ring. */
   color?: FastTextFieldColor;
+  /** Floating label text. */
   placeholder?: string;
+  /** Controlled value. */
   value?: string;
+  /** Uncontrolled initial value. */
   defaultValue?: string;
+  /** Change handler. */
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  /** Disabled state — 0.35 opacity, no interactions. */
   disabled?: boolean;
+  /** Field width. Number → px, string → raw CSS. */
   width?: number | string;
+  /** Field height. Default 52. */
   height?: number | string;
+  /** Red error styling (border, text). */
   error?: boolean;
   /** Custom error message shown in red below the field. Implies error styling. */
   errorMessage?: string;
+  /** Helper text shown below the field (gray, or red when error is true). */
   helperText?: string;
+  /** Shows asterisk, auto-validates on blur if empty — red border + "This field is required". */
   required?: boolean;
+  /** Restrict input to numeric values (int or float). */
   numeric?: boolean;
+  /** Show up/down stepper buttons on the right. Implies numeric. */
   stepper?: boolean;
+  /** Stepper increment / decrement step. Default 1. */
   step?: number;
+  /** Minimum value (for numeric). */
   min?: number;
+  /** Maximum value (for numeric). */
   max?: number;
+  /** Decimal places for numeric (0 = integer). */
   precision?: number;
 }
 

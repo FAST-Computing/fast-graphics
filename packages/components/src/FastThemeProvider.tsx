@@ -7,9 +7,13 @@ import { createThemeFromTokens } from '../../mui-theme/dist/index.js';
 import type { BrandName } from '../../tokens/dist/index.js';
 
 export interface FastThemeProviderProps {
+  /** Brand identifier. One of the 5 available brands. */
   brand: BrandName;
+  /** React tree that will receive the generated MUI theme. */
   children: ReactNode;
+  /** Inject MUI CssBaseline (normalize + global resets). Default true. */
   withCssBaseline?: boolean;
+  /** Apply sensible MUI component defaults (AppBar color, Button variant). Default true. */
   withComponentDefaults?: boolean;
 }
 

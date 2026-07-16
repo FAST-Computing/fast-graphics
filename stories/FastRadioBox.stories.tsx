@@ -1,6 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { FastRadioBox } from '../packages/components/src/FastRadioBox';
 import PetsIcon from '@mui/icons-material/Pets';
+import SetMealIcon from '@mui/icons-material/SetMeal';
+import EggAltIcon from '@mui/icons-material/EggAlt';
+import IcecreamIcon from '@mui/icons-material/Icecream';
+import { Box } from '@mui/material';
 
 const meta: Meta<typeof FastRadioBox> = {
   title: 'Inputs/FastRadioBox',
@@ -12,7 +16,6 @@ const meta: Meta<typeof FastRadioBox> = {
     width: { control: 'number' },
     height: { control: 'number' },
     disabled: { control: 'boolean' },
-    required: { control: 'boolean' },
   },
 };
 
@@ -23,10 +26,16 @@ export const Default: Story = {
   args: { icon: <PetsIcon />, label: 'Cat', name: 'pet', width: 80, height: 80 },
 };
 
-export const Selected: Story = {
-  args: { ...Default.args, defaultChecked: true },
-};
+export const FoodGroup: Story = {
+  args: {
+    color: "primary"
+  },
 
-export const Required: Story = {
-  args: { ...Default.args, label: 'Required', required: true },
+  render: () => (
+    <Box sx={{ display: 'flex', gap: 2 }}>
+      <FastRadioBox color="primary" name="food" icon={<SetMealIcon />} label="Fish" defaultChecked />
+      <FastRadioBox color="primary" name="food" icon={<EggAltIcon />} label="Eggs" />
+      <FastRadioBox color="primary" name="food" icon={<IcecreamIcon />} label="Icecream" />
+    </Box>
+  )
 };

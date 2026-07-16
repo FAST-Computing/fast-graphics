@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { FastRadio } from '../packages/components/src/FastRadio';
+import { Box } from '@mui/material';
+import IcecreamIcon from '@mui/icons-material/Icecream';
 
 const meta: Meta<typeof FastRadio> = {
   title: 'Inputs/FastRadio',
@@ -10,7 +12,6 @@ const meta: Meta<typeof FastRadio> = {
     size: { control: 'number' },
     label: { control: 'text' },
     disabled: { control: 'boolean' },
-    required: { control: 'boolean' },
   },
 };
 
@@ -21,10 +22,13 @@ export const Default: Story = {
   args: { label: 'Option A', name: 'group' },
 };
 
-export const Selected: Story = {
-  args: { ...Default.args, defaultChecked: true },
+export const RadioGroup: Story = {
+  render: () => (
+    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+      <FastRadio color="primary" name="size" label="Small" defaultChecked />
+      <FastRadio color="primary" name="size" label="Medium" />
+      <FastRadio color="primary" name="size" label="Large" />
+    </Box>
+  ),
 };
 
-export const Required: Story = {
-  args: { ...Default.args, label: 'Required', required: true },
-};

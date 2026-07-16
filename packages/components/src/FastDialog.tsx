@@ -22,9 +22,13 @@ declare module '@emotion/react' {
 export type FastDialogColor = 'primary' | 'secondary';
 
 export interface FastDialogProps extends Omit<DialogProps, 'color' | 'title'> {
+  /** Accent color for the header bar background. */
   color?: FastDialogColor;
+  /** Title text or node rendered in the branded header bar. */
   title?: ReactNode;
+  /** Footer action elements (buttons). */
   actions?: ReactNode;
+  /** Close handler. Required for controlled open state. */
   onClose: () => void;
 }
 

@@ -12,13 +12,21 @@ declare module '@emotion/react' {
 export type FastCheckboxColor = 'primary' | 'secondary';
 
 export interface FastCheckboxProps {
+  /** Accent color when checked. */
   color?: FastCheckboxColor;
+  /** Box size in px. Default 28. */
   size?: number;
+  /** Label text shown next to the checkbox. */
   label?: string;
+  /** Controlled checked state. */
   checked?: boolean;
+  /** Uncontrolled initial state. */
   defaultChecked?: boolean;
+  /** Change handler. */
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  /** Disabled state — 0.35 opacity. */
   disabled?: boolean;
+  /** Shows red asterisk on label, enables browser-native validation. */
   required?: boolean;
 }
 
