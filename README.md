@@ -3,11 +3,12 @@
 Design tokens + MUI theme factory + branded React components for FAST-Computing and Simplifica.
 
 ```
-packages/
+packages/     → fast-graphics core
   tokens/       → design tokens (brand colors, fonts)
-  mui-theme/    → createThemeFromTokens()
-  components/   → 16 branded components
-  playground/   → local testing via Vite
+  mui-theme/    → token conversion into MUI themes
+  components/   → custom components
+playground/   → local testing via Vite
+stories/      → Storybook docs showcase
 ```
 
 ---
@@ -24,7 +25,7 @@ npm install @fast/tokens @fast/mui-theme @fast/components \
 ### Provider
 
 ```tsx
-import { FastThemeProvider } from '@fast/components';
+import { FastThemeProvider } from '@fast-computing/fast-graphics/components';
 
 export default function RootLayout({ children }) {
   return (
@@ -42,7 +43,7 @@ export default function RootLayout({ children }) {
 ### Use a component
 
 ```tsx
-import { FastButton } from '@fast/components';
+import { FastButton } from '@fast-computing/fast-graphics/components';
 
 <FastButton label="Click me" color="primary" animated />
 ```
