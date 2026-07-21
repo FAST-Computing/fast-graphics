@@ -1,6 +1,6 @@
 {
   "name": "@fast/mui-theme",
-  "version": "1.5.1",
+  "version": "1.6.0",
   "private": false,
   "description": "MUI theme creators derived from @fast/tokens",
   "license": "MIT",

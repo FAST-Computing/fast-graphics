@@ -1,6 +1,6 @@
 # @fast/graphics
 
-## 1.5.1
+## 1.6.0
 
 Automated tests, custom calendar popup for FastDateInput, column-level filtering in FastTable with range support.
 
