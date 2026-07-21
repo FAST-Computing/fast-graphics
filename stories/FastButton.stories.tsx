@@ -1,3 +1,4 @@
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { FastButton } from '../packages/components/src/FastButton';
 import PaymentIcon from '@mui/icons-material/Payment';
@@ -48,7 +49,31 @@ export default meta;
 type Story = StoryObj<typeof FastButton>;
 
 export const Default: Story = {
-  args: { label: 'Button', color: 'primary', variant: 'default', width: '130px', height: '40px', animated: true },
+  args: { label: 'Button', color: 'primary', variant: 'default', width: '130px', height: '40px', animated: false },
+};
+
+export const Animated: Story = {
+  args: { ...Default.args, animated: true },
+};
+
+export const PrimaryLight: Story = {
+  args: { ...Default.args, color: 'primaryLight' },
+};
+
+export const PrimaryDark: Story = {
+  args: { ...Default.args, color: 'primaryDark' },
+};
+
+export const Secondary: Story = {
+  args: { ...Default.args, color: 'secondary' },
+};
+
+export const SecondaryLight: Story = {
+  args: { ...Default.args, color: 'secondaryLight' },
+};
+
+export const SecondaryDark: Story = {
+  args: { ...Default.args, color: 'secondaryDark' },
 };
 
 export const Outlined: Story = {

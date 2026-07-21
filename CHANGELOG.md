@@ -1,5 +1,38 @@
 # @fast/graphics
 
+## 1.5.1
+
+Automated tests, custom calendar popup for FastDateInput, column-level filtering in FastTable with range support.
+
+### Storybook Tests
+- Currently supporting Interactions and Accessibility tests (Axe rules compliant).
+
+### FastDateInput
+
+- **Custom calendar popup**: replaced native `<input type="date">` with a full React-calendar. Month/year navigation with ChevronLeft/ChevronRight icons, 7-column day grid (Mon–Sun), selected day highlighted with brand `main` background + `contrastText`, today highlighted with `action.hover`.
+- **Today & Clear buttons**: popup footer with both actions. "Today" jumps to current date. "Clear" resets the value.
+- **Click-outside-to-close**: `useEffect` with `mousedown` listener on document closes the popup when clicking outside the wrapper.
+- **Focus state on Clear**: `setFocused(false)` forced in `commitDate` so the floating label drops back to center when clearing.
+- **`:active` moved to Trigger**: removed from the wrapper (which contained the popup), added to the Trigger div. Clicking calendar days, arrows, or buttons no longer triggers the press-down transform on the whole component.
+
+### FastTable
+
+- **New `columnFilterable` prop**: when true, renders a filter input row in `<thead>` below the header row. Each column gets a text input connected to `header.column.setFilterValue()`.
+- **Range filter support**: columns with `meta: { filterVariant: 'range' }` render two number inputs (Min / Max) instead of a single text input. Values are stored as `[min, max]` array.
+- **Built-in `inNumberRange`**: tanstack/react-table's native `inNumberRange` filter function. Uses `resolveFilterValue` for string-to-number parsing, auto-swaps min/max when inverted, and auto-removes when both inputs are empty.
+- **Age column filter**: data now use `filterFn: 'inNumberRange'` with `meta: { filterVariant: 'range' }`.
+
+### FastButton — aXe fixes
+
+- **`::before` moved to `StyledWrapper`**: pseudo-element moved from `.Btn` to the outer wrapper so `.Btn` has no overlapping pseudo-elements. aXe can now resolve color contrast against the single `background-color` on `.Btn`. Added `pointer-events: none` on `::before` to prevent click interception.
+- **Smooth default variant hover**: added `filter 0.2s ease` to `.Btn-content` transition. The default variant uses `filter: invert(1)` on hover which now fades smoothly instead of snapping, matching the fluid feel of outlined/text variants.
+
+### FastTextField / FastTextArea — aXe fixes
+
+- **`aria-label={placeholder}`**: added to both `<input>` and `<textarea>` elements. The floating label (`<span class="float-label">`) is visual only — aXe requires a programmatic association. `aria-label` resolves the "Form label" critical violation without changing the visual design.
+
+---
+
 ## 1.5.0
 
 FastTooltip, FastUpload, FastTextArea, FastEmptyState, forwardRef support on FastButton, JSDoc documentation across all components.

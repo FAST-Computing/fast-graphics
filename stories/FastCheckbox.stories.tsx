@@ -1,3 +1,4 @@
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { FastCheckbox } from '../packages/components/src/FastCheckbox';
 
@@ -20,6 +21,10 @@ type Story = StoryObj<typeof FastCheckbox>;
 
 export const Default: Story = {
   args: { label: 'Accept terms' },
+};
+
+export const Secondary: Story = {
+  args: { ...Default.args, color: 'secondary' },
 };
 
 export const Checked: Story = {

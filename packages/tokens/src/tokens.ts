@@ -1,5 +1,5 @@
 export type BrandName = 
-    'fast_core' | 'fast_argos' | 'fast_atlas' | 'simplifica_core' | 'simplifica_burlo';
+    'fast_core' | 'fast_argos' | 'fast_atlas' | 'simplifica_core' | 'simplifica_burlo' | 'smarttour';
 
 export type BrandTokens = {
   primary: {
@@ -133,13 +133,13 @@ export const brandTokens: Record<BrandName, BrandTokens> = {
 
   simplifica_burlo: {
     primary: {
-      main: '#1B9A75',
-      dark: '#0F6E56',
+      main: '#0F6E56', // old: #1B9A75
+      dark: '#094637',
       light: '#84c8bb',
     },
     secondary: {
-      main: '#FABA59',
-      dark: '#E09A30',
+      main: '#FABA59', // old: #FABA59
+      dark: '#a77e3d',
       light: '#ffd9a0',
     },
     background: {
@@ -156,5 +156,28 @@ export const brandTokens: Record<BrandName, BrandTokens> = {
     }
   },
 
-  
+  smarttour: {
+    primary: {
+      main: '#3B4CCA',
+      dark: '#232D7A',
+      light: '#8C98EC',
+    },
+    secondary: {
+      main: '#FF6B57',
+      dark: '#B84030',
+      light: '#FFA396',
+    },
+    background: {
+      default: '#F5F6FA',
+      paper: '#FFFFFF',
+    },
+    text: { 
+      primary: '#12131A',
+      secondary: '#5A5E73',
+    },
+    font: {
+      main: '"Google Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+      mono: '"Roboto Mono", monospace',
+    }
+}
 };

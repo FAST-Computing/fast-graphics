@@ -1,3 +1,4 @@
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { FastUpload } from '../packages/components/src/FastUpload';
 
@@ -25,6 +26,10 @@ type Story = StoryObj<typeof FastUpload>;
 
 export const Default: Story = {
   args: { label: 'Click to upload', width: '300px' },
+};
+
+export const Secondary: Story = {
+  args: { ...Default.args, color: 'secondary' },
 };
 
 export const ImagesOnly: Story = {

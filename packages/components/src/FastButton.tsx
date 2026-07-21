@@ -168,7 +168,7 @@ const StyledWrapper = styled('div')<StyledProps>`
     color: ${p => (p.$selected || p.$variant === 'default' ? cs(p).contrastText : cs(p).main)};
     font-weight: 600;
     font-size: ${p => (p.$fs !== undefined ? (typeof p.$fs === 'number' ? `${p.$fs}px` : p.$fs) : 'inherit')};
-    transition: color 0.2s ease;
+    transition: color 0.2s ease, filter 0.2s ease;
   }
 
   ${p => p.$animated && `

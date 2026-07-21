@@ -1,3 +1,4 @@
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { FastThemeProvider } from '../packages/components/src/FastThemeProvider';
 import { useTheme } from '@mui/material/styles';
@@ -49,7 +50,7 @@ const meta: Meta<typeof FastThemeProvider> = {
   argTypes: {
     brand: {
       control: 'select',
-      options: ['fast_core', 'fast_argos', 'fast_atlas', 'simplifica_core', 'simplifica_burlo'],
+      options: ['fast_core', 'fast_argos', 'fast_atlas', 'simplifica_core', 'simplifica_burlo', 'smarttour'],
     },
     withCssBaseline: { control: 'boolean' },
     withComponentDefaults: { control: 'boolean' },

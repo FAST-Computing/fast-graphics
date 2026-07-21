@@ -68,6 +68,7 @@ import { useTheme } from '@mui/material/styles';
 | FAST Computing Atlas | `fast_atlas` |
 | Simplifica Core | `simplifica_core` |
 | Simplifica Burlo | `simplifica_burlo` |
+| SmartTour | `smarttour` |
 
 ---
 
@@ -102,3 +103,9 @@ Tag & push to publish to GitHub Packages:
 git tag v<version>
 git push origin v<version>
 ```
+
+---
+
+## Tests
+
+Automated tests can be executed **locally** on Storybook.

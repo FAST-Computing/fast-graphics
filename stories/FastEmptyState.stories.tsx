@@ -1,3 +1,4 @@
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { FastEmptyState } from '../packages/components/src/FastEmptyState';
 import { FastButton } from '../packages/components/src/FastButton';

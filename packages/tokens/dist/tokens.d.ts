@@ -1,4 +1,4 @@
-export type BrandName = 'fast_core' | 'fast_argos' | 'fast_atlas' | 'simplifica_core' | 'simplifica_burlo';
+export type BrandName = 'fast_core' | 'fast_argos' | 'fast_atlas' | 'simplifica_core' | 'simplifica_burlo' | 'smarttour';
 export type BrandTokens = {
     primary: {
         main: string;

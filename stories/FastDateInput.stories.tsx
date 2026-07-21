@@ -1,3 +1,4 @@
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { FastDateInput } from '../packages/components/src/FastDateInput';
 
@@ -20,6 +21,10 @@ type Story = StoryObj<typeof FastDateInput>;
 
 export const Default: Story = {
   args: { placeholder: 'Select date', width: '240px' },
+};
+
+export const Secondary: Story = {
+  args: { ...Default.args, color: 'secondary' },
 };
 
 export const WithValue: Story = {

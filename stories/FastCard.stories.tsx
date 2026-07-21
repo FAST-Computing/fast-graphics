@@ -1,3 +1,4 @@
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { FastCard } from '../packages/components/src/FastCard';
 import { FastButton } from '../packages/components/src/FastButton';

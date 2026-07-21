@@ -1,3 +1,4 @@
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { FastRadioBox } from '../packages/components/src/FastRadioBox';
 import PetsIcon from '@mui/icons-material/Pets';
@@ -24,6 +25,10 @@ type Story = StoryObj<typeof FastRadioBox>;
 
 export const Default: Story = {
   args: { icon: <PetsIcon />, label: 'Cat', name: 'pet', width: 80, height: 80 },
+};
+
+export const Secondary: Story = {
+  args: { ...Default.args, color: 'secondary' },
 };
 
 export const FoodGroup: Story = {

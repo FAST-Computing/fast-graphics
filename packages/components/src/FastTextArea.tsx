@@ -93,6 +93,7 @@ export function FastTextArea({
         onFocus={() => setFocused(true)}
         onBlur={handleBlur}
         disabled={disabled}
+        aria-label={placeholder || ''}
       />
       <span className="float-label">
         {placeholder}

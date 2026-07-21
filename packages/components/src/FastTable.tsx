@@ -17,6 +17,7 @@ import {
   type RowData,
   type SortingState,
   type PaginationState,
+  type ColumnFiltersState,
 } from '@tanstack/react-table';
 
 /** Merge MUI palette types into Emotion's theme so styled can access palette. */
@@ -35,8 +36,6 @@ export interface FastTableProps<T extends RowData> {
   columns: ColumnDef<T, any>[];
   /** Which palette color to use for headers. Text auto-contrasts. */
   color?: FastTableColor;
-  /** Show footer row */
-  showFooter?: boolean;
   /** Highlight row on hover */
   hoverable?: boolean;
   /** Alternate row background */
@@ -51,6 +50,9 @@ export interface FastTableProps<T extends RowData> {
   defaultPageSize?: number;
   /** Enable global text search across all columns. */
   searchable?: boolean;
+  /** Enable per-column text filtering via inputs in the header row. 
+   * NOTE: needs "filterFn: 'includesString'"" in the data's columnHelper info on numerical values.*/
+  filterable?: boolean;
   /** Optional function that renders action buttons per row. */
   renderActions?: (row: T) => React.ReactNode;
   /** Header text for the actions column. Default "Actions". */
@@ -62,7 +64,6 @@ export function FastTable<T extends RowData>({
   data,
   columns,
   color = 'primary',
-  showFooter = false,
   hoverable = true,
   striped = true,
   width = '100%',
@@ -70,6 +71,7 @@ export function FastTable<T extends RowData>({
   pageable = false,
   defaultPageSize = 5,
   searchable = false,
+  filterable = false,
   renderActions,
   actionsHeader = 'Actions',
 }: FastTableProps<T>) {
@@ -79,14 +81,16 @@ export function FastTable<T extends RowData>({
     pageSize: defaultPageSize,
   });
   const [globalFilter, setGlobalFilter] = useState('');
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
   const table = useReactTable({
     data,
     columns,
-    state: { sorting, pagination, globalFilter },
+    state: { sorting, pagination, globalFilter, columnFilters },
     onSortingChange: setSorting,
     onPaginationChange: setPagination,
     onGlobalFilterChange: setGlobalFilter,
+    onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
@@ -191,6 +195,54 @@ export function FastTable<T extends RowData>({
               {renderActions && <th className="actions-header">{actionsHeader}</th>}
             </tr>
           ))}
+          {filterable && (
+            <tr className="filter-row">
+              {table.getHeaderGroups()[0]?.headers.map((header) => {
+                const meta = (header.column.columnDef as any).meta;
+                const isRange = meta?.filterVariant === 'range';
+                const fv = header.column.getFilterValue() as any;
+
+                if (isRange) {
+                  const fvArr = Array.isArray(fv) ? fv : [undefined, undefined];
+                  const [min, max] = fvArr;
+                  return (
+                    <th key={header.id}>
+                      <RangeGroup>
+                        <RangeInput
+                          type="number"
+                          placeholder="Min"
+                          value={min ?? ''}
+                          onChange={(e) => header.column.setFilterValue([e.target.value, max])}
+                          onClick={(e) => e.stopPropagation()}
+                        />
+                        <RangeSep>–</RangeSep>
+                        <RangeInput
+                          type="number"
+                          placeholder="Max"
+                          value={max ?? ''}
+                          onChange={(e) => header.column.setFilterValue([min, e.target.value])}
+                          onClick={(e) => e.stopPropagation()}
+                        />
+                      </RangeGroup>
+                    </th>
+                  );
+                }
+
+                return (
+                  <th key={header.id}>
+                    <FilterInput
+                      type="text"
+                      placeholder={`Filter ${typeof header.column.columnDef.header === 'string' ? header.column.columnDef.header : ''}`}
+                      value={(header.column.getFilterValue() as string) || ''}
+                      onChange={(e) => header.column.setFilterValue(e.target.value)}
+                      onClick={(e) => e.stopPropagation()}
+                    />
+                  </th>
+                );
+              })}
+              {renderActions && <th />}
+            </tr>
+          )}
         </thead>
         <tbody>
           {table.getRowModel().rows.map((row) => (
@@ -208,24 +260,6 @@ export function FastTable<T extends RowData>({
             </tr>
           ))}
         </tbody>
-        {showFooter && (
-          <tfoot>
-            {table.getFooterGroups().map((footerGroup) => (
-              <tr key={footerGroup.id}>
-                {footerGroup.headers.map((header) => (
-                  <th key={header.id}>
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
-                          header.column.columnDef.footer,
-                          header.getContext(),
-                        )}
-                  </th>
-                ))}
-              </tr>
-            ))}
-          </tfoot>
-        )}
       </table>
     </StyledWrapper>
   );
@@ -314,11 +348,75 @@ const StyledWrapper = styled('div')<{
     color: ${(p) => p.theme.palette.text.secondary};
     border-top: 1px solid ${(p) => p.theme.palette.divider};
   }
+
+  .filter-row th {
+    padding: 6px 8px;
+    vertical-align: top;
+  }
 `;
 
 const SortIndicator = styled('span')`
   font-size: 0.65rem;
   margin-left: 4px;
+`;
+
+const FilterInput = styled('input')`
+  width: 100%;
+  padding: 5px 6px;
+  border: 1px solid ${p => p.theme.palette.divider};
+  font-family: inherit;
+  font-size: 0.75rem;
+  color: ${p => p.theme.palette.text.primary};
+  background: ${p => p.theme.palette.background.paper};
+  outline: none;
+  box-sizing: border-box;
+
+  &:focus {
+    border-color: ${p => p.theme.palette.primary.main};
+  }
+
+  &::placeholder {
+    color: ${p => p.theme.palette.text.secondary};
+  }
+`;
+
+const RangeGroup = styled('div')`
+  display: flex;
+  align-items: center;
+  gap: 4px;
+`;
+
+const RangeSep = styled('span')`
+  color: ${p => p.theme.palette.text.secondary};
+  font-size: 0.75rem;
+  flex-shrink: 0;
+`;
+
+const RangeInput = styled('input')`
+  width: 100%;
+  padding: 5px 6px;
+  border: 1px solid ${p => p.theme.palette.divider};
+  font-family: inherit;
+  font-size: 0.75rem;
+  color: ${p => p.theme.palette.text.primary};
+  background: ${p => p.theme.palette.background.paper};
+  outline: none;
+  box-sizing: border-box;
+
+  &:focus {
+    border-color: ${p => p.theme.palette.primary.main};
+  }
+
+  &::placeholder {
+    color: ${p => p.theme.palette.text.secondary};
+  }
+
+  /* Hide native number spinners */
+  &::-webkit-inner-spin-button,
+  &::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
 `;
 
 const PaginationBar = styled('div')`

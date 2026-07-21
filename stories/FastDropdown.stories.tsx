@@ -1,3 +1,4 @@
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { FastDropdown } from '../packages/components/src/FastDropdown';
 
@@ -25,6 +26,11 @@ export const Default: Story = {
       <button type="button" onClick={() => alert('Logout')}>Logout</button>
     </FastDropdown>
   ),
+};
+
+export const Secondary: Story = {
+  ...Default,
+  args: { ...Default.args, color: 'secondary' },
 };
 
 export const Outlined: Story = {
