@@ -28,6 +28,8 @@ const config: StorybookConfig = {
       '@fast/mui-theme': path.resolve(currentDir, '../packages/mui-theme/src'),
       '@fast/components': path.resolve(currentDir, '../packages/components/src'),
     };
+    vite.optimizeDeps = vite.optimizeDeps || {};
+    vite.optimizeDeps.include = [...(vite.optimizeDeps?.include || []), 'aria-query', 'lz-string', '@testing-library/dom', '@testing-library/jest-dom'];
     return vite;
   },
 };

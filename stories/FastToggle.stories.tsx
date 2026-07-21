@@ -1,3 +1,4 @@
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { FastToggle } from '../packages/components/src/FastToggle';
 
@@ -18,6 +19,10 @@ type Story = StoryObj<typeof FastToggle>;
 
 export const Default: Story = {
   args: { label: 'Enable notifications' },
+};
+
+export const Secondary: Story = {
+  args: { ...Default.args, color: 'secondary' },
 };
 
 export const Checked: Story = {

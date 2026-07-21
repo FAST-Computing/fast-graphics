@@ -1,3 +1,4 @@
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { FastSlider } from '../packages/components/src/FastSlider';
 import { Box } from '@mui/material';
@@ -25,6 +26,10 @@ type Story = StoryObj<typeof FastSlider>;
 
 export const Default: Story = {
   args: { defaultValue: 50, width: '300px' },
+};
+
+export const Secondary: Story = {
+  args: { ...Default.args, color: 'secondary' },
 };
 
 export const WithLabel: Story = {

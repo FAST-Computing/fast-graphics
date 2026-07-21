@@ -230,6 +230,7 @@ export default function App() {
           sortable
           pageable
           searchable
+          filterable
           renderActions={(row) => (
             <Box sx={{ display: 'flex', gap: 0.5 }}>
               <FastButton icon={<WavingHandIcon />} color="primary" variant="text" width="50%" height={26} fontSize={10} onClick={() => alert(`Petted ${row.name}!`)} />

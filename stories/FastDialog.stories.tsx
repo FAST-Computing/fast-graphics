@@ -1,8 +1,9 @@
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { useState } from 'react';
 import { FastDialog } from '../packages/components/src/FastDialog';
 import { FastButton } from '../packages/components/src/FastButton';
-import { Button, Typography, Box } from '@mui/material';
+import { Typography, Box } from '@mui/material';
 
 const meta: Meta<typeof FastDialog> = {
   title: 'Feedback/FastDialog',
@@ -39,4 +40,5 @@ export const Default: Story = {
     );
   },
 };
+
 

@@ -33,6 +33,7 @@ const preview: Preview = {
           { value: 'fast_atlas', title: 'FAST Atlas' },
           { value: 'simplifica_core', title: 'Simplifica Core' },
           { value: 'simplifica_burlo', title: 'Simplifica Burlo' },
+          { value: 'smarttour', title: 'SmartTour' },
         ],
         dynamicTitle: true,
       },

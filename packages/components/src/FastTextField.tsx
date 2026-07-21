@@ -17,7 +17,7 @@ export interface FastTextFieldProps {
   /** Floating label text. */
   placeholder?: string;
   /** Controlled value. */
-  value?: string;
+  label?: string;
   /** Uncontrolled initial value. */
   defaultValue?: string;
   /** Change handler. */
@@ -60,7 +60,7 @@ function clamp(num: number, min?: number, max?: number): number {
 export function FastTextField({
   color: accent = 'primary',
   placeholder,
-  value: controlledValue,
+  label: controlledValue,
   defaultValue,
   onChange,
   disabled,
@@ -152,6 +152,7 @@ export function FastTextField({
         onBlur={handleBlur}
         disabled={disabled}
         autoComplete="off"
+        aria-label={placeholder || ''}
       />
       <span className="float-label">
         {placeholder}

@@ -1,3 +1,4 @@
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { FastTextField } from '../packages/components/src/FastTextField';
 import { Box } from '@mui/material';
@@ -30,6 +31,10 @@ type Story = StoryObj<typeof FastTextField>;
 
 export const Default: Story = {
   args: { placeholder: 'Enter text', width: '300px' },
+};
+
+export const Secondary: Story = {
+  args: { ...Default.args, color: 'secondary' },
 };
 
 export const WithError: Story = {

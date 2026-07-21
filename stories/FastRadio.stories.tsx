@@ -1,3 +1,4 @@
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { FastRadio } from '../packages/components/src/FastRadio';
 import { Box } from '@mui/material';
@@ -20,6 +21,10 @@ type Story = StoryObj<typeof FastRadio>;
 
 export const Default: Story = {
   args: { label: 'Option A', name: 'group' },
+};
+
+export const Secondary: Story = {
+  args: { ...Default.args, color: 'secondary' },
 };
 
 export const RadioGroup: Story = {

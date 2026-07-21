@@ -1,3 +1,4 @@
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { FastTextArea } from '../packages/components/src/FastTextArea';
 
@@ -25,6 +26,10 @@ type Story = StoryObj<typeof FastTextArea>;
 
 export const Default: Story = {
   args: { placeholder: 'Tell us about your cat', width: '360px', rows: 4 },
+};
+
+export const Secondary: Story = {
+  args: { ...Default.args, color: 'secondary' },
 };
 
 export const WithValue: Story = {

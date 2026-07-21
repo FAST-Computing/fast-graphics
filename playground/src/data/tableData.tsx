@@ -127,6 +127,7 @@ export const defaultColumns: ColumnDef<Cat, any>[] = [
   }),
   columnHelper.accessor('age', {
     header: 'Age (Years)',
+    filterFn: 'includesString',
     cell: (info) => info.renderValue(),
     footer: (info) => info.column.id,
   }),
@@ -140,6 +141,8 @@ export const defaultColumns: ColumnDef<Cat, any>[] = [
   }),
   columnHelper.accessor('zoomiesProgress', {
     header: 'Zoomies Progress (%)',
+    filterFn: 'includesString',
+    cell: (info) => info.renderValue(),
     footer: (info) => info.column.id,
   }),
 ];
