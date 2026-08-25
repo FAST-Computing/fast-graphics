@@ -4,6 +4,7 @@ import { FastThemeProvider } from '../packages/components/src/FastThemeProvider'
 import '@fontsource/google-sans/latin.css';
 
 const preview: Preview = {
+  tags: ['autodocs'],
   parameters: {
     docs: {
       source: {

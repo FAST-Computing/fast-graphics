@@ -110,14 +110,30 @@ export function FastDateInput({
     return () => document.removeEventListener('mousedown', handler);
   }, [open]);
 
+  React.useEffect(() => {
+    if (!isControlled) return;
+    const d = parseDate(controlledValue);
+    if (d) {
+      setViewYear(d.getFullYear());
+      setViewMonth(d.getMonth());
+    }
+  }, [controlledValue, isControlled]);
+
+  const emitChange = useCallback((raw: string) => {
+    if (!onChange) return;
+    const nativeInput = hiddenRef.current;
+    if (!nativeInput) return;
+    Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value')?.set?.call(nativeInput, raw);
+    nativeInput.dispatchEvent(new Event('input', { bubbles: true }));
+  }, [onChange]);
+
   const commitDate = useCallback((s: string) => {
     if (!isControlled) setInternalValue(s);
     setOpen(false);
     setFocused(false);
     setTouched(false);
-    const ev = new Event('input', { bubbles: true }) as unknown as React.ChangeEvent<HTMLInputElement>;
-    onChange?.(ev);
-  }, [isControlled, onChange]);
+    emitChange(s);
+  }, [emitChange, isControlled]);
 
   const handleDayClick = (day: number) => {
     const s = `${viewYear}-${String(viewMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
@@ -138,9 +154,15 @@ export function FastDateInput({
     <Wrapper ref={wrapperRef} $color={color} $w={width} $isPct={typeof width === 'string'} $h={height} $disabled={!!disabled} $float={hasValue || focused} $error={showError}
       onFocus={() => setFocused(true)}
       onBlur={(e) => { if (!wrapperRef.current?.contains(e.relatedTarget as Node)) { setFocused(false); if (required && !hasValue) setTouched(true); } }}
-      tabIndex={disabled ? -1 : 0}
     >
-      <Trigger onClick={() => { if (!disabled) setOpen(!open); }} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setOpen(!open); } }}>
+      <Trigger
+        role="button"
+        tabIndex={disabled ? -1 : 0}
+        aria-expanded={open}
+        aria-haspopup="dialog"
+        onClick={() => { if (!disabled) setOpen(!open); }}
+        onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setOpen(!open); } }}
+      >
         <div className="date-trigger">
           <span className="date-label">{hasValue ? formatDisplay(displayValue) : ''}</span>
         </div>
@@ -154,11 +176,11 @@ export function FastDateInput({
       {open && (
         <Popup $color={color}>
           <Nav>
-            <NavBtn onClick={() => { if (viewMonth === 0) { setViewYear(v => v - 1); setViewMonth(11); } else setViewMonth(m => m - 1); }}>
+            <NavBtn type="button" onClick={() => { if (viewMonth === 0) { setViewYear(v => v - 1); setViewMonth(11); } else setViewMonth(m => m - 1); }}>
               <ChevronLeftIcon sx={{ fontSize: 20 }} />
             </NavBtn>
             <NavTitle>{MONTHS[viewMonth]} {viewYear}</NavTitle>
-            <NavBtn onClick={() => { if (viewMonth === 11) { setViewYear(v => v + 1); setViewMonth(0); } else setViewMonth(m => m + 1); }}>
+            <NavBtn type="button" onClick={() => { if (viewMonth === 11) { setViewYear(v => v + 1); setViewMonth(0); } else setViewMonth(m => m + 1); }}>
               <ChevronRightIcon sx={{ fontSize: 20 }} />
             </NavBtn>
           </Nav>
@@ -179,13 +201,22 @@ export function FastDateInput({
             })}
           </Grid>
           <PopupActions>
-            <PopupBtn $color={color} onClick={handleToday}>Today</PopupBtn>
-            <PopupBtn $color={color} onClick={() => { commitDate(''); }}>Clear</PopupBtn>
+            <PopupBtn type="button" $color={color} onClick={handleToday}>Today</PopupBtn>
+            <PopupBtn type="button" $color={color} onClick={() => { commitDate(''); }}>Clear</PopupBtn>
           </PopupActions>
         </Popup>
       )}
 
-      <input ref={hiddenRef} type="hidden" value={displayValue} readOnly />
+      <input
+        ref={hiddenRef}
+        type="text"
+        className="date-value-input"
+        value={displayValue}
+        onChange={onChange}
+        readOnly
+        tabIndex={-1}
+        aria-hidden="true"
+      />
 
       {errorMsg && <span className="field-helper">{errorMsg}</span>}
     </Wrapper>
@@ -238,6 +269,10 @@ const Wrapper = styled('div')<{
     flex-shrink: 0; margin-right: 10px; font-size: 1.5rem;
     color: ${p => p.$error ? p.theme.palette.error.main : p.theme.palette.text.primary};
     transition: color 0.2s ease;
+  }
+  .date-value-input {
+    position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+    overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
   }
   .asterisk { color: ${p => p.theme.palette.error.main}; }
   .field-helper {
