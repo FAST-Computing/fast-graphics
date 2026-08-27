@@ -1,5 +1,5 @@
 {
-  "name": "@fast-computing/playground",
+  "name": "@fast/playground",
   "version": "1.6.2",
   "private": true,
   "type": "module",
@@ -11,9 +11,9 @@
   "dependencies": {
     "@emotion/react": "^11.13.0",
     "@emotion/styled": "^11.13.0",
-    "@fast-computing/components": "^1.6.2",
-    "@fast-computing/mui-theme": "^1.6.2",
-    "@fast-computing/tokens": "^1.6.2",
+    "@fast/components": "file:../packages/components",
+    "@fast/mui-theme": "file:../packages/mui-theme",
+    "@fast/tokens": "file:../packages/tokens",
     "@fontsource-variable/google-sans": "^5.2.1",
     "@fontsource/google-sans": "^5.2.1",
     "@mui/icons-material": "^9.0.0",

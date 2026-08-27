@@ -1,11 +1,8 @@
 {
-  "name": "@fast-computing/mui-theme",
-  "version": "1.6.4",
+  "name": "@fast/mui-theme",
+  "version": "1.6.2",
   "private": false,
-  "description": "MUI theme creators derived from @fast-computing/tokens",
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
-  },
+  "description": "MUI theme creators derived from @fast/tokens",
   "license": "MIT",
   "type": "module",
   "sideEffects": false,
@@ -28,6 +25,6 @@
     "react": "^18.0.0 || ^19.0.0"
   },
   "dependencies": {
-    "@fast-computing/tokens": "^1.6.2"
+    "@fast/tokens": "file:../tokens"
   }
 }

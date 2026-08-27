@@ -6,9 +6,9 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      '@fast-computing/tokens': path.resolve(__dirname, '../packages/tokens/src'),
-      '@fast-computing/mui-theme': path.resolve(__dirname, '../packages/mui-theme/src'),
-      '@fast-computing/components': path.resolve(__dirname, '../packages/components/src'),
+      '@fast/tokens': path.resolve(__dirname, '../packages/tokens/src'),
+      '@fast/mui-theme': path.resolve(__dirname, '../packages/mui-theme/src'),
+      '@fast/components': path.resolve(__dirname, '../packages/components/src'),
     },
   },
   server: {

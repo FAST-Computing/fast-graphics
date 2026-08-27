@@ -1,11 +1,8 @@
 {
-  "name": "@fast-computing/tokens",
-  "version": "1.6.4",
+  "name": "@fast/tokens",
+  "version": "1.6.2",
   "private": false,
   "description": "FAST design tokens",
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
-  },
   "license": "MIT",
   "type": "module",
   "sideEffects": false,

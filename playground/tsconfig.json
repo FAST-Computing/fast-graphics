@@ -6,12 +6,12 @@
     "jsx": "react-jsx",
     "baseUrl": ".",
     "paths": {
-      "@fast-computing/tokens": ["../packages/tokens/src"],
-      "@fast-computing/tokens/*": ["../packages/tokens/src/*"],
-      "@fast-computing/mui-theme": ["../packages/mui-theme/src"],
-      "@fast-computing/mui-theme/*": ["../packages/mui-theme/src/*"],
-      "@fast-computing/components": ["../packages/components/src"],
-      "@fast-computing/components/*": ["../packages/components/src/*"]
+      "@fast/tokens": ["../packages/tokens/src"],
+      "@fast/tokens/*": ["../packages/tokens/src/*"],
+      "@fast/mui-theme": ["../packages/mui-theme/src"],
+      "@fast/mui-theme/*": ["../packages/mui-theme/src/*"],
+      "@fast/components": ["../packages/components/src"],
+      "@fast/components/*": ["../packages/components/src/*"]
     }
   },
   "include": ["src"]
