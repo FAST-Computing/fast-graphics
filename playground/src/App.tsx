@@ -15,7 +15,7 @@ import IcecreamIcon from '@mui/icons-material/Icecream';
 import SetMealIcon from '@mui/icons-material/SetMeal';
 import PetsIcon from '@mui/icons-material/Pets';
 
-import type { BrandName } from '@fast/tokens';
+import type { BrandName } from '@fast-computing/tokens';
 import {
   FastCard,
   FastCardFA,
@@ -37,7 +37,7 @@ import {
   FastTextArea,
   FastTooltip,
   FastUpload,
-} from '@fast/components';
+} from '@fast-computing/components';
 import { defaultData, defaultColumns } from './data/tableData.js';
 
 const BRANDS: BrandName[] = [
@@ -61,7 +61,7 @@ export default function App() {
     <FastThemeProvider brand={brand}>
       <Box sx={{ p: 3 }}>
         <Typography variant="h4" sx={{ mb: 1, fontWeight: 'bold' }}>
-          @fast/components - Playground
+          @fast-computing/components - Playground
         </Typography>
         <ToggleButtonGroup
           value={brand}

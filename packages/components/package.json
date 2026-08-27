@@ -1,8 +1,11 @@
 {
-  "name": "@fast/components",
-  "version": "1.6.2",
+  "name": "@fast-computing/components",
+  "version": "1.6.3",
   "private": false,
-  "description": "Example branded components built on @fast/tokens + MUI",
+  "description": "Example branded components built on @fast-computing/tokens + MUI",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
   "license": "MIT",
   "type": "module",
   "sideEffects": false,
@@ -27,8 +30,8 @@
     "react": "^18.0.0 || ^19.0.0"
   },
   "dependencies": {
-    "@fast/tokens": "file:../tokens",
-    "@fast/mui-theme": "file:../mui-theme",
+    "@fast-computing/tokens": "^1.6.2",
+    "@fast-computing/mui-theme": "^1.6.2",
     "@tanstack/react-table": "^8.21.3"
   }
 }

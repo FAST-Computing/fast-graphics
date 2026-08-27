@@ -18,7 +18,7 @@ stories/      → Storybook docs showcase
 ### Install
 
 ```bash
-npm install @fast/tokens @fast/mui-theme @fast/components \
+npm install @fast-computing/tokens @fast-computing/mui-theme @fast-computing/components \
   @mui/material @emotion/react @emotion/styled
 ```
 
@@ -91,38 +91,40 @@ Storybook is auto-deployed to GitHub Pages on push to `main`.
 
 ---
 
-## Versioning
+## Versioning & Releasing
 
-This repo uses [Changesets](https://github.com/changesets/changesets). All three
-packages (`@fast/tokens`, `@fast/mui-theme`, `@fast/components`) are kept in
-lockstep via the `fixed` config, so a single version bump updates every
-`package.json` and the CHANGELOG automatically. **You never edit a version
-number by hand.**
+Versioning is handled natively with **npm workspaces** — no extra tooling. All
+three publishable packages (`@fast-computing/tokens`, `@fast-computing/mui-theme`,
+`@fast-computing/components`) are versioned in lockstep from a single command,
+so you never edit a `package.json` version by hand.
 
-Release flow:
+### 1. Bump the version (patch / minor / major)
 
-1. **Add a changeset** — describe your change and pick the bump type
-   (patch / minor / major). This writes a single file under `.changeset/`.
+```bash
+npm run version:bump -- patch   # or: minor | major
+```
 
-   ```bash
-   npm run changeset
-   ```
+This updates the version in all three packages **and** the root in one step,
+without creating a git commit or tag (you control those).
 
-2. **Apply the version bump** — bumps all packages + root in sync and
-   generates the CHANGELOG entry.
+### 2. Build & publish to GitHub Packages
 
-   ```bash
-   npm run version:packages
-   ```
+```bash
+npm run build
+npm run publish
+```
 
-3. **Publish** — builds and pushes the packages to GitHub Packages.
+`npm run publish` pushes `@fast-computing/tokens`, `@fast-computing/mui-theme`,
+and `@fast-computing/components` to `https://npm.pkg.github.com`. Internal
+package dependencies use the `workspace:` protocol, so npm automatically rewrites
+them to real version ranges in the published tarballs.
 
-   ```bash
-   npm run release
-   ```
+### 3. Tag & push
 
-Commit the generated changeset file (from step 1) and the version/CHANGELOG
-changes (from step 2) together.
+```bash
+git tag v<version>
+git push origin v<version>
+```
 
 ### Bump guidelines
 
@@ -130,9 +132,18 @@ changes (from step 2) together.
 - **Minor** — new tokens or components
 - **Patch** — localized fixes
 
-> If you prefer not to use changesets, the helper script
-> `npm run version:patch` bumps the root and all three workspaces in one
-> command, but it does not generate CHANGELOG entries.
+### Authentication
+
+Publishing requires a GitHub Packages token. The repo `.npmrc` maps the
+`@fast-computing` scope to GitHub Packages and reads the token from the
+`GITHUB_TOKEN` environment variable, so set it before publishing:
+
+```bash
+export GITHUB_TOKEN=ghp_xxx   # PAT with read:packages + write:packages
+```
+
+> The `.npmrc` contains **no secret** — only the registry mapping and a
+> reference to the env var.
 
 ---
 
