@@ -1,6 +1,6 @@
 {
   "name": "@fast-computing/components",
-  "version": "1.6.3",
+  "version": "1.6.4",
   "private": false,
   "description": "Example branded components built on @fast-computing/tokens + MUI",
   "publishConfig": {

@@ -1,6 +1,6 @@
 {
   "name": "@fast-computing/tokens",
-  "version": "1.6.3",
+  "version": "1.6.4",
   "private": false,
   "description": "FAST design tokens",
   "publishConfig": {
