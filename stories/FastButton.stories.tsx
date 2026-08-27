@@ -27,7 +27,7 @@ const meta: Meta<typeof FastButton> = {
   component: FastButton,
   tags: ['autodocs'],
   argTypes: {
-    color: { control: 'select', options: ['primary', 'secondary', 'primaryLight', 'primaryDark', 'secondaryLight', 'secondaryDark', 'paper', 'text'] },
+    color: { control: 'select', options: ['primary', 'secondary', 'primaryMain', 'primaryLight', 'primaryDark', 'secondaryMain', 'secondaryLight', 'secondaryDark', 'paper', 'text'] },
     variant: { control: 'radio', options: ['default', 'outlined', 'text'] },
     iconPosition: { control: 'radio', options: ['left', 'right'] },
     align: { control: 'radio', options: ['center', 'left', 'right'] },

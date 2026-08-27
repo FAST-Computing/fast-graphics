@@ -7,7 +7,7 @@ const meta: Meta<typeof FastDropdown> = {
   component: FastDropdown,
   tags: ['autodocs'],
   argTypes: {
-    color: { control: 'radio', options: ['primary', 'secondary'] },
+    color: { control: 'radio', options: ['primary', 'secondary', 'primaryMain', 'primaryLight', 'primaryDark', 'secondaryMain', 'secondaryLight', 'secondaryDark', 'paper', 'text'] },
     variant: { control: 'radio', options: ['default', 'outlined', 'text'] },
     direction: { control: 'radio', options: ['bottom', 'top', 'left', 'right'] },
     label: { control: 'text' },

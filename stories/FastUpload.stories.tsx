@@ -7,7 +7,7 @@ const meta: Meta<typeof FastUpload> = {
   component: FastUpload,
   tags: ['autodocs'],
   argTypes: {
-    color: { control: 'radio', options: ['primary', 'secondary'] },
+    color: { control: 'radio', options: ['primary', 'secondary', 'primaryMain', 'primaryLight', 'primaryDark', 'secondaryMain', 'secondaryLight', 'secondaryDark', 'paper', 'text'] },
     label: { control: 'text' },
     accept: { control: 'text' },
     multiple: { control: 'boolean' },

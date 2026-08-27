@@ -4,16 +4,15 @@ import React from 'react';
 import styled from '@emotion/styled';
 import type { Theme as MuiTheme } from '@mui/material/styles';
 
+import { getColorSet, type FastColor } from './colors.js';
+
 declare module '@emotion/react' {
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
   export interface Theme extends MuiTheme {}
 }
 
-export type FastButtonColor =
-  | 'primary' | 'secondary'
-  | 'primaryMain' | 'primaryLight' | 'primaryDark'
-  | 'secondaryMain' | 'secondaryLight' | 'secondaryDark'
-  | 'paper' | 'text';
+export type FastButtonColor = FastColor;
+export { getColorSet };
 
 export type FastButtonVariant = 'default' | 'outlined' | 'text';
 export type FastButtonIconPosition = 'left' | 'right';
@@ -51,40 +50,6 @@ export interface FastButtonProps {
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }
 
-type ColorSet = { main: string; dark: string; light: string; contrastText: string };
-
-export function getColorSet(color: FastButtonColor, theme: MuiTheme, _selected: boolean): ColorSet {
-  const p = theme.palette;
-  const pc = (c: 'primary' | 'secondary') => {
-    const entry = p[c];
-    return { main: entry.main, dark: entry.dark, light: entry.light, contrastText: entry.contrastText };
-  };
-
-  let base: ColorSet;
-  switch (color) {
-    case 'primary':
-    case 'primaryMain':
-      base = pc('primary'); break;
-    case 'primaryLight':
-      base = { ...pc('primary'), main: p.primary.light, contrastText: p.getContrastText(p.primary.light) }; break;
-    case 'primaryDark':
-      base = { ...pc('primary'), main: p.primary.dark }; break;
-    case 'secondary':
-    case 'secondaryMain':
-      base = pc('secondary'); break;
-    case 'secondaryLight':
-      base = { ...pc('secondary'), main: p.secondary.light, contrastText: p.getContrastText(p.secondary.light) }; break;
-    case 'secondaryDark':
-      base = { ...pc('secondary'), main: p.secondary.dark }; break;
-    case 'paper':
-      base = { main: p.background.paper, dark: p.text.primary, light: p.background.paper, contrastText: p.text.primary }; break;
-    case 'text':
-      base = { main: p.text.primary, dark: p.text.primary, light: p.background.paper, contrastText: p.background.paper }; break;
-  }
-
-  return base;
-}
-
 export const FastButton = React.forwardRef<HTMLDivElement, FastButtonProps>(function FastButton({
     label = '',
     icon,
@@ -109,7 +74,7 @@ export const FastButton = React.forwardRef<HTMLDivElement, FastButtonProps>(func
       <button className="Btn" type={type} onClick={onClick} disabled={disabled}>
         <span className="Btn-content">
           {iconPosition === 'left' && icon}
-          {label}
+          {label && label}
           {iconPosition === 'right' && icon}
         </span>
       </button>
@@ -145,7 +110,11 @@ const StyledWrapper = styled('div')<StyledProps>`
     display: flex;
     align-items: center;
     justify-content: ${p => p.$align === 'left' ? 'flex-start' : p.$align === 'right' ? 'flex-end' : 'center'};
-    padding: 0 12px;
+    padding: 0 ${p => {
+      const h = p.$hNum || 40;
+      const pad = Math.min(16, Math.max(4, Math.round(h * 0.3)));
+      return `${pad}px`;
+    }};
     background-color: ${p => (p.$selected || p.$variant === 'default' ? cs(p).main : 'transparent')};
     border: ${p => (p.$variant === 'outlined' ? `2px solid ${cs(p).main}` : 'none')};
     cursor: pointer;
@@ -162,12 +131,29 @@ const StyledWrapper = styled('div')<StyledProps>`
     z-index: 1;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: ${p => {
+      const h = p.$hNum || 40;
+      const g = Math.min(10, Math.max(2, Math.round(h * 0.2)));
+      return `${g}px`;
+    }};
     min-width: 0;
     color: ${p => (p.$selected || p.$variant === 'default' ? cs(p).contrastText : cs(p).main)};
     font-weight: 600;
     font-size: ${p => (p.$fs !== undefined ? (typeof p.$fs === 'number' ? `${p.$fs}px` : p.$fs) : 'inherit')};
     transition: color 0.2s ease, filter 0.2s ease;
+
+    svg {
+      font-size: ${p => {
+        if (!p.$isPct && typeof p.$w === 'number') {
+          const h = p.$hNum || 40;
+          const pad = Math.min(16, Math.max(4, Math.round(h * 0.3)));
+          const innerW = p.$w - 2 * pad;
+          if (innerW > 0) return `min(1em, ${innerW}px)`;
+        }
+        return '1em';
+      }};
+      flex-shrink: 0;
+    }
   }
 
   ${p => p.$animated && `

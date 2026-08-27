@@ -2,14 +2,16 @@
 
 import React from 'react';
 import styled from '@emotion/styled';
-import type { Theme as MuiTheme, PaletteColor } from '@mui/material/styles';
+import type { Theme as MuiTheme } from '@mui/material/styles';
+
+import { getColorSet, type FastColor } from './colors.js';
 
 declare module '@emotion/react' {
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
   export interface Theme extends MuiTheme {}
 }
 
-export type FastRadioColor = 'primary' | 'secondary';
+export type FastRadioColor = FastColor;
 
 export interface FastRadioProps {
   /** Accent color when checked. */
@@ -72,7 +74,7 @@ export function FastRadioBox({
 
 type RadioTheme = { theme: MuiTheme } & { $color: FastRadioColor };
 
-const pc = (p: RadioTheme) => p.theme.palette[p.$color] as PaletteColor;
+const pc = (p: RadioTheme) => getColorSet(p.$color, p.theme, false);
 
 const StyledWrapper = styled('div')<{
   $color: FastRadioColor;

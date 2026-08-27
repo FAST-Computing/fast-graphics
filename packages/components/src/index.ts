@@ -1,6 +1,8 @@
 export { FastCard } from './FastCard.js';
 export { FastCardFA } from './FastCardFA.js';
 export { FastButton } from './FastButton.js';
+export type { FastColor } from './colors.js';
+export { getColorSet } from './colors.js';
 export { FastBurger } from './FastBurger.js';
 export { FastLoader } from './FastLoader.js';
 export { FastTable } from './FastTable.js';

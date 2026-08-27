@@ -2,18 +2,22 @@
 
 import React from 'react';
 import styled from '@emotion/styled';
-import type { Theme as MuiTheme, PaletteColor } from '@mui/material/styles';
+import type { Theme as MuiTheme } from '@mui/material/styles';
 import { Slider } from '@mui/material';
 import type { SliderProps } from '@mui/material';
+
+import { getColorSet, type FastColor } from './colors.js';
 
 declare module '@emotion/react' {
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
   export interface Theme extends MuiTheme {}
 }
 
-export type FastSliderColor = 'primary' | 'secondary';
+export type FastSliderColor = FastColor;
 
-export interface FastSliderProps extends SliderProps {
+const cs = (p: { theme: MuiTheme; $accent: FastSliderColor }) => getColorSet(p.$accent, p.theme, false);
+
+export interface FastSliderProps extends Omit<SliderProps, 'color'> {
   /** Accent color for track and thumb. */
   color?: FastSliderColor;
   /** Slider width. Number → px, string → raw CSS. */
@@ -49,7 +53,7 @@ const StyledWrapper = styled('div')<{ $w?: number | string; $isPct: boolean; $di
 const StyledSlider = styled(Slider, {
   shouldForwardProp: (prop) => prop !== '$accent' && prop !== '$h',
 })<{ $accent: FastSliderColor; $h?: number | string }>`
-  color: ${(p) => (p.theme.palette[p.$accent] as PaletteColor).main};
+  color: ${(p) => cs(p).main};
   width: 100%;
   padding: 13px 0;
   height: ${p => (p.$h !== undefined ? (typeof p.$h === 'number' ? `${p.$h}px` : p.$h) : '6px')};
@@ -85,7 +89,7 @@ const StyledSlider = styled(Slider, {
 
   & .MuiSlider-valueLabel {
     border-radius: 0;
-    background: ${(p) => (p.theme.palette[p.$accent] as PaletteColor).main};
+    background: ${(p) => cs(p).main};
     font-family: inherit;
     font-size: 0.75rem;
     font-weight: 500;
@@ -104,7 +108,7 @@ const StyledSlider = styled(Slider, {
   }
 
   & .MuiSlider-markActive {
-    background: ${(p) => (p.theme.palette[p.$accent] as PaletteColor).main};
+    background: ${(p) => cs(p).main};
   }
 
   & .MuiSlider-markLabel {

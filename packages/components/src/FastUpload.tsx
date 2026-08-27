@@ -2,16 +2,20 @@
 
 import React, { useState, useRef, useCallback } from 'react';
 import styled from '@emotion/styled';
-import type { Theme as MuiTheme, PaletteColor } from '@mui/material/styles';
+import type { Theme as MuiTheme } from '@mui/material/styles';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import ClearIcon from '@mui/icons-material/Clear';
+
+import { getColorSet, type FastColor } from './colors.js';
 
 declare module '@emotion/react' {
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
   export interface Theme extends MuiTheme {}
 }
 
-export type FastUploadColor = 'primary' | 'secondary';
+export type FastUploadColor = FastColor;
+
+const cs = (p: { theme: MuiTheme; $color: FastUploadColor }) => getColorSet(p.$color, p.theme, false);
 
 export interface FastUploadFile {
   /** File name. */
@@ -205,7 +209,7 @@ export function FastUpload({
   );
 }
 
-const accent = (p: any) => (p.theme.palette[p.$color] as PaletteColor).main;
+const accent = (p: any) => cs(p).main;
 
 const StyledWrapper = styled('div')<{
   $color: FastUploadColor;
@@ -341,7 +345,7 @@ const RemoveBtn = styled('button')`
   }
 `;
 
-const AddMoreBtn = styled('button')<{ $color: string }>`
+const AddMoreBtn = styled('button')<{ $color: FastUploadColor }>`
   width: 100%;
   padding: 8px;
   border: 1px dashed ${p => p.theme.palette.divider};
@@ -349,7 +353,7 @@ const AddMoreBtn = styled('button')<{ $color: string }>`
   font-family: inherit;
   font-size: 0.8125rem;
   font-weight: 500;
-  color: ${p => (p.theme.palette[p.$color as FastUploadColor] as PaletteColor).main};
+  color: ${p => cs(p).main};
   cursor: ${p => (p.disabled ? 'default' : 'pointer')};
   transition: background 0.15s ease;
 

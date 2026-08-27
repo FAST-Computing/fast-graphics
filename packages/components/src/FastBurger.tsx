@@ -2,14 +2,18 @@
 
 import React from 'react';
 import styled from '@emotion/styled';
-import type { Theme as MuiTheme, PaletteColor } from '@mui/material/styles';
+import type { Theme as MuiTheme } from '@mui/material/styles';
+
+import { getColorSet, type FastColor } from './colors.js';
 
 declare module '@emotion/react' {
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
   export interface Theme extends MuiTheme {}
 }
 
-export type FastBurgerColor = 'primary' | 'secondary';
+export type FastBurgerColor = FastColor;
+
+const cs = (p: { theme: MuiTheme; $color: FastBurgerColor }) => getColorSet(p.$color, p.theme, false);
 
 export interface FastBurgerProps {
   /** Which palette color to use for the stroke. */
@@ -64,7 +68,7 @@ const StyledWrapper = styled('div')<{ $color: FastBurgerColor; $size: number }>`
   .hamburger svg {
     height: ${p => p.$size}em;
     transition: transform 600ms cubic-bezier(0.4, 0, 0.2, 1);
-    stroke: ${p => (p.theme.palette[p.$color] as PaletteColor).contrastText};
+    stroke: ${p => cs(p).contrastText};
   }
 
   .line {

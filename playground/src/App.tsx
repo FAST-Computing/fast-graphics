@@ -84,7 +84,7 @@ export default function App() {
           FAST Cats
         </Typography>
         <Typography sx={{ mb: 2 }}>
-          Cats are the best, and these cards are the best way to show them off. You can customize the card's width, height, and content. 
+          Cats are the best, and these cards are the best way to show them off. You can customize the card's width, height, and content.
         </Typography>
 
         <Box sx={{ display: 'flex', gap: 2 }}>
@@ -240,7 +240,7 @@ export default function App() {
         />
 
         <Divider sx={{ my: 3 }} />
-        
+
         <Typography variant="h6" sx={{ mb: 2, fontWeight: 'bold' }}>
           Knowledge check
         </Typography>
@@ -266,7 +266,7 @@ export default function App() {
         </FastDialog>
 
         <Divider sx={{ my: 3 }} />
-        
+
         <Typography variant="h6" sx={{ mb: 2, fontWeight: 'bold' }}>
           Choose the size and color of your cat
         </Typography>
@@ -285,7 +285,7 @@ export default function App() {
         </Box>
 
         <Divider sx={{ my: 3 }} />
-        
+
         <Typography variant="h6" sx={{ mb: 2, fontWeight: 'bold' }}>
           Choose your favorite cat and its favourite food
         </Typography>
@@ -312,18 +312,18 @@ export default function App() {
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
             <FastSlider color="primary" width="25%" defaultValue={40} label="Laziness" valueLabelDisplay="auto" />
           </Box>
-          
+
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
             <FastSlider color="secondary" width="25%" defaultValue={70} step={5} label="Cuteness" marks valueLabelDisplay="auto" />
           </Box>
-          
+
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
             <FastSlider color="primary" width="25%" defaultValue={100} label="Happiness" disabled />
           </Box>
         </Box>
 
         <br />
-        
+
         <Box sx={{ px: 1, gap: 2, display: 'flex', flexDirection: 'column' }}>
           <Box sx={{ display: 'flex', gap: 3, alignItems: 'center' }}>
             <FastToggle color="primary" defaultChecked label="Soft fur" />
@@ -360,7 +360,7 @@ export default function App() {
         </Box>
 
         <Divider sx={{ my: 3 }} />
-        
+
 
         <Typography variant="h6" sx={{  mb: 2, fontWeight: 'bold' }}>
           Cat form
@@ -478,6 +478,10 @@ export default function App() {
             imgHeight={160}
           />
         </Box>
+
+        <FastButton
+        color="primary" label="aaa" width={340} height={80} fontSize={64} icon=<IcecreamIcon/>
+        />
 
       </Box>
     </FastThemeProvider>

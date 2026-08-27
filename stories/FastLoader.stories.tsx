@@ -7,7 +7,7 @@ const meta: Meta<typeof FastLoader> = {
   component: FastLoader,
   tags: ['autodocs'],
   argTypes: {
-    color: { control: 'radio', options: ['primary', 'secondary'] },
+    color: { control: 'radio', options: ['primary', 'secondary', 'primaryMain', 'primaryLight', 'primaryDark', 'secondaryMain', 'secondaryLight', 'secondaryDark', 'paper', 'text'] },
     size: { control: 'number' },
   },
 };

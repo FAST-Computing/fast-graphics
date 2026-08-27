@@ -2,14 +2,18 @@
 
 import React from 'react';
 import styled from '@emotion/styled';
-import type { Theme as MuiTheme, PaletteColor } from '@mui/material/styles';
+import type { Theme as MuiTheme } from '@mui/material/styles';
+
+import { getColorSet, type FastColor } from './colors.js';
 
 declare module '@emotion/react' {
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
   export interface Theme extends MuiTheme {}
 }
 
-export type FastToggleColor = 'primary' | 'secondary';
+export type FastToggleColor = FastColor;
+
+const cs = (p: { theme: MuiTheme; $color: FastToggleColor }) => getColorSet(p.$color, p.theme, false);
 
 export interface FastToggleProps {
   /** Which palette color to use when checked. */
@@ -95,7 +99,7 @@ const StyledWrapper = styled('div')<{ $color: FastToggleColor; $disabled: boolea
   }
 
   input:checked ~ .toggle-track {
-    background: ${p => (p.theme.palette[p.$color] as PaletteColor).main};
+    background: ${p => cs(p).main};
   }
 
   input:checked ~ .toggle-track .toggle-thumb {

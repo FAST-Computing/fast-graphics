@@ -55,7 +55,7 @@ const meta: Meta<typeof FastTable> = {
   component: FastTable,
   tags: ['autodocs'],
   argTypes: {
-    color: { control: 'radio', options: ['primary', 'secondary'] },
+    color: { control: 'radio', options: ['primary', 'secondary', 'primaryMain', 'primaryLight', 'primaryDark', 'secondaryMain', 'secondaryLight', 'secondaryDark', 'paper', 'text'] },
     sortable: { control: 'boolean' },
     pageable: { control: 'boolean' },
     searchable: { control: 'boolean' },

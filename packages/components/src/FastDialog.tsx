@@ -2,7 +2,7 @@
 
 import type { ReactNode } from 'react';
 import styled from '@emotion/styled';
-import type { Theme as MuiTheme, PaletteColor } from '@mui/material/styles';
+import type { Theme as MuiTheme } from '@mui/material/styles';
 import {
   Dialog,
   DialogTitle,
@@ -14,12 +14,16 @@ import type { DialogProps } from '@mui/material';
 
 import CloseIcon from '@mui/icons-material/Close';
 
+import { getColorSet, type FastColor } from './colors.js';
+
 declare module '@emotion/react' {
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
   export interface Theme extends MuiTheme {}
 }
 
-export type FastDialogColor = 'primary' | 'secondary';
+export type FastDialogColor = FastColor;
+
+const cs = (p: { theme: MuiTheme; $accent: FastDialogColor }) => getColorSet(p.$accent, p.theme, false);
 
 export interface FastDialogProps extends Omit<DialogProps, 'color' | 'title'> {
   /** Accent color for the header bar background. */
@@ -75,7 +79,7 @@ const StyledDialog = styled(Dialog, {
   }
 
   & .MuiBackdrop-root {
-    background-color: ${(p) => (p.theme.palette[p.$accent] as PaletteColor).dark}100;
+    background-color: ${(p) => cs(p).dark}100;
   }
 `;
 
@@ -83,8 +87,8 @@ const StyledHeader = styled('div')<{ $accent: FastDialogColor }>`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: ${(p) => (p.theme.palette[p.$accent] as PaletteColor).main};
-  color: ${(p) => (p.theme.palette[p.$accent] as PaletteColor).contrastText};
+  background-color: ${(p) => cs(p).main};
+  color: ${(p) => cs(p).contrastText};
   padding-right: 4px;
 `;
 

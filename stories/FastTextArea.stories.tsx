@@ -7,7 +7,7 @@ const meta: Meta<typeof FastTextArea> = {
   component: FastTextArea,
   tags: ['autodocs'],
   argTypes: {
-    color: { control: 'radio', options: ['primary', 'secondary'] },
+    color: { control: 'radio', options: ['primary', 'secondary', 'primaryMain', 'primaryLight', 'primaryDark', 'secondaryMain', 'secondaryLight', 'secondaryDark', 'paper', 'text'] },
     placeholder: { control: 'text' },
     width: { control: 'text' },
     rows: { control: 'number' },

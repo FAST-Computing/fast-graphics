@@ -12,7 +12,7 @@ const meta: Meta<typeof FastRadioBox> = {
   component: FastRadioBox,
   tags: ['autodocs'],
   argTypes: {
-    color: { control: 'radio', options: ['primary', 'secondary'] },
+    color: { control: 'radio', options: ['primary', 'secondary', 'primaryMain', 'primaryLight', 'primaryDark', 'secondaryMain', 'secondaryLight', 'secondaryDark', 'paper', 'text'] },
     label: { control: 'text' },
     width: { control: 'number' },
     height: { control: 'number' },

@@ -3,9 +3,11 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { keyframes } from '@emotion/react';
-import type { Theme as MuiTheme, PaletteColor } from '@mui/material/styles';
+import type { Theme as MuiTheme } from '@mui/material/styles';
 import { Snackbar } from '@mui/material';
 import type { SnackbarProps } from '@mui/material';
+
+import { getColorSet, type FastColor } from './colors.js';
 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ErrorIcon from '@mui/icons-material/Error';
@@ -15,7 +17,7 @@ declare module '@emotion/react' {
   export interface Theme extends MuiTheme {}
 }
 
-export type FastSnackbarColor = 'primary' | 'secondary';
+export type FastSnackbarColor = FastColor;
 export type FastSnackbarType = 'default' | 'success' | 'error' | 'warning' | 'info';
 
 export interface FastSnackbarProps extends Omit<SnackbarProps, 'color'> {
@@ -33,13 +35,13 @@ export interface FastSnackbarProps extends Omit<SnackbarProps, 'color'> {
   hideClose?: boolean;
 }
 
-function typeColor(palette: MuiTheme['palette'], type: FastSnackbarType, accent: FastSnackbarColor): string {
+function typeColor(palette: MuiTheme['palette'], type: FastSnackbarType, accent: FastSnackbarColor, theme: MuiTheme): string {
   switch (type) {
     case 'success': return palette.success.main;
     case 'error': return palette.error.main;
     case 'warning': return palette.warning.main;
     case 'info': return palette.info.main;
-    default: return (palette[accent] as PaletteColor).main;
+    default: return getColorSet(accent, theme, false).main;
   }
 }
 
@@ -112,7 +114,7 @@ export function FastSnackbar({
 
 type P = { theme: MuiTheme; $type: FastSnackbarType; $accent: FastSnackbarColor; $duration?: number };
 
-const bg = (p: P) => typeColor(p.theme.palette, p.$type, p.$accent);
+const bg = (p: P) => typeColor(p.theme.palette, p.$type, p.$accent, p.theme);
 
 const StyledSnackbar = styled(Snackbar, {
   shouldForwardProp: (prop) => prop !== '$type' && prop !== '$accent' && prop !== '$duration',

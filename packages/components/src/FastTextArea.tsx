@@ -2,14 +2,18 @@
 
 import React, { useState, useRef } from 'react';
 import styled from '@emotion/styled';
-import type { Theme as MuiTheme, PaletteColor } from '@mui/material/styles';
+import type { Theme as MuiTheme } from '@mui/material/styles';
+
+import { getColorSet, type FastColor } from './colors.js';
 
 declare module '@emotion/react' {
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
   export interface Theme extends MuiTheme {}
 }
 
-export type FastTextAreaColor = 'primary' | 'secondary';
+export type FastTextAreaColor = FastColor;
+
+const cs = (p: { theme: MuiTheme; $accent: FastTextAreaColor }) => getColorSet(p.$accent, p.theme, false);
 export type FastTextAreaResize = 'none' | 'vertical';
 
 export interface FastTextAreaProps {
@@ -122,20 +126,20 @@ const StyledWrapper = styled('div')<{
   flex-direction: column;
   ${p => p.$w !== undefined ? `width: ${p.$isPct ? p.$w : `${p.$w}px`};` : ''}
   opacity: ${p => (p.$disabled ? 0.35 : 1)};
-  border: 2px solid ${p => p.$error ? p.theme.palette.error.main : (p.theme.palette[p.$accent] as PaletteColor).main};
+  border: 2px solid ${p => p.$error ? p.theme.palette.error.main : cs(p).main};
   cursor: ${p => (p.$disabled ? 'default' : 'text')};
   transition: background-color 0.2s ease, border-color 0.15s ease, box-shadow 0.15s ease;
 
   &:focus-within {
     box-shadow: 0 0 0 3px ${p => {
-      const c = p.$error ? p.theme.palette.error.main : (p.theme.palette[p.$accent] as PaletteColor).main;
+      const c = p.$error ? p.theme.palette.error.main : cs(p).main;
       return `${c}33`;
     }};
   }
 
   &:hover:not(:disabled) {
     background: ${p => {
-      const c = p.$error ? p.theme.palette.error.main : (p.theme.palette[p.$accent] as PaletteColor).main;
+      const c = p.$error ? p.theme.palette.error.main : cs(p).main;
       return `${c}0d`;
     }};
   }
@@ -174,7 +178,7 @@ const StyledWrapper = styled('div')<{
     font-family: inherit;
     font-size: ${p => (p.$float ? '0.7rem' : '0.9375rem')};
     font-weight: ${p => (p.$float ? '600' : '400')};
-    color: ${p => p.$error ? p.theme.palette.error.main : (p.theme.palette[p.$accent] as PaletteColor).main};
+    color: ${p => p.$error ? p.theme.palette.error.main : cs(p).main};
     pointer-events: none;
     transition: all 0.15s ease;
     white-space: nowrap;

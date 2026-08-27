@@ -10,7 +10,7 @@ const meta: Meta<typeof FastSnackbar> = {
   component: FastSnackbar,
   tags: ['autodocs'],
   argTypes: {
-    color: { control: 'radio', options: ['primary', 'secondary'] },
+    color: { control: 'radio', options: ['primary', 'secondary', 'primaryMain', 'primaryLight', 'primaryDark', 'secondaryMain', 'secondaryLight', 'secondaryDark', 'paper', 'text'] },
     type: { control: 'radio', options: ['default', 'success', 'error', 'warning', 'info'] },
     message: { control: 'text' },
     actionLabel: { control: 'text' },

@@ -2,14 +2,18 @@
 
 import React, { useState, useRef, useCallback } from 'react';
 import styled from '@emotion/styled';
-import type { Theme as MuiTheme, PaletteColor } from '@mui/material/styles';
+import type { Theme as MuiTheme } from '@mui/material/styles';
+
+import { getColorSet, type FastColor } from './colors.js';
 
 declare module '@emotion/react' {
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
   export interface Theme extends MuiTheme {}
 }
 
-export type FastTextFieldColor = 'primary' | 'secondary';
+export type FastTextFieldColor = FastColor;
+
+const cs = (p: { theme: MuiTheme; $accent: FastTextFieldColor }) => getColorSet(p.$accent, p.theme, false);
 
 export interface FastTextFieldProps {
   /** Accent color for border, label, and focus ring. */
@@ -193,20 +197,20 @@ const StyledWrapper = styled('div')<{
   ${p => p.$w !== undefined ? `width: ${p.$isPct ? p.$w : `${p.$w}px`};` : ''}
   opacity: ${p => (p.$disabled ? 0.35 : 1)};
   height: ${p => (typeof p.$h === 'number' ? `${p.$h}px` : p.$h)};
-  border: 2px solid ${p => p.$error ? p.theme.palette.error.main : (p.theme.palette[p.$accent] as PaletteColor).main};
+  border: 2px solid ${p => p.$error ? p.theme.palette.error.main : cs(p).main};
   cursor: ${p => (p.$disabled ? 'default' : 'text')};
   transition: background-color 0.2s ease, border-color 0.15s ease, box-shadow 0.15s ease;
 
   &:focus-within {
     box-shadow: 0 0 0 3px ${p => {
-      const c = p.$error ? p.theme.palette.error.main : (p.theme.palette[p.$accent] as PaletteColor).main;
+      const c = p.$error ? p.theme.palette.error.main : cs(p).main;
       return `${c}33`;
     }};
   }
 
   &:hover:not(:disabled) {
     background: ${p => {
-      const c = p.$error ? p.theme.palette.error.main : (p.theme.palette[p.$accent] as PaletteColor).main;
+      const c = p.$error ? p.theme.palette.error.main : cs(p).main;
       return `${c}0d`;
     }};
   }
@@ -241,7 +245,7 @@ const StyledWrapper = styled('div')<{
     font-family: inherit;
     font-size: ${p => (p.$float ? '0.7rem' : '0.9375rem')};
     font-weight: ${p => (p.$float ? '600' : '400')};
-    color: ${p => p.$error ? p.theme.palette.error.main : (p.theme.palette[p.$accent] as PaletteColor).main};
+    color: ${p => p.$error ? p.theme.palette.error.main : cs(p).main};
     pointer-events: none;
     transition: all 0.15s ease;
     white-space: nowrap;
@@ -270,13 +274,13 @@ const StyledWrapper = styled('div')<{
     border: none;
     background: transparent;
     cursor: ${p => (p.$disabled ? 'default' : 'pointer')};
-    color: ${p => (p.theme.palette[p.$accent] as PaletteColor).main};
+    color: ${p => cs(p).main};
     padding: 0;
     transition: background-color 0.12s ease, color 0.12s ease;
 
     &:hover:not(:disabled) {
-      background: ${p => (p.theme.palette[p.$accent] as PaletteColor).main};
-      color: ${p => (p.theme.palette[p.$accent] as PaletteColor).contrastText};
+      background: ${p => cs(p).main};
+      color: ${p => cs(p).contrastText};
     }
 
     &:active:not(:disabled) {
@@ -289,7 +293,7 @@ const StyledWrapper = styled('div')<{
   }
 
   .stepper-up {
-    border-bottom: 1px solid ${p => (p.theme.palette[p.$accent] as PaletteColor).main}44;
+    border-bottom: 1px solid ${p => cs(p).main}44;
   }
 
   .asterisk {

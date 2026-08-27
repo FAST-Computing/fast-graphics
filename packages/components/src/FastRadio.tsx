@@ -2,14 +2,18 @@
 
 import React from 'react';
 import styled from '@emotion/styled';
-import type { Theme as MuiTheme, PaletteColor } from '@mui/material/styles';
+import type { Theme as MuiTheme } from '@mui/material/styles';
+
+import { getColorSet, type FastColor } from './colors.js';
 
 declare module '@emotion/react' {
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
   export interface Theme extends MuiTheme {}
 }
 
-export type FastRadioColor = 'primary' | 'secondary';
+export type FastRadioColor = FastColor;
+
+const cs = (p: { theme: MuiTheme; $color: FastRadioColor }) => getColorSet(p.$color, p.theme, false);
 
 export interface FastRadioProps {
   /** Accent color when checked. */
@@ -95,19 +99,19 @@ const StyledWrapper = styled('div')<{ $color: FastRadioColor; $size: number; $di
 
   .box {
     fill: transparent;
-    stroke: ${p => (p.theme.palette[p.$color] as PaletteColor).main};
+    stroke: ${p => cs(p).main};
     stroke-width: 2.5;
     transition: fill 0.2s ease;
   }
 
   .dot {
-    fill: ${p => (p.theme.palette[p.$color] as PaletteColor).contrastText};
+    fill: ${p => cs(p).contrastText};
     opacity: 0;
     transition: opacity 0.2s ease;
   }
 
   input:checked + svg .box {
-    fill: ${p => (p.theme.palette[p.$color] as PaletteColor).main};
+    fill: ${p => cs(p).main};
   }
 
   input:checked + svg .dot {

@@ -10,7 +10,7 @@ const meta: Meta<typeof FastDialog> = {
   component: FastDialog,
   tags: ['autodocs'],
   argTypes: {
-    color: { control: 'radio', options: ['primary', 'secondary'] },
+    color: { control: 'radio', options: ['primary', 'secondary', 'primaryMain', 'primaryLight', 'primaryDark', 'secondaryMain', 'secondaryLight', 'secondaryDark', 'paper', 'text'] },
     maxWidth: { control: 'radio', options: ['xs', 'sm', 'md', 'lg'] },
   },
 };

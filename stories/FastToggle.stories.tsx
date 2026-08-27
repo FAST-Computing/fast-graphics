@@ -7,7 +7,7 @@ const meta: Meta<typeof FastToggle> = {
   component: FastToggle,
   tags: ['autodocs'],
   argTypes: {
-    color: { control: 'radio', options: ['primary', 'secondary'] },
+    color: { control: 'radio', options: ['primary', 'secondary', 'primaryMain', 'primaryLight', 'primaryDark', 'secondaryMain', 'secondaryLight', 'secondaryDark', 'paper', 'text'] },
     label: { control: 'text' },
     disabled: { control: 'boolean' },
     defaultChecked: { control: 'boolean' },

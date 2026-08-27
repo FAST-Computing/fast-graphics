@@ -1,7 +1,7 @@
 'use client';
 
 import styled from '@emotion/styled';
-import type { Theme as MuiTheme, PaletteColor } from '@mui/material/styles';
+import type { Theme as MuiTheme } from '@mui/material/styles';
 
 import { useState } from 'react';
 import type React from 'react';
@@ -20,6 +20,8 @@ import {
   type ColumnFiltersState,
 } from '@tanstack/react-table';
 
+import { getColorSet, type FastColor } from './colors.js';
+
 /** Merge MUI palette types into Emotion's theme so styled can access palette. */
 declare module '@emotion/react' {
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -27,7 +29,9 @@ declare module '@emotion/react' {
 }
 
 
-export type FastTableColor = 'primary' | 'secondary';
+export type FastTableColor = FastColor;
+
+const cs = (p: { theme: MuiTheme; $color: FastTableColor }) => getColorSet(p.$color, p.theme, false);
 
 export interface FastTableProps<T extends RowData> {
   /** Row data */
@@ -284,8 +288,8 @@ const StyledWrapper = styled('div')<{
   }
 
   thead {
-    background-color: ${(p) => (p.theme.palette[p.$color] as PaletteColor).main};
-    color: ${(p) => (p.theme.palette[p.$color] as PaletteColor).contrastText};
+    background-color: ${(p) => cs(p).main};
+    color: ${(p) => cs(p).contrastText};
   }
 
   th {

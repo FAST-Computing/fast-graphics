@@ -2,14 +2,18 @@
 
 import styled from '@emotion/styled';
 import { keyframes } from '@emotion/react';
-import type { Theme as MuiTheme, PaletteColor } from '@mui/material/styles';
+import type { Theme as MuiTheme } from '@mui/material/styles';
+
+import { getColorSet, type FastColor } from './colors.js';
 
 declare module '@emotion/react' {
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
   export interface Theme extends MuiTheme {}
 }
 
-export type FastLoaderColor = 'primary' | 'secondary';
+export type FastLoaderColor = FastColor;
+
+const cs = (p: { theme: MuiTheme; $color: FastLoaderColor }) => getColorSet(p.$color, p.theme, false);
 
 export interface FastLoaderProps {
   /** Which palette color to use for chevrons. */
@@ -66,7 +70,7 @@ const StyledWrapper = styled('div')<{ $color: FastLoaderColor; $size: number }>`
   }
 
   .chevron {
-    stroke: ${p => (p.theme.palette[p.$color] as PaletteColor).main};
+    stroke: ${p => cs(p).main};
     fill: none;
     stroke-dasharray: 30;
   }

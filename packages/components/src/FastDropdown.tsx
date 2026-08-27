@@ -5,15 +5,14 @@ import styled from '@emotion/styled';
 import type { Theme as MuiTheme } from '@mui/material/styles';
 import { FastBurger } from './FastBurger.js';
 import type { FastBurgerColor } from './FastBurger.js';
-import type { FastButtonColor } from './FastButton.js';
-import { getColorSet } from './FastButton.js';
+import { getColorSet, type FastColor } from './colors.js';
 
 declare module '@emotion/react' {
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
   export interface Theme extends MuiTheme {}
 }
 
-export type FastDropdownColor = FastButtonColor;
+export type FastDropdownColor = FastColor;
 export type FastDropdownVariant = 'default' | 'outlined' | 'text';
 export type FastDropdownDirection = 'bottom' | 'top' | 'left' | 'right';
 

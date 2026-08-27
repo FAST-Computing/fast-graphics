@@ -8,7 +8,7 @@ const meta: Meta<typeof FastTooltip> = {
   component: FastTooltip,
   tags: ['autodocs'],
   argTypes: {
-    color: { control: 'radio', options: ['primary', 'secondary', 'paper', 'text'] },
+    color: { control: 'radio', options: ['primary', 'secondary', 'primaryMain', 'primaryLight', 'primaryDark', 'secondaryMain', 'secondaryLight', 'secondaryDark', 'paper', 'text'] },
     title: { control: 'text' },
     placement: {
       control: 'radio',

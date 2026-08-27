@@ -7,7 +7,7 @@ const meta: Meta<typeof FastDateInput> = {
   component: FastDateInput,
   tags: ['autodocs'],
   argTypes: {
-    color: { control: 'radio', options: ['primary', 'secondary'] },
+    color: { control: 'radio', options: ['primary', 'secondary', 'primaryMain', 'primaryLight', 'primaryDark', 'secondaryMain', 'secondaryLight', 'secondaryDark', 'paper', 'text'] },
     placeholder: { control: 'text' },
     required: { control: 'boolean' },
     errorMessage: { control: 'text' },

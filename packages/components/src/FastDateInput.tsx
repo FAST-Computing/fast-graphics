@@ -2,16 +2,20 @@
 
 import React, { useRef, useState, useCallback } from 'react';
 import styled from '@emotion/styled';
-import type { Theme as MuiTheme, PaletteColor } from '@mui/material/styles';
+import type { Theme as MuiTheme } from '@mui/material/styles';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+
+import { getColorSet, type FastColor } from './colors.js';
 
 declare module '@emotion/react' {
   export interface Theme extends MuiTheme {}
 }
 
-export type FastDateInputColor = 'primary' | 'secondary';
+export type FastDateInputColor = FastColor;
+
+const cs = (p: { theme: MuiTheme; $color: FastDateInputColor }) => getColorSet(p.$color, p.theme, false);
 
 export interface FastDateInputProps {
   /** Accent colors. */
@@ -224,7 +228,7 @@ export function FastDateInput({
 }
 
 type Palette = { theme: MuiTheme; $color: FastDateInputColor };
-const pc = (p: Palette) => p.theme.palette[p.$color] as PaletteColor;
+const pc = (p: Palette) => getColorSet(p.$color, p.theme, false);
 
 const Wrapper = styled('div')<{
   $color: FastDateInputColor;
