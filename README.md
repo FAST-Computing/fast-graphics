@@ -93,16 +93,46 @@ Storybook is auto-deployed to GitHub Pages on push to `main`.
 
 ## Versioning
 
+This repo uses [Changesets](https://github.com/changesets/changesets). All three
+packages (`@fast/tokens`, `@fast/mui-theme`, `@fast/components`) are kept in
+lockstep via the `fixed` config, so a single version bump updates every
+`package.json` and the CHANGELOG automatically. **You never edit a version
+number by hand.**
+
+Release flow:
+
+1. **Add a changeset** — describe your change and pick the bump type
+   (patch / minor / major). This writes a single file under `.changeset/`.
+
+   ```bash
+   npm run changeset
+   ```
+
+2. **Apply the version bump** — bumps all packages + root in sync and
+   generates the CHANGELOG entry.
+
+   ```bash
+   npm run version:packages
+   ```
+
+3. **Publish** — builds and pushes the packages to GitHub Packages.
+
+   ```bash
+   npm run release
+   ```
+
+Commit the generated changeset file (from step 1) and the version/CHANGELOG
+changes (from step 2) together.
+
+### Bump guidelines
+
 - **Major** — core changes (affects all apps)
 - **Minor** — new tokens or components
-- **Fix** — localized fixes
+- **Patch** — localized fixes
 
-Tag & push to publish to GitHub Packages:
-
-```bash
-git tag v<version>
-git push origin v<version>
-```
+> If you prefer not to use changesets, the helper script
+> `npm run version:patch` bumps the root and all three workspaces in one
+> command, but it does not generate CHANGELOG entries.
 
 ---
 

@@ -2,7 +2,7 @@
   "$schema": "https://unpkg.com/@changesets/config@3.0.0/schema.json",
   "changelog": ["@changesets/changelog-github", { "repo": "FAST-Computing/fast-css" }],
   "commit": false,
-  "fixed": [],
+  "fixed": [["@fast/tokens", "@fast/mui-theme", "@fast/components"]],
   "linked": [],
   "access": "restricted",
   "baseBranch": "master",

@@ -15,12 +15,15 @@ declare module '@emotion/react' {
 
 export type FastDropdownColor = FastButtonColor;
 export type FastDropdownVariant = 'default' | 'outlined' | 'text';
+export type FastDropdownDirection = 'bottom' | 'top' | 'left' | 'right';
 
 export interface FastDropdownProps {
   /** Which palette color to use. */
   color?: FastDropdownColor;
   /** Visual variant matching FastButton. */
   variant?: FastDropdownVariant;
+  /** Which side of the trigger the menu opens on. */
+  direction?: FastDropdownDirection;
   /** Button label text shown before the burger icon. */
   label?: string;
   /** Controlled open state */
@@ -38,6 +41,7 @@ export interface FastDropdownProps {
 export function FastDropdown({
   color = 'primary',
   variant = 'default',
+  direction = 'bottom',
   label = 'Actions',
   open: controlledOpen,
   defaultOpen = false,
@@ -68,7 +72,7 @@ export function FastDropdown({
   }, [open, controlledOpen, onOpenChange]);
 
   return (
-    <StyledWrapper ref={wrapperRef} $color={color} $variant={variant} $w={width} $isPct={typeof width === 'string'}>
+    <StyledWrapper ref={wrapperRef} $color={color} $variant={variant} $direction={direction} $w={width} $isPct={typeof width === 'string'}>
       <button type="button" className="dropdown-trigger" onClick={toggle}>
         <span className="trigger-label">{label}</span>
         <span className="trigger-burger">
@@ -87,6 +91,7 @@ export function FastDropdown({
 type StyledProps = {
   $color: FastDropdownColor;
   $variant: FastDropdownVariant;
+  $direction: FastDropdownDirection;
   $w?: number | string;
   $isPct: boolean;
   theme: MuiTheme;
@@ -94,7 +99,21 @@ type StyledProps = {
 
 const cs = (p: StyledProps) => getColorSet(p.$color, p.theme, false);
 
-const StyledWrapper = styled('div')<{ $color: FastDropdownColor; $variant: FastDropdownVariant; $w?: number | string; $isPct: boolean }>`
+const menuPlacement = (p: StyledProps) => {
+  switch (p.$direction) {
+    case 'top':
+      return 'bottom: 100%; left: 0; right: 0;';
+    case 'left':
+      return 'top: 0; right: 100%; min-height: 100%;';
+    case 'right':
+      return 'top: 0; left: 100%; min-height: 100%;';
+    case 'bottom':
+    default:
+      return 'top: 100%; left: 0; right: 0;';
+  }
+};
+
+const StyledWrapper = styled('div')<{ $color: FastDropdownColor; $variant: FastDropdownVariant; $direction: FastDropdownDirection; $w?: number | string; $isPct: boolean }>`
   position: relative;
   display: inline-block;
   ${p => p.$w !== undefined ? `width: ${p.$isPct ? p.$w : `${p.$w}px`};` : ''}
@@ -155,9 +174,7 @@ const StyledWrapper = styled('div')<{ $color: FastDropdownColor; $variant: FastD
 
   .dropdown-menu {
     position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
+    ${menuPlacement}
     min-width: 200px;
     background: ${p => p.theme.palette.background.paper};
     border: 1px solid ${p => p.theme.palette.divider};

@@ -9,6 +9,7 @@ const meta: Meta<typeof FastDropdown> = {
   argTypes: {
     color: { control: 'radio', options: ['primary', 'secondary'] },
     variant: { control: 'radio', options: ['default', 'outlined', 'text'] },
+    direction: { control: 'radio', options: ['bottom', 'top', 'left', 'right'] },
     label: { control: 'text' },
     width: { control: 'text' },
   },
@@ -41,4 +42,19 @@ export const Outlined: Story = {
 export const Open: Story = {
   ...Default,
   args: { ...Default.args, defaultOpen: true },
+};
+
+export const Top: Story = {
+  ...Default,
+  args: { ...Default.args, direction: 'top', defaultOpen: true },
+};
+
+export const Left: Story = {
+  ...Default,
+  args: { ...Default.args, direction: 'left', defaultOpen: true },
+};
+
+export const Right: Story = {
+  ...Default,
+  args: { ...Default.args, direction: 'right', defaultOpen: true },
 };

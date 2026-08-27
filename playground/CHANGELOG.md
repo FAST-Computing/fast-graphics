@@ -1,0 +1,7 @@
+# @fast/playground
+
+## 1.6.2
+
+### Patch Changes
+
+- test
