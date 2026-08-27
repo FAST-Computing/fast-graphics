@@ -144,6 +144,8 @@ const StyledWrapper = styled('div')<StyledProps>`
     height: ${p => (typeof p.$h === 'string' ? p.$h : `${p.$h}px`)};
     display: flex;
     align-items: center;
+    justify-content: ${p => p.$align === 'left' ? 'flex-start' : p.$align === 'right' ? 'flex-end' : 'center'};
+    padding: 0 12px;
     background-color: ${p => (p.$selected || p.$variant === 'default' ? cs(p).main : 'transparent')};
     border: ${p => (p.$variant === 'outlined' ? `2px solid ${cs(p).main}` : 'none')};
     cursor: pointer;
@@ -160,11 +162,8 @@ const StyledWrapper = styled('div')<StyledProps>`
     z-index: 1;
     display: flex;
     align-items: center;
-    justify-content: ${p => p.$align === 'left' ? 'flex-start' : p.$align === 'right' ? 'flex-end' : 'center'};
     gap: 8px;
-    padding: 0 12px;
-    flex: 1;
-    flex-direction: ${p => (p.$iconPos === 'right' ? 'row' : 'row')};
+    min-width: 0;
     color: ${p => (p.$selected || p.$variant === 'default' ? cs(p).contrastText : cs(p).main)};
     font-weight: 600;
     font-size: ${p => (p.$fs !== undefined ? (typeof p.$fs === 'number' ? `${p.$fs}px` : p.$fs) : 'inherit')};
