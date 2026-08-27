@@ -25,15 +25,13 @@ npm install @fast/tokens @fast/mui-theme @fast/components \
 ### Provider
 
 ```tsx
-import { FastThemeProvider } from '@fast-computing/fast-graphics/components';
+import { FastThemeProvider } from "@fast-computing/fast-graphics/components";
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <FastThemeProvider brand="fast_core">
-          {children}
-        </FastThemeProvider>
+        <FastThemeProvider brand="fast_core">{children}</FastThemeProvider>
       </body>
     </html>
   );
@@ -43,32 +41,34 @@ export default function RootLayout({ children }) {
 ### Use a component
 
 ```tsx
-import { FastButton } from '@fast-computing/fast-graphics/components';
+import { FastButton } from "@fast-computing/fast-graphics/components";
 
-<FastButton label="Click me" color="primary" animated />
+<FastButton label="Click me" color="primary" animated />;
 ```
 
 ### Fallback to MUI
 
 ```tsx
-import { Button } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
+import { Button } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 
-<Button variant="contained" color="primary">MUI works too</Button>
+<Button variant="contained" color="primary">
+  MUI works too
+</Button>;
 ```
 
 ---
 
 ## Brands
 
-| Brand | Name |
-|-------|------|
-| FAST Computing Core | `fast_core` |
-| FAST Computing Argos | `fast_argos` |
-| FAST Computing Atlas | `fast_atlas` |
-| Simplifica Core | `simplifica_core` |
-| Simplifica Burlo | `simplifica_burlo` |
-| SmartTour | `smarttour` |
+| Brand                | Name               |
+| -------------------- | ------------------ |
+| FAST Computing Core  | `fast_core`        |
+| FAST Computing Argos | `fast_argos`       |
+| FAST Computing Atlas | `fast_atlas`       |
+| Simplifica Core      | `simplifica_core`  |
+| Simplifica Burlo     | `simplifica_burlo` |
+| SmartTour            | `smarttour`        |
 
 ---
 
