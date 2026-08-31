@@ -42,6 +42,8 @@ export interface FastButtonProps {
   fontSize?: number | string;
   /** Enable the clip-path circular reveal animation on hover. */
   animated?: boolean;
+  /** Animation speed in ms. Only applies when "animated" is enabled. Defaults to 450. */
+  animationSpeed?: number;
   /** Disabled state — 0.4 opacity, no pointer events. */
   disabled?: boolean;
   /** Native HTML button type. Defaults to "button" to prevent accidental form submits. */
@@ -62,6 +64,7 @@ export const FastButton = React.forwardRef<HTMLDivElement, FastButtonProps>(func
     height = 40,
     fontSize,
     animated = false,
+    animationSpeed = 450,
     disabled = false,
     type = 'button',
     onClick,
@@ -70,7 +73,7 @@ export const FastButton = React.forwardRef<HTMLDivElement, FastButtonProps>(func
   const isPct = typeof width === 'string';
   const heightNum = typeof height === 'number' ? height : parseInt(height) || 40;
   return (
-    <StyledWrapper ref={ref} $color={color} $variant={variant} $w={width} $h={height} $animated={animated} $isPct={isPct} $hNum={heightNum} $fs={fontSize} $selected={selected} $iconPos={iconPosition} $align={align} {...rest}>
+    <StyledWrapper ref={ref} $color={color} $variant={variant} $w={width} $h={height} $animated={animated} $animSpeed={animationSpeed} $isPct={isPct} $hNum={heightNum} $fs={fontSize} $selected={selected} $iconPos={iconPosition} $align={align} {...rest}>
       <button className="Btn" type={type} onClick={onClick} disabled={disabled}>
         <span className="Btn-content">
           {iconPosition === 'left' && icon}
@@ -88,6 +91,7 @@ type StyledProps = {
   $w: number | string;
   $h: number | string;
   $animated: boolean;
+  $animSpeed: number;
   $isPct: boolean;
   $hNum: number;
   $fs?: number | string;
@@ -165,7 +169,7 @@ const StyledWrapper = styled('div')<StyledProps>`
     content: "";
     background-color: ${p.$variant === 'default' ? cs(p).contrastText : cs(p).main};
     clip-path: circle(0% at 0% 100%);
-    transition: clip-path 0.45s ease;
+    transition: clip-path ${p.$animSpeed}ms ease;
   }
 
   `}
@@ -177,7 +181,7 @@ const StyledWrapper = styled('div')<StyledProps>`
 
   .Btn:hover::before {
     clip-path: circle(150% at 0% 100%);
-    transition-duration: 0.5s;
+    transition-duration: ${p.$animated ? `${p.$animSpeed + 50}ms` : '0s'};
   }
   `}
 

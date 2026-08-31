@@ -136,12 +136,10 @@ const StyledWrapper = styled('div')<{ $color: FastDropdownColor; $variant: FastD
       ? `
         color: ${cs(p).contrastText};
         background-color: ${cs(p).main};
-        &:hover { background-color: ${cs(p).dark}; }
       `
       : `
         color: ${cs(p).main};
         background-color: transparent;
-        &:hover { background-color: ${p.theme.palette.action.hover}; }
       `
     }
 
@@ -196,10 +194,6 @@ const StyledWrapper = styled('div')<{ $color: FastDropdownColor; $variant: FastD
     text-align: left;
     cursor: pointer;
     transition: background-color 0.15s ease;
-  }
-
-  .dropdown-menu > *:hover {
-    background-color: ${p => p.theme.palette.action.hover};
   }
 
   .dropdown-menu > *:active {

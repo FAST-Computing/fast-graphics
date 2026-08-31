@@ -342,7 +342,7 @@ export default function App() {
         <Divider sx={{ my: 3 }} />
 
         <Box sx={{ display: 'flex', gap: 3, alignItems: 'flex-start' }}>
-          <FastDropdown color="primary" label="Actions" width="15%">
+          <FastDropdown color="paper" label="Actions" width="15%">
             <button type="button" onClick={() => alert('Edit')}>Edit profile</button>
             <button type="button" onClick={() => alert('Settings')}>Settings</button>
             <button type="button" onClick={() => alert('Logout')}>Logout</button>
