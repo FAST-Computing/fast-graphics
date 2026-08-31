@@ -24,6 +24,12 @@ export interface FastButtonProps {
   label?: string;
   /** MUI icon or any React node to display alongside the label. */
   icon?: React.ReactNode;
+  /** Image source URL to display inside the button. */
+  imgSrc?: string;
+  /** Alt text for the image. */
+  imgAlt?: string;
+  /** Image size. Number → px applies to both width and height. Defaults to ~50% of the button height. */
+  imgSize?: number | string;
   /** Color from the extended palette. */
   color?: FastButtonColor;
   /** Visual style variant. */
@@ -55,6 +61,9 @@ export interface FastButtonProps {
 export const FastButton = React.forwardRef<HTMLDivElement, FastButtonProps>(function FastButton({
     label = '',
     icon,
+    imgSrc,
+    imgAlt = '',
+    imgSize,
     color = 'primary',
     variant = 'default',
     iconPosition = 'left',
@@ -73,11 +82,13 @@ export const FastButton = React.forwardRef<HTMLDivElement, FastButtonProps>(func
   const isPct = typeof width === 'string';
   const heightNum = typeof height === 'number' ? height : parseInt(height) || 40;
   return (
-    <StyledWrapper ref={ref} $color={color} $variant={variant} $w={width} $h={height} $animated={animated} $animSpeed={animationSpeed} $isPct={isPct} $hNum={heightNum} $fs={fontSize} $selected={selected} $iconPos={iconPosition} $align={align} {...rest}>
+    <StyledWrapper ref={ref} $color={color} $variant={variant} $w={width} $h={height} $animated={animated} $animSpeed={animationSpeed} $isPct={isPct} $hNum={heightNum} $fs={fontSize} $selected={selected} $iconPos={iconPosition} $align={align} $imgSize={imgSize} {...rest}>
       <button className="Btn" type={type} onClick={onClick} disabled={disabled}>
         <span className="Btn-content">
           {iconPosition === 'left' && icon}
+          {iconPosition === 'left' && imgSrc && <img className="Btn-img" src={imgSrc} alt={imgAlt} />}
           {label && label}
+          {iconPosition === 'right' && imgSrc && <img className="Btn-img" src={imgSrc} alt={imgAlt} />}
           {iconPosition === 'right' && icon}
         </span>
       </button>
@@ -98,9 +109,17 @@ type StyledProps = {
   $selected: boolean;
   $iconPos: FastButtonIconPosition;
   $align: FastButtonAlign;
+  $imgSize?: number | string;
 };
 
 const cs = (p: StyledProps & { theme: MuiTheme }) => getColorSet(p.$color, p.theme, p.$selected);
+
+const imgSizeCss = (p: StyledProps): string => {
+  if (p.$imgSize !== undefined) {
+    return typeof p.$imgSize === 'number' ? `${p.$imgSize}px` : p.$imgSize;
+  }
+  return `${Math.round((p.$hNum || 40) * 0.5)}px`;
+};
 
 const StyledWrapper = styled('div')<StyledProps>`
   ${p => p.$isPct
@@ -113,7 +132,6 @@ const StyledWrapper = styled('div')<StyledProps>`
     height: ${p => (typeof p.$h === 'string' ? p.$h : `${p.$h}px`)};
     display: flex;
     align-items: center;
-    justify-content: ${p => p.$align === 'left' ? 'flex-start' : p.$align === 'right' ? 'flex-end' : 'center'};
     padding: 0 ${p => {
       const h = p.$hNum || 40;
       const pad = Math.min(16, Math.max(4, Math.round(h * 0.3)));
@@ -133,8 +151,10 @@ const StyledWrapper = styled('div')<StyledProps>`
   .Btn-content {
     position: relative;
     z-index: 1;
+    width: 100%;
     display: flex;
     align-items: center;
+    justify-content: ${p => p.$align === 'left' ? 'flex-start' : p.$align === 'right' ? 'flex-end' : 'center'};
     gap: ${p => {
       const h = p.$hNum || 40;
       const g = Math.min(10, Math.max(2, Math.round(h * 0.2)));
@@ -157,6 +177,14 @@ const StyledWrapper = styled('div')<StyledProps>`
         return '1em';
       }};
       flex-shrink: 0;
+    }
+
+    .Btn-img {
+      width: ${p => imgSizeCss(p)};
+      height: ${p => imgSizeCss(p)};
+      flex-shrink: 0;
+      object-fit: cover;
+      border-radius: 50%;
     }
   }
 

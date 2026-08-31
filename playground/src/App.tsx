@@ -480,7 +480,7 @@ export default function App() {
         </Box>
 
         <FastButton
-        color="primary" label="aaa" width={340} height={80} fontSize={64} icon=<IcecreamIcon/>
+          color="primary" label="aaa" width={340} height={80} fontSize={64} icon=<IcecreamIcon/>
         />
 
       </Box>

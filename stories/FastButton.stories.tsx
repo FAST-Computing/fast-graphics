@@ -37,6 +37,7 @@ const meta: Meta<typeof FastButton> = {
     animated: { control: 'boolean' },
     disabled: { control: 'boolean' },
     selected: { control: 'boolean' },
+    imgSize: { control: 'number' },
     icon: {
       control: 'select',
       options: Object.keys(iconMap),
@@ -86,6 +87,20 @@ export const TextVariant: Story = {
 
 export const WithIcon: Story = {
   args: { ...Default.args, label: 'Pay', icon: <PaymentIcon />, width: '160px' },
+};
+
+const SAMPLE_IMG = 'https://i.pravatar.cc/80?img=12';
+
+export const WithImage: Story = {
+  args: { ...Default.args, label: 'Profile', imgSrc: SAMPLE_IMG, imgSize: 20, width: '160px' },
+};
+
+export const ImageAndIcon: Story = {
+  args: { ...WithImage.args, label: 'Pay', icon: <PaymentIcon />, width: '200px' },
+};
+
+export const ImageIconRight: Story = {
+  args: { ...ImageAndIcon.args, iconPosition: 'right' },
 };
 
 export const IconRight: Story = {
