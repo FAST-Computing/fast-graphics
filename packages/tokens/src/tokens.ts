@@ -58,22 +58,22 @@ export const brandTokens: Record<BrandName, BrandTokens> = {
 
   fast_argos: {
     primary: {
-      main: '#643f4d',
-      dark: '#554148',
-      light: '#bda5ad',
+      main: '#FF7F78',
+      dark: '#c06156',
+      light: '#FFB9AE',
     },
     secondary: {
-      main: '#e98527',
-      dark: '#c46e1d',
-      light: '#fcad64',
+      main: '#6C7A89',
+      dark: '#1B1F24',
+      light: '#8ea0b4',
     },
     background: {
-      default: '#bda5ad',
+      default: '#F2F2F2',
       paper: '#ffffff',
     },
     text: { 
-      primary: '#0f0f0f', 
-      secondary: '#5a5a5a' 
+      primary: '#1B1F24', 
+      secondary: '#6C7A89' 
     },
     font: {
       main: '"Google Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
