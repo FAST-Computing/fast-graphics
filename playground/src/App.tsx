@@ -14,6 +14,8 @@ import WavingHandIcon from '@mui/icons-material/WavingHand';
 import IcecreamIcon from '@mui/icons-material/Icecream';
 import SetMealIcon from '@mui/icons-material/SetMeal';
 import PetsIcon from '@mui/icons-material/Pets';
+import TsunamiIcon from '@mui/icons-material/Tsunami';
+import LayersIcon from '@mui/icons-material/Layers';
 
 import type { BrandName } from '@fast/tokens';
 import {
@@ -37,6 +39,9 @@ import {
   FastTextArea,
   FastTooltip,
   FastUpload,
+  FastSegmentedToggle,
+  FastTour,
+  type FastTourStep,
 } from '@fast/components';
 import { defaultData, defaultColumns } from './data/tableData.js';
 
@@ -48,6 +53,26 @@ const BRANDS: BrandName[] = [
   'simplifica_burlo',
 ];
 
+const DEMO_TOUR_STEPS: FastTourStep[] = [
+  {
+    id: 'welcome',
+    title: 'Welcome to the playground',
+    body: 'This centered step has no target. Use Next, the arrow keys, or Esc to move around.',
+  },
+  {
+    id: 'toggle',
+    title: 'Segmented toggle',
+    body: 'The toggle on the right switches the demo view mode.',
+    target: '[data-tour="playground-toggle"]',
+    placement: 'above',
+  },
+  {
+    id: 'done',
+    title: 'All set',
+    body: 'Finish stores a flag so this tour only auto-starts once.',
+  },
+];
+
 export default function App() {
   const [brand, setBrand] = useState<BrandName>('fast_core');
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -56,6 +81,8 @@ export default function App() {
   const [snackMsg, setSnackMsg] = useState('');
   const [snackType, setSnackType] = useState<'success' | 'error' | 'warning' | 'default'>('default');
   const [snackOpen, setSnackOpen] = useState(false);
+  const [viewMode, setViewMode] = useState('3d');
+  const [tourReplay, setTourReplay] = useState(0);
 
   return (
     <FastThemeProvider brand={brand}>
@@ -481,6 +508,43 @@ export default function App() {
 
         <FastButton
           color="primary" label="aaa" width={340} height={80} fontSize={64} icon=<IcecreamIcon/>
+        />
+
+        <Divider sx={{ my: 3 }} />
+
+        <Typography variant="h6" sx={{ mb: 2, fontWeight: 'bold' }}>
+          View mode & guided tour
+        </Typography>
+        <Box sx={{ display: 'flex', gap: 3, alignItems: 'center', flexWrap: 'wrap' }}>
+          <Box data-tour="playground-toggle">
+            <FastSegmentedToggle
+              ariaLabel="View mode"
+              value={viewMode}
+              onChange={setViewMode}
+              options={[
+                { value: '3d', label: '3D', icon: <TsunamiIcon /> },
+                { value: 'sections', label: 'Sections', icon: <LayersIcon /> },
+              ]}
+            />
+          </Box>
+          <Typography variant="body2" sx={{ opacity: 0.7 }}>
+            Selected: {viewMode}
+          </Typography>
+          <FastButton
+            label="Start tour"
+            color="secondary"
+            width={140}
+            height={40}
+            animated
+            onClick={() => setTourReplay((k) => k + 1)}
+          />
+        </Box>
+
+        <FastTour
+          steps={DEMO_TOUR_STEPS}
+          storageKey="fast-graphics.playground.tourDone"
+          replayKey={tourReplay}
+          autoStart={false}
         />
 
       </Box>
