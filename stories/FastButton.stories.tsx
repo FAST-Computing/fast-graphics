@@ -34,6 +34,7 @@ const meta: Meta<typeof FastButton> = {
     width: { control: 'text' },
     height: { control: 'text' },
     fontSize: { control: 'text' },
+    fontSizeIcon: { control: 'text' },
     animated: { control: 'boolean' },
     disabled: { control: 'boolean' },
     selected: { control: 'boolean' },
@@ -105,6 +106,10 @@ export const ImageIconRight: Story = {
 
 export const IconRight: Story = {
   args: { ...WithIcon.args, iconPosition: 'right' },
+};
+
+export const SeparateFontSizes: Story = {
+  args: { ...WithIcon.args, label: 'Pay', fontSize: '12px', fontSizeIcon: '32px', width: '180px', height: '48px' },
 };
 
 export const Selected: Story = {

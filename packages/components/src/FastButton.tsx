@@ -44,8 +44,10 @@ export interface FastButtonProps {
   width?: number | string;
   /** Button height. Number → px, string → raw CSS. */
   height?: number | string;
-  /** Text font size. Number → px */
+  /** Text font size. Number → px. Only affects the label, not the icon. */
   fontSize?: number | string;
+  /** Icon font size. Number → px. Defaults to "fontSize" when not provided. */
+  fontSizeIcon?: number | string;
   /** Enable the clip-path circular reveal animation on hover. */
   animated?: boolean;
   /** Animation speed in ms. Only applies when "animated" is enabled. Defaults to 450. */
@@ -72,6 +74,7 @@ export const FastButton = React.forwardRef<HTMLDivElement, FastButtonProps>(func
     width = 130,
     height = 40,
     fontSize,
+    fontSizeIcon,
     animated = false,
     animationSpeed = 450,
     disabled = false,
@@ -82,12 +85,12 @@ export const FastButton = React.forwardRef<HTMLDivElement, FastButtonProps>(func
   const isPct = typeof width === 'string';
   const heightNum = typeof height === 'number' ? height : parseInt(height) || 40;
   return (
-    <StyledWrapper ref={ref} $color={color} $variant={variant} $w={width} $h={height} $animated={animated} $animSpeed={animationSpeed} $isPct={isPct} $hNum={heightNum} $fs={fontSize} $selected={selected} $iconPos={iconPosition} $align={align} $imgSize={imgSize} {...rest}>
+    <StyledWrapper ref={ref} $color={color} $variant={variant} $w={width} $h={height} $animated={animated} $animSpeed={animationSpeed} $isPct={isPct} $hNum={heightNum} $fs={fontSize} $fis={fontSizeIcon} $selected={selected} $iconPos={iconPosition} $align={align} $imgSize={imgSize} {...rest}>
       <button className="Btn" type={type} onClick={onClick} disabled={disabled}>
         <span className="Btn-content">
           {iconPosition === 'left' && icon}
           {iconPosition === 'left' && imgSrc && <img className="Btn-img" src={imgSrc} alt={imgAlt} />}
-          {label && label}
+          {label && <span className="Btn-label">{label}</span>}
           {iconPosition === 'right' && imgSrc && <img className="Btn-img" src={imgSrc} alt={imgAlt} />}
           {iconPosition === 'right' && icon}
         </span>
@@ -106,6 +109,7 @@ type StyledProps = {
   $isPct: boolean;
   $hNum: number;
   $fs?: number | string;
+  $fis?: number | string;
   $selected: boolean;
   $iconPos: FastButtonIconPosition;
   $align: FastButtonAlign;
@@ -163,18 +167,23 @@ const StyledWrapper = styled('div')<StyledProps>`
     min-width: 0;
     color: ${p => (p.$selected || p.$variant === 'default' ? cs(p).contrastText : cs(p).main)};
     font-weight: 600;
-    font-size: ${p => (p.$fs !== undefined ? (typeof p.$fs === 'number' ? `${p.$fs}px` : p.$fs) : 'inherit')};
     transition: color 0.2s ease, filter 0.2s ease;
+
+    .Btn-label {
+      font-size: ${p => (p.$fs !== undefined ? (typeof p.$fs === 'number' ? `${p.$fs}px` : p.$fs) : 'inherit')};
+    }
 
     svg {
       font-size: ${p => {
+        const fs = p.$fis ?? p.$fs;
+        const base = fs !== undefined ? (typeof fs === 'number' ? `${fs}px` : fs) : '1em';
         if (!p.$isPct && typeof p.$w === 'number') {
           const h = p.$hNum || 40;
           const pad = Math.min(16, Math.max(4, Math.round(h * 0.3)));
           const innerW = p.$w - 2 * pad;
-          if (innerW > 0) return `min(1em, ${innerW}px)`;
+          if (innerW > 0) return `min(${base}, ${innerW}px)`;
         }
-        return '1em';
+        return base;
       }};
       flex-shrink: 0;
     }
