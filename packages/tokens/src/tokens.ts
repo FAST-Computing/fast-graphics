@@ -107,28 +107,27 @@ export const brandTokens: Record<BrandName, BrandTokens> = {
   },
 
   fast_dart: {
-    primary: {
-      main: '#1F2328',
-      dark: '#0B0D0F',
-      light: '#8A929C',
+    primary: { 
+      main: '#F06543', 
+      dark: '#B84930', 
+      light: '#F09D51' 
     },
-    secondary: {
-      main: '#6B7280',
-      dark: '#374151',
-      light: '#D1D5DB',
+    secondary: { 
+      main: '#313638', 
+      dark: '#1E2224', 
+      light: '#E0DFD5' 
     },
-    background: {
-      default: '#F7F8F9',
-      paper: '#FFFFFF',
+    background: { 
+      default: '#E8E9EB', 
+      paper: '#FFFFFF' 
     },
-    text: {
-      primary: '#0B0D0F',
-      secondary: '#6B7280',
+    text: { 
+      primary: '#313638', 
+      secondary: '#5C6367' 
     },
     font: {
       main: '"Google Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
       mono: '"Roboto Mono", monospace',
-    }
   },
 
   simplifica_core: {
