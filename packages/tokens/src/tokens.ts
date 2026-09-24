@@ -1,4 +1,4 @@
-export type BrandName = 
+export type BrandName =
     'fast_core' | 'fast_argos' | 'fast_atlas' | 'fast_dart' | 'simplifica_core' | 'simplifica_burlo' | 'smarttour';
 
 export type BrandTokens = {
@@ -46,7 +46,7 @@ export const brandTokens: Record<BrandName, BrandTokens> = {
       default: '#dfe0df',
       paper: '#ffffff',
     },
-    text: { 
+    text: {
       primary: '#0f0f0f',
       secondary: '#5a5a5a'
     },
@@ -71,9 +71,9 @@ export const brandTokens: Record<BrandName, BrandTokens> = {
       default: '#F2F2F2',
       paper: '#ffffff',
     },
-    text: { 
-      primary: '#1B1F24', 
-      secondary: '#6C7A89' 
+    text: {
+      primary: '#1B1F24',
+      secondary: '#6C7A89'
     },
     font: {
       main: '"Google Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
@@ -96,9 +96,9 @@ export const brandTokens: Record<BrandName, BrandTokens> = {
       default: '#BDC7CF',
       paper: '#FFFFFF',
     },
-    text: { 
-      primary: '#0f0f0f', 
-      secondary: '#5a5a5a' 
+    text: {
+      primary: '#0f0f0f',
+      secondary: '#5a5a5a'
     },
     font: {
       main: '"Google Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
@@ -107,27 +107,28 @@ export const brandTokens: Record<BrandName, BrandTokens> = {
   },
 
   fast_dart: {
-    primary: { 
-      main: '#F06543', 
-      dark: '#B84930', 
-      light: '#F09D51' 
+    primary: {
+      main: '#F06543',
+      dark: '#B84930',
+      light: '#F09D51'
     },
-    secondary: { 
-      main: '#313638', 
-      dark: '#1E2224', 
-      light: '#E0DFD5' 
+    secondary: {
+      main: '#313638',
+      dark: '#1E2224',
+      light: '#E0DFD5'
     },
-    background: { 
-      default: '#E8E9EB', 
-      paper: '#FFFFFF' 
+    background: {
+      default: '#E8E9EB',
+      paper: '#FFFFFF'
     },
-    text: { 
-      primary: '#313638', 
-      secondary: '#5C6367' 
+    text: {
+      primary: '#313638',
+      secondary: '#5C6367'
     },
     font: {
       main: '"Google Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
       mono: '"Roboto Mono", monospace',
+    }
   },
 
   simplifica_core: {
@@ -145,9 +146,9 @@ export const brandTokens: Record<BrandName, BrandTokens> = {
       default: '#f3f3f3',
       paper: '#FFFFFF',
     },
-    text: { 
-      primary: '#2e2e2e', 
-      secondary: '#77b844' 
+    text: {
+      primary: '#2e2e2e',
+      secondary: '#77b844'
     },
     font: {
       main: '"Google Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
@@ -170,8 +171,8 @@ export const brandTokens: Record<BrandName, BrandTokens> = {
       default: '#EDF4F5',
       paper: '#FFFFFF',
     },
-    text: { 
-      primary: '#1A1A1A', 
+    text: {
+      primary: '#1A1A1A',
       secondary: '#6B7280',
     },
     font: {
@@ -195,7 +196,7 @@ export const brandTokens: Record<BrandName, BrandTokens> = {
       default: '#F5F6FA',
       paper: '#FFFFFF',
     },
-    text: { 
+    text: {
       primary: '#12131A',
       secondary: '#5A5E73',
     },
