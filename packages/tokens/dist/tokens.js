@@ -29,22 +29,22 @@ export const brandTokens = {
     },
     fast_argos: {
         primary: {
-            main: '#643f4d',
-            dark: '#554148',
-            light: '#bda5ad',
+            main: '#FF7F78',
+            dark: '#c06156',
+            light: '#FFB9AE',
         },
         secondary: {
-            main: '#e98527',
-            dark: '#c46e1d',
-            light: '#fcad64',
+            main: '#6C7A89',
+            dark: '#1B1F24',
+            light: '#8ea0b4',
         },
         background: {
-            default: '#bda5ad',
+            default: '#F2F2F2',
             paper: '#ffffff',
         },
         text: {
-            primary: '#0f0f0f',
-            secondary: '#5a5a5a'
+            primary: '#1B1F24',
+            secondary: '#6C7A89'
         },
         font: {
             main: '"Google Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
@@ -69,6 +69,30 @@ export const brandTokens = {
         text: {
             primary: '#0f0f0f',
             secondary: '#5a5a5a'
+        },
+        font: {
+            main: '"Google Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+            mono: '"Roboto Mono", monospace',
+        }
+    },
+    fast_dart: {
+        primary: {
+            main: '#F06543',
+            dark: '#B84930',
+            light: '#F09D51'
+        },
+        secondary: {
+            main: '#313638',
+            dark: '#1E2224',
+            light: '#E0DFD5'
+        },
+        background: {
+            default: '#E8E9EB',
+            paper: '#FFFFFF'
+        },
+        text: {
+            primary: '#313638',
+            secondary: '#5C6367'
         },
         font: {
             main: '"Google Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',

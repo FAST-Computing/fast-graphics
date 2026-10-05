@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useCallback } from 'react';
 import styled from '@emotion/styled';
 import type { Theme as MuiTheme } from '@mui/material/styles';
 
@@ -12,11 +12,16 @@ declare module '@emotion/react' {
 }
 
 export type FastTextAreaColor = FastColor;
+export type FastTextAreaResize = 'none' | 'vertical';
+export type FastTextAreaSize = 'small' | 'medium';
 
 const cs = (p: { theme: MuiTheme; $accent: FastTextAreaColor }) => getColorSet(p.$accent, p.theme, false);
-export type FastTextAreaResize = 'none' | 'vertical';
 
-export interface FastTextAreaProps {
+export interface FastTextAreaProps
+  extends Omit<
+    React.TextareaHTMLAttributes<HTMLTextAreaElement>,
+    'color' | 'onChange' | 'value' | 'defaultValue' | 'rows'
+  > {
   /** Accent color for border, label, and focus ring. */
   color?: FastTextAreaColor;
   /** Floating label text. */
@@ -27,10 +32,18 @@ export interface FastTextAreaProps {
   defaultValue?: string;
   /** Change handler. */
   onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  /** Focus handler. */
+  onFocus?: React.FocusEventHandler<HTMLTextAreaElement>;
+  /** Blur handler. */
+  onBlur?: React.FocusEventHandler<HTMLTextAreaElement>;
   /** Disabled state — 0.35 opacity, no interactions. */
   disabled?: boolean;
   /** Field width. Number → px, string → raw CSS. */
   width?: number | string;
+  /** Stretch to the container width (width: 100%). */
+  fullWidth?: boolean;
+  /** Field size. Defaults to "medium". */
+  size?: FastTextAreaSize;
   /** Number of visible text rows. Default 4. */
   rows?: number;
   /** Resize behavior. Default "vertical". */
@@ -47,69 +60,110 @@ export interface FastTextAreaProps {
   required?: boolean;
 }
 
-export function FastTextArea({
-  color: accent = 'primary',
-  placeholder,
-  value: controlledValue,
-  defaultValue,
-  onChange,
-  disabled,
-  width,
-  rows = 4,
-  resize = 'none',
-  minHeight,
-  error,
-  helperText,
-  required,
-  errorMessage,
-}: FastTextAreaProps) {
-  const [internalValue, setInternalValue] = useState(defaultValue || '');
-  const [focused, setFocused] = useState(false);
-  const [touched, setTouched] = useState(false);
-  const isControlled = controlledValue !== undefined;
-  const displayValue = isControlled ? controlledValue : internalValue;
-  const hasValue = displayValue !== '';
-  const showError = !!(error || errorMessage || (required && touched && !hasValue));
-  const autoMsg = required && touched && !hasValue && !helperText && !errorMessage ? '*This field is required' : '';
-  const errorMsg = errorMessage || autoMsg;
-  const inputRef = useRef<HTMLTextAreaElement>(null);
-  const heightPx = minHeight || rows * 24 + 20;
+export const FastTextArea = React.forwardRef<HTMLTextAreaElement, FastTextAreaProps>(
+  function FastTextArea(props, ref) {
+    const {
+      color: accent = 'primary',
+      placeholder,
+      value: controlledValue,
+      defaultValue,
+      onChange,
+      onFocus,
+      onBlur,
+      disabled,
+      width,
+      fullWidth,
+      size = 'medium',
+      rows = 4,
+      resize = 'none',
+      minHeight,
+      error,
+      helperText,
+      required,
+      errorMessage,
+      ...rest
+    } = props;
 
-  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    if (!isControlled) setInternalValue(e.target.value);
-    if (e.target.value) setTouched(false);
-    onChange?.(e);
-  };
+    const [internalValue, setInternalValue] = useState(defaultValue || '');
+    const [focused, setFocused] = useState(false);
+    const [touched, setTouched] = useState(false);
+    const isControlled = controlledValue !== undefined;
+    const displayValue = isControlled ? controlledValue : internalValue;
+    const hasValue = displayValue !== '';
+    const showError = !!(error || errorMessage || (required && touched && !hasValue));
+    const autoMsg = required && touched && !hasValue && !helperText && !errorMessage ? '*This field is required' : '';
+    const errorMsg = errorMessage || autoMsg;
+    const inputRef = useRef<HTMLTextAreaElement>(null);
+    const heightPx = minHeight || rows * 24 + 20;
 
-  const handleBlur = () => {
-    setFocused(false);
-    if (required && !hasValue) setTouched(true);
-  };
+    const setRefs = useCallback(
+      (node: HTMLTextAreaElement | null) => {
+        inputRef.current = node;
+        if (typeof ref === 'function') ref(node);
+        else if (ref) {
+          (ref as React.MutableRefObject<HTMLTextAreaElement | null>).current = node;
+        }
+      },
+      [ref],
+    );
 
-  return (
-    <StyledWrapper $accent={accent} $w={width} $isPct={typeof width === 'string'} $disabled={!!disabled} $error={showError} $float={hasValue || focused} $h={heightPx} $resize={resize} onClick={() => inputRef.current?.focus()}>
-      <textarea
-        ref={inputRef}
-        className="field-input"
-        rows={rows}
-        value={displayValue}
-        onChange={handleChange}
-        onFocus={() => setFocused(true)}
-        onBlur={handleBlur}
-        disabled={disabled}
-        aria-label={placeholder || ''}
-      />
-      <span className="float-label">
-        {placeholder}
-        {required && <span className="asterisk"> *</span>}
-      </span>
-      {helperText && <span className="field-helper">{helperText}</span>}
-      {errorMsg && !helperText && (
-        <span className="field-helper">{errorMsg}</span>
-      )}
-    </StyledWrapper>
-  );
-}
+    const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+      if (!isControlled) setInternalValue(e.target.value);
+      if (e.target.value) setTouched(false);
+      onChange?.(e);
+    };
+
+    const handleFocus = (e: React.FocusEvent<HTMLTextAreaElement>) => {
+      setFocused(true);
+      onFocus?.(e);
+    };
+
+    const handleBlur = (e: React.FocusEvent<HTMLTextAreaElement>) => {
+      setFocused(false);
+      if (required && !hasValue) setTouched(true);
+      onBlur?.(e);
+    };
+
+    const resolvedWidth = fullWidth ? '100%' : width;
+
+    return (
+      <StyledWrapper
+        $accent={accent}
+        $w={resolvedWidth}
+        $isPct={typeof resolvedWidth === 'string'}
+        $disabled={!!disabled}
+        $error={showError}
+        $float={hasValue || focused}
+        $h={heightPx}
+        $resize={resize}
+        $small={size === 'small'}
+        onClick={() => inputRef.current?.focus()}
+      >
+        <textarea
+          {...rest}
+          ref={setRefs}
+          className="field-input"
+          rows={rows}
+          value={displayValue}
+          onChange={handleChange}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+          disabled={disabled}
+          required={required}
+          aria-label={placeholder || ''}
+        />
+        <span className="float-label">
+          {placeholder}
+          {required && <span className="asterisk"> *</span>}
+        </span>
+        {helperText && <span className="field-helper">{helperText}</span>}
+        {errorMsg && !helperText && (
+          <span className="field-helper">{errorMsg}</span>
+        )}
+      </StyledWrapper>
+    );
+  },
+);
 
 const StyledWrapper = styled('div')<{
   $accent: FastTextAreaColor;
@@ -120,6 +174,7 @@ const StyledWrapper = styled('div')<{
   $float: boolean;
   $h: number;
   $resize: FastTextAreaResize;
+  $small: boolean;
 }>`
   position: relative;
   display: inline-flex;
@@ -155,7 +210,7 @@ const StyledWrapper = styled('div')<{
     outline: none;
     background: transparent;
     font-family: inherit;
-    font-size: 0.9375rem;
+    font-size: ${p => (p.$small ? '0.875rem' : '0.9375rem')};
     font-weight: 500;
     color: ${p => p.$error ? p.theme.palette.error.main : p.theme.palette.text.primary};
     padding: 0 14px;

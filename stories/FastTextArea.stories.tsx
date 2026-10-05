@@ -18,6 +18,8 @@ const meta: Meta<typeof FastTextArea> = {
     helperText: { control: 'text' },
     required: { control: 'boolean' },
     disabled: { control: 'boolean' },
+    fullWidth: { control: 'boolean' },
+    size: { control: 'radio', options: ['small', 'medium'] },
   },
 };
 
@@ -50,4 +52,12 @@ export const Disabled: Story = {
 
 export const Small: Story = {
   args: { ...Default.args, placeholder: 'Short note', rows: 2, width: '280px' },
+};
+
+export const FullWidth: Story = {
+  args: { placeholder: 'Full width note', fullWidth: true, rows: 3 },
+};
+
+export const SmallSize: Story = {
+  args: { placeholder: 'Compact', size: 'small', rows: 2, width: '320px' },
 };
