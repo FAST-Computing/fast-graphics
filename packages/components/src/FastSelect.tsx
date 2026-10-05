@@ -168,7 +168,7 @@ export const FastSelect = React.forwardRef<HTMLInputElement, FastSelectProps>(
         $h={height}
         $disabled={!!disabled}
         $error={showError}
-        $float={hasValue || focused}
+        $float={!!selected || hasValue || focused}
       >
         <div
           className="select-trigger"
