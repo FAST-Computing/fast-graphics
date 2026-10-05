@@ -189,7 +189,7 @@ export const FastSelect = React.forwardRef<HTMLInputElement, FastSelectProps>(
           }}
         >
           <span className={`select-value${hasValue ? '' : ' placeholder'}`}>
-            {selected ? selected.label : placeholder}
+            {selected ? selected.label : (!label || focused ? placeholder : '')}
           </span>
           <ExpandMoreIcon className={`select-icon${open ? ' open' : ''}`} />
         </div>
