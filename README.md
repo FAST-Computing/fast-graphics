@@ -68,7 +68,7 @@ import { useTheme } from "@mui/material/styles";
 | FAST Computing Atlas | `fast_atlas`       |
 | Simplifica Core      | `simplifica_core`  |
 | Simplifica Burlo     | `simplifica_burlo` |
-| SmartTour            | `smarttour`        |
+| FAST Hoko            | `fast_hoko`        |
 
 ---
 

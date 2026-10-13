@@ -1,5 +1,5 @@
 export type BrandName =
-    'fast_core' | 'fast_argos' | 'fast_atlas' | 'fast_dart' | 'simplifica_core' | 'simplifica_burlo' | 'smarttour';
+    'fast_core' | 'fast_argos' | 'fast_atlas' | 'fast_dart' | 'simplifica_core' | 'simplifica_burlo' | 'fast_hoko';
 
 export type BrandTokens = {
   primary: {
@@ -181,24 +181,24 @@ export const brandTokens: Record<BrandName, BrandTokens> = {
     }
   },
 
-  smarttour: {
+  fast_hoko: {
     primary: {
-      main: '#3B4CCA',
-      dark: '#232D7A',
-      light: '#8C98EC',
+      main: '#4A4E69',
+      dark: '#22223B',
+      light: '#9A8C98',
     },
     secondary: {
-      main: '#FF6B57',
-      dark: '#B84030',
-      light: '#FFA396',
+      main: '#C9ADA7',
+      dark: '#A98A84',
+      light: '#F2E9E4',
     },
     background: {
-      default: '#F5F6FA',
+      default: '#F2E9E4',
       paper: '#FFFFFF',
     },
     text: {
-      primary: '#12131A',
-      secondary: '#5A5E73',
+      primary: '#22223B',
+      secondary: '#4A4E69',
     },
     font: {
       main: '"Google Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',

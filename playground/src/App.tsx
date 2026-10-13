@@ -31,6 +31,7 @@ import {
   FastCheckbox,
   FastRadioBox,
   FastRadio,
+  FastRadioGroup,
   FastSlider,
   FastToggle,
   FastDropdown,
@@ -49,6 +50,7 @@ const BRANDS: BrandName[] = [
   'fast_core',
   'fast_argos',
   'fast_atlas',
+  'fast_hoko',
   'simplifica_core',
   'simplifica_burlo',
 ];
@@ -328,6 +330,34 @@ export default function App() {
           <FastRadioBox color="secondary" name="food" defaultChecked icon={<SetMealIcon />} label="Fish" width={72} height={72} />
           <FastRadioBox color="secondary" name="food" icon={<IcecreamIcon />} label="Icecream" width={72} height={72} />
           <FastRadioBox color="secondary" name="food" disabled icon={<EggAltIcon />} label="Eggs" width={72} height={72} />
+        </Box>
+
+        <Divider sx={{ my: 3 }} />
+
+        <Typography variant="h6" sx={{ mb: 2, fontWeight: 'bold' }}>
+          Required radio groups (validate on blur)
+        </Typography>
+        <Typography sx={{ mb: 2 }}>
+          Both groups start empty and required. Tab out without picking an option to see the boxes highlighted in red.
+          The third group is forced into the error state by the parent.
+        </Typography>
+        <Box sx={{ display: 'flex', gap: 6, flexWrap: 'wrap', alignItems: 'flex-start' }}>
+          <FastRadioGroup label="Pick a size" name="size-required" required>
+            <FastRadio value="small" label="Small" />
+            <FastRadio value="medium" label="Medium" />
+            <FastRadio value="large" label="Large" />
+          </FastRadioGroup>
+
+          <FastRadioGroup label="Pick a treat" name="treat-required" color="secondary" required>
+            <FastRadioBox value="fish" icon={<SetMealIcon />} label="Fish" width={72} height={72} />
+            <FastRadioBox value="icecream" icon={<IcecreamIcon />} label="Icecream" width={72} height={72} />
+            <FastRadioBox value="eggs" icon={<EggAltIcon />} label="Eggs" width={72} height={72} />
+          </FastRadioGroup>
+
+          <FastRadioGroup label="Pick a pet" name="pet-error" errorMessage="This field is required" required>
+            <FastRadioBox value="cat" icon={<PetsIcon />} label="Cat" width={72} height={72} />
+            <FastRadioBox value="dog" icon={<PetsIcon />} label="Dog" width={72} height={72} />
+          </FastRadioGroup>
         </Box>
 
         <Divider sx={{ my: 3 }} />

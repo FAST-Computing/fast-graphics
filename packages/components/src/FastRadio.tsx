@@ -5,6 +5,7 @@ import styled from '@emotion/styled';
 import type { Theme as MuiTheme } from '@mui/material/styles';
 
 import { getColorSet, type FastColor } from './colors.js';
+import { useFastRadioGroup } from './FastRadioGroup.js';
 
 declare module '@emotion/react' {
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -37,7 +38,7 @@ export interface FastRadioProps {
 }
 
 export function FastRadio({
-  color = 'primary',
+  color,
   size = 28,
   label,
   checked,
@@ -47,16 +48,31 @@ export function FastRadio({
   name,
   value,
 }: FastRadioProps) {
+  const group = useFastRadioGroup();
+  const resolvedColor = color ?? group?.color ?? 'primary';
+  const resolvedName = name ?? group?.name;
+  const resolvedDisabled = !!disabled || !!group?.disabled;
+  const resolvedChecked = checked !== undefined
+    ? checked
+    : group && value !== undefined
+      ? group.selected === value
+      : undefined;
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    onChange?.(e);
+    if (group && value !== undefined) group.select(value);
+  };
+
   return (
-    <StyledWrapper $color={color} $size={size} $disabled={!!disabled}>
+    <StyledWrapper $color={resolvedColor} $size={size} $disabled={resolvedDisabled} $error={!!group?.showError}>
       <label className="radio-label">
         <input
           type="radio"
-          checked={checked}
+          checked={resolvedChecked}
           defaultChecked={defaultChecked}
-          onChange={onChange}
-          disabled={disabled}
-          name={name}
+          onChange={handleChange}
+          disabled={resolvedDisabled}
+          name={resolvedName}
           value={value}
         />
         <svg viewBox="0 0 32 32" className="radio-svg">
@@ -69,7 +85,7 @@ export function FastRadio({
   );
 }
 
-const StyledWrapper = styled('div')<{ $color: FastRadioColor; $size: number; $disabled: boolean }>`
+const StyledWrapper = styled('div')<{ $color: FastRadioColor; $size: number; $disabled: boolean; $error: boolean }>`
   display: inline-flex;
   opacity: ${p => p.$disabled ? 0.35 : 1};
 
@@ -81,7 +97,15 @@ const StyledWrapper = styled('div')<{ $color: FastRadioColor; $size: number; $di
   }
 
   .radio-label input {
-    display: none;
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
   }
 
   .radio-text {
@@ -94,12 +118,14 @@ const StyledWrapper = styled('div')<{ $color: FastRadioColor; $size: number; $di
     width: ${p => p.$size}px;
     height: ${p => p.$size}px;
     display: block;
-    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.103);
+    box-shadow: ${p => p.$error
+      ? `0 0 0 3px ${p.theme.palette.error.main}33, 5px 5px 10px rgba(0, 0, 0, 0.103)`
+      : '5px 5px 10px rgba(0, 0, 0, 0.103)'};
   }
 
   .box {
     fill: transparent;
-    stroke: ${p => cs(p).main};
+    stroke: ${p => p.$error ? p.theme.palette.error.main : cs(p).main};
     stroke-width: 2.5;
     transition: fill 0.2s ease;
   }
@@ -116,6 +142,10 @@ const StyledWrapper = styled('div')<{ $color: FastRadioColor; $size: number; $di
 
   input:checked + svg .dot {
     opacity: 1;
+  }
+
+  input:focus-visible + svg {
+    box-shadow: 0 0 0 3px ${p => cs(p).main}33, 5px 5px 10px rgba(0, 0, 0, 0.103);
   }
 
   .radio-label:active .radio-svg {

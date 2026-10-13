@@ -5,6 +5,7 @@ import styled from '@emotion/styled';
 import type { Theme as MuiTheme } from '@mui/material/styles';
 
 import { getColorSet, type FastColor } from './colors.js';
+import { useFastRadioGroup } from './FastRadioGroup.js';
 
 declare module '@emotion/react' {
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -39,7 +40,7 @@ export interface FastRadioProps {
 }
 
 export function FastRadioBox({
-  color = 'primary',
+  color,
   icon,
   label,
   width = 72,
@@ -51,16 +52,38 @@ export function FastRadioBox({
   name,
   value,
 }: FastRadioProps) {
+  const group = useFastRadioGroup();
+  const resolvedColor = color ?? group?.color ?? 'primary';
+  const resolvedName = name ?? group?.name;
+  const resolvedDisabled = !!disabled || !!group?.disabled;
+  const resolvedChecked = checked !== undefined
+    ? checked
+    : group && value !== undefined
+      ? group.selected === value
+      : undefined;
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    onChange?.(e);
+    if (group && value !== undefined) group.select(value);
+  };
+
   return (
-    <StyledWrapper $color={color} $w={width} $h={height} $disabled={!!disabled} $isPct={typeof width === 'string'}>
+    <StyledWrapper
+      $color={resolvedColor}
+      $w={width}
+      $h={height}
+      $disabled={resolvedDisabled}
+      $isPct={typeof width === 'string'}
+      $error={!!group?.showError}
+    >
       <label className="radio-label">
         <input
           type="radio"
-          checked={checked}
+          checked={resolvedChecked}
           defaultChecked={defaultChecked}
-          onChange={onChange}
-          disabled={disabled}
-          name={name}
+          onChange={handleChange}
+          disabled={resolvedDisabled}
+          name={resolvedName}
           value={value}
         />
         <div className="radio-tile">
@@ -82,6 +105,7 @@ const StyledWrapper = styled('div')<{
   $h: number | string;
   $disabled: boolean;
   $isPct: boolean;
+  $error: boolean;
 }>`
   display: inline-flex;
   opacity: ${p => p.$disabled ? 0.35 : 1};
@@ -92,7 +116,15 @@ const StyledWrapper = styled('div')<{
   }
 
   .radio-label input {
-    display: none;
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
   }
 
   .radio-tile {
@@ -103,11 +135,13 @@ const StyledWrapper = styled('div')<{
     align-items: center;
     justify-content: center;
     gap: 8px;
-    border: 2px solid ${p => pc(p).main};
+    border: 2px solid ${p => p.$error ? p.theme.palette.error.main : pc(p).main};
     background: transparent;
-    color: ${p => pc(p).main};
-    fill: ${p => pc(p).main};
-    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.103);
+    color: ${p => p.$error ? p.theme.palette.error.main : pc(p).main};
+    fill: ${p => p.$error ? p.theme.palette.error.main : pc(p).main};
+    box-shadow: ${p => p.$error
+      ? `0 0 0 3px ${p.theme.palette.error.main}33, 5px 5px 10px rgba(0, 0, 0, 0.103)`
+      : '5px 5px 10px rgba(0, 0, 0, 0.103)'};
     transition: background 0.2s ease, color 0.2s ease, fill 0.2s ease;
   }
 
@@ -128,6 +162,10 @@ const StyledWrapper = styled('div')<{
     background: ${p => pc(p).main};
     color: ${p => pc(p).contrastText};
     fill: ${p => pc(p).contrastText};
+  }
+
+  input:focus-visible + .radio-tile {
+    box-shadow: 0 0 0 3px ${p => pc(p).main}33, 5px 5px 10px rgba(0, 0, 0, 0.103);
   }
 
   .radio-label:active .radio-tile {

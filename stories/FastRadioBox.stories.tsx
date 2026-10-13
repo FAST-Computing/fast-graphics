@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { FastRadioBox } from '../packages/components/src/FastRadioBox';
+import { FastRadioGroup } from '../packages/components/src/FastRadioGroup';
 import PetsIcon from '@mui/icons-material/Pets';
 import SetMealIcon from '@mui/icons-material/SetMeal';
 import EggAltIcon from '@mui/icons-material/EggAlt';
@@ -42,5 +43,15 @@ export const FoodGroup: Story = {
       <FastRadioBox color="primary" name="food" icon={<EggAltIcon />} label="Eggs" />
       <FastRadioBox color="primary" name="food" icon={<IcecreamIcon />} label="Icecream" />
     </Box>
+  )
+};
+
+export const RequiredGroup: Story = {
+  render: () => (
+    <FastRadioGroup label="Favourite food" name="food-required" required>
+      <FastRadioBox value="fish" icon={<SetMealIcon />} label="Fish" width={80} height={80} />
+      <FastRadioBox value="eggs" icon={<EggAltIcon />} label="Eggs" width={80} height={80} />
+      <FastRadioBox value="icecream" icon={<IcecreamIcon />} label="Icecream" width={80} height={80} />
+    </FastRadioGroup>
   )
 };

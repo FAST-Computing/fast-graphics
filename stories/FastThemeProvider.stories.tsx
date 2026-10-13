@@ -50,7 +50,7 @@ const meta: Meta<typeof FastThemeProvider> = {
   argTypes: {
     brand: {
       control: 'select',
-      options: ['fast_core', 'fast_argos', 'fast_atlas', 'simplifica_core', 'simplifica_burlo', 'smarttour'],
+      options: ['fast_core', 'fast_argos', 'fast_atlas', 'simplifica_core', 'simplifica_burlo', 'fast_hoko'],
     },
     withCssBaseline: { control: 'boolean' },
     withComponentDefaults: { control: 'boolean' },

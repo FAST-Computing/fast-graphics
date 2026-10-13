@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { FastRadio } from '../packages/components/src/FastRadio';
+import { FastRadioGroup } from '../packages/components/src/FastRadioGroup';
 import { Box } from '@mui/material';
 import IcecreamIcon from '@mui/icons-material/Icecream';
 
@@ -34,6 +35,16 @@ export const RadioGroup: Story = {
       <FastRadio color="primary" name="size" label="Medium" />
       <FastRadio color="primary" name="size" label="Large" />
     </Box>
+  ),
+};
+
+export const RequiredGroup: Story = {
+  render: () => (
+    <FastRadioGroup label="Size" name="size-required" required>
+      <FastRadio value="small" label="Small" />
+      <FastRadio value="medium" label="Medium" />
+      <FastRadio value="large" label="Large" />
+    </FastRadioGroup>
   ),
 };
 

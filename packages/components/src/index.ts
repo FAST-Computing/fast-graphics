@@ -17,6 +17,12 @@ export { FastDialog } from './FastDialog.js';
 export { FastCheckbox } from './FastCheckbox.js';
 export { FastRadio } from './FastRadio.js';
 export { FastRadioBox } from './FastRadioBox.js';
+export { FastRadioGroup, useFastRadioGroup, FastRadioGroupContext } from './FastRadioGroup.js';
+export type {
+  FastRadioGroupProps,
+  FastRadioGroupColor,
+  FastRadioGroupContextValue,
+} from './FastRadioGroup.js';
 export { FastSlider } from './FastSlider.js';
 export { FastToggle } from './FastToggle.js';
 export { FastSegmentedToggle } from './FastSegmentedToggle.js';
