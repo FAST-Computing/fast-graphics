@@ -25,6 +25,10 @@ export type FastButtonType = 'button' | 'submit' | 'reset';
  * the rest of the DOM button attributes reach the real element — the one
  * assistive technology and forms actually see. This is what lets an icon-only
  * button (no `label`) still carry an accessible name.
+ *
+ * The `ref` points at that same `<button>`, not the layout wrapper around it,
+ * so props and ref stay on one element — the invariant MUI's `Tooltip` (and
+ * `FastTooltip`) checks with `<FastTooltip><FastButton /></FastTooltip>`.
  */
 export interface FastButtonProps
   extends Omit<
@@ -71,7 +75,7 @@ export interface FastButtonProps
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }
 
-export const FastButton = React.forwardRef<HTMLDivElement, FastButtonProps>(function FastButton({
+export const FastButton = React.forwardRef<HTMLButtonElement, FastButtonProps>(function FastButton({
     label = '',
     icon,
     imgSrc,
@@ -97,11 +101,12 @@ export const FastButton = React.forwardRef<HTMLDivElement, FastButtonProps>(func
   const isPct = typeof width === 'string';
   const heightNum = typeof height === 'number' ? height : parseInt(height) || 40;
   return (
-    <StyledWrapper ref={ref} $color={color} $variant={variant} $w={width} $h={height} $animated={animated} $animSpeed={animationSpeed} $isPct={isPct} $hNum={heightNum} $fs={fontSize} $fis={fontSizeIcon} $selected={selected} $iconPos={iconPosition} $align={align} $imgSize={imgSize}>
-      {/* `rest` lands on the button, not the wrapper: that is what gives an
-          icon-only button its accessible name (aria-label) and lets forms
-          (name/form/value) and tests (data-*) target the real control. */}
-      <button {...rest} className={className ? `Btn ${className}` : 'Btn'} type={type} onClick={onClick} disabled={disabled}>
+    <StyledWrapper $color={color} $variant={variant} $w={width} $h={height} $animated={animated} $animSpeed={animationSpeed} $isPct={isPct} $hNum={heightNum} $fs={fontSize} $fis={fontSizeIcon} $selected={selected} $iconPos={iconPosition} $align={align} $imgSize={imgSize}>
+      {/* `rest` and the ref land on the button, not the wrapper: that is what
+          gives an icon-only button its accessible name (aria-label), lets forms
+          (name/form/value) and tests (data-*) target the real control, and keeps
+          props and ref on one element for Tooltip. */}
+      <button {...rest} ref={ref} className={className ? `Btn ${className}` : 'Btn'} type={type} onClick={onClick} disabled={disabled}>
         <span className="Btn-content">
           {iconPosition === 'left' && icon}
           {iconPosition === 'left' && imgSrc && <img className="Btn-img" src={imgSrc} alt={imgAlt} />}
