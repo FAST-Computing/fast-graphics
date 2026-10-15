@@ -1,5 +1,5 @@
 export type BrandName =
-    'fast_core' | 'fast_argos' | 'fast_atlas' | 'fast_dart' | 'simplifica_core' | 'simplifica_burlo' | 'fast_hoko';
+    'fast_core' | 'fast_argos' | 'fast_atlas' | 'fast_dart' | 'simplifica_core' | 'simplifica_burlo' | 'fast_hoko' | 'fast_convective';
 
 export type BrandTokens = {
   primary: {
@@ -204,5 +204,30 @@ export const brandTokens: Record<BrandName, BrandTokens> = {
       main: '"Google Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
       mono: '"Roboto Mono", monospace',
     }
-}
+  },
+
+  fast_convective: {
+    primary: {
+      main: '#FF6A00',
+      dark: '#d64800',
+      light: '#ff8055',
+    },
+    secondary: {
+      main: '#b0b0b0',
+      dark: '#8a8a8a',
+      light: '#d0d0d0',
+    },
+    background: {
+      default: '#1c1c1c',
+      paper: '#262626',
+    },
+    text: {
+      primary: '#e6e6e6',
+      secondary: '#9b9b9b',
+    },
+    font: {
+      main: '"Google Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+      mono: '"Roboto Mono", monospace',
+    }
+  }
 };

@@ -66,9 +66,11 @@ import { useTheme } from "@mui/material/styles";
 | FAST Computing Core  | `fast_core`        |
 | FAST Computing Argos | `fast_argos`       |
 | FAST Computing Atlas | `fast_atlas`       |
+| FAST Computing Dart  | `fast_dart`        |
 | Simplifica Core      | `simplifica_core`  |
 | Simplifica Burlo     | `simplifica_burlo` |
 | FAST Hoko            | `fast_hoko`        |
+| FAST Convective      | `fast_convective`  |
 
 ---
 

@@ -50,7 +50,9 @@ const BRANDS: BrandName[] = [
   'fast_core',
   'fast_argos',
   'fast_atlas',
+  'fast_dart',
   'fast_hoko',
+  'fast_convective',
   'simplifica_core',
   'simplifica_burlo',
 ];
