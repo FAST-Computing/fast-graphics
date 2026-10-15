@@ -19,7 +19,18 @@ export type FastButtonIconPosition = 'left' | 'right';
 export type FastButtonAlign = 'center' | 'left' | 'right';
 export type FastButtonType = 'button' | 'submit' | 'reset';
 
-export interface FastButtonProps {
+/**
+ * Props for {@link FastButton}. Anything not listed here is forwarded to the
+ * underlying `<button>`, so `aria-label`, `title`, `data-*`, `name`, `form` and
+ * the rest of the DOM button attributes reach the real element — the one
+ * assistive technology and forms actually see. This is what lets an icon-only
+ * button (no `label`) still carry an accessible name.
+ */
+export interface FastButtonProps
+  extends Omit<
+    React.ButtonHTMLAttributes<HTMLButtonElement>,
+    'color' | 'children'
+  > {
   /** Button text content. */
   label?: string;
   /** MUI icon or any React node to display alongside the label. */
@@ -80,13 +91,17 @@ export const FastButton = React.forwardRef<HTMLDivElement, FastButtonProps>(func
     disabled = false,
     type = 'button',
     onClick,
+    className,
     ...rest
 }, ref) {
   const isPct = typeof width === 'string';
   const heightNum = typeof height === 'number' ? height : parseInt(height) || 40;
   return (
-    <StyledWrapper ref={ref} $color={color} $variant={variant} $w={width} $h={height} $animated={animated} $animSpeed={animationSpeed} $isPct={isPct} $hNum={heightNum} $fs={fontSize} $fis={fontSizeIcon} $selected={selected} $iconPos={iconPosition} $align={align} $imgSize={imgSize} {...rest}>
-      <button className="Btn" type={type} onClick={onClick} disabled={disabled}>
+    <StyledWrapper ref={ref} $color={color} $variant={variant} $w={width} $h={height} $animated={animated} $animSpeed={animationSpeed} $isPct={isPct} $hNum={heightNum} $fs={fontSize} $fis={fontSizeIcon} $selected={selected} $iconPos={iconPosition} $align={align} $imgSize={imgSize}>
+      {/* `rest` lands on the button, not the wrapper: that is what gives an
+          icon-only button its accessible name (aria-label) and lets forms
+          (name/form/value) and tests (data-*) target the real control. */}
+      <button {...rest} className={className ? `Btn ${className}` : 'Btn'} type={type} onClick={onClick} disabled={disabled}>
         <span className="Btn-content">
           {iconPosition === 'left' && icon}
           {iconPosition === 'left' && imgSrc && <img className="Btn-img" src={imgSrc} alt={imgAlt} />}

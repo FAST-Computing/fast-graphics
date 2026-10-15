@@ -127,3 +127,19 @@ export const LeftAligned: Story = {
 export const RightAligned: Story = {
   args: { ...Default.args, label: 'Right', align: 'right', width: '200px' },
 };
+
+/**
+ * Icon-only buttons have no text content, so they must carry their accessible
+ * name on the inner <button>. This guards that extra props are forwarded to it
+ * rather than the wrapper <div>.
+ */
+export const IconOnlyAccessible: Story = {
+  args: {
+    ...Default.args,
+    label: undefined,
+    icon: <SettingsIcon />,
+    width: '44px',
+    height: '40px',
+    'aria-label': 'Settings',
+  },
+};
